@@ -3,8 +3,8 @@
 	Properties
 	{
 		_MainTex("Texture", 2D) = "white" {}
-		//_Color("Color", Color) = (0, 0, 0, 0)
 	}
+
 	SubShader
 	{
 		Tags { "RenderType"="Opaque" }
@@ -33,7 +33,6 @@
 
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
-			//float4 _Color;
 			
 			v2f vert (appdata v)
 			{

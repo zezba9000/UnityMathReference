@@ -10,6 +10,12 @@ struct CubicBezierCurvePoint
 		this.point = point;
 		this.controlPoint = controlPoint;
 	}
+
+	public static float CalculateControlPointForCircle(float numberOfPointsOnCircle)
+	{
+		const float percent = (4f / 3f);
+		return percent * Mathf.Tan(Mathf.PI / (numberOfPointsOnCircle * 2f));
+	}
 }
 
 class CubicBezierCurve
@@ -23,17 +29,27 @@ class CubicBezierCurve
 	public Vector2[] uvs;
 	public int[] indices;
 
-	public static CubicBezierCurve CreateIdentity(Vector3 cameraPosition, int density, Material material)
+	private static void getIdentity(out CubicBezierCurvePoint point1, out CubicBezierCurvePoint point2)
 	{
 		const float size = 1;
 		var cpX = new Vector3(size*.6666f, 0, 0);
 
 		var pos = new Vector3(-size, 0, 0);
-		var point1 = new CubicBezierCurvePoint(pos, pos + cpX);
+		point1 = new CubicBezierCurvePoint(pos, pos + cpX);
 
 		pos = new Vector3(size, 0, 0);
-		var point2 = new CubicBezierCurvePoint(pos, pos - cpX);
+		point2 = new CubicBezierCurvePoint(pos, pos - cpX);
+	}
 
+	public void SetIdentity()
+	{
+		getIdentity(out point1, out point2);
+	}
+
+	public static CubicBezierCurve CreateIdentity(Vector3 cameraPosition, int density, Material material)
+	{
+		CubicBezierCurvePoint point1, point2;
+		getIdentity(out point1, out point2);
 		return new CubicBezierCurve(point1, point2, cameraPosition, density, material);
 	}
 
@@ -68,6 +84,7 @@ class CubicBezierCurve
 		mesh.MarkDynamic();
 		mesh.vertices = vertices;
 		mesh.uv = uvs;
+		mesh.normals = normals;
 		mesh.SetIndices(indices, MeshTopology.LineStrip, 0);
 	}
 

@@ -25,7 +25,7 @@ class BicubicBezierPatch
 	public Vector2[] uvs;
 	public int[] indices;
 
-	public static BicubicBezierPatch CreateIdentity(int density, Material material)
+	private static void getIdentity(out BicubicBezierPatchPoint point1, out BicubicBezierPatchPoint point2, out BicubicBezierPatchPoint point3, out BicubicBezierPatchPoint point4)
 	{
 		const float size = 1;
 
@@ -34,20 +34,30 @@ class BicubicBezierPatch
 
 		var pos = new Vector3(-size, -size, 0);
 		var surface = new Vector3(pos.x+cpX.x, pos.y+cpY.y, 0);
-		var point1 = new BicubicBezierPatchPoint(pos, pos + cpX, pos + cpY, surface);
+		point1 = new BicubicBezierPatchPoint(pos, pos + cpX, pos + cpY, surface);
 
 		pos = new Vector3(-size, size, 0);
 		surface = new Vector3(pos.x+cpX.x, pos.y-cpY.y, 0);
-		var point2 = new BicubicBezierPatchPoint(pos, pos - cpY, pos + cpX, surface);
+		point2 = new BicubicBezierPatchPoint(pos, pos - cpY, pos + cpX, surface);
 
 		pos = new Vector3(size, size, 0);
 		surface = new Vector3(pos.x-cpX.x, pos.y-cpY.y, 0);
-		var point3 = new BicubicBezierPatchPoint(pos, pos - cpX, pos - cpY, surface);
+		point3 = new BicubicBezierPatchPoint(pos, pos - cpX, pos - cpY, surface);
 
 		pos = new Vector3(size, -size, 0);
 		surface = new Vector3(pos.x-cpX.x, pos.y+cpY.y, 0);
-		var point4 = new BicubicBezierPatchPoint(pos, pos + cpY, pos - cpX, surface);
+		point4 = new BicubicBezierPatchPoint(pos, pos + cpY, pos - cpX, surface);
+	}
 
+	public void SetIdentity()
+	{
+		getIdentity(out point1, out point2, out point3, out point4);
+	}
+
+	public static BicubicBezierPatch CreateIdentity(int density, Material material)
+	{
+		BicubicBezierPatchPoint point1, point2, point3, point4;
+		getIdentity(out point1, out point2, out point3, out point4);
 		return new BicubicBezierPatch(point1, point2, point3, point4, density, material);
 	}
 
@@ -112,6 +122,7 @@ class BicubicBezierPatch
 		mesh.MarkDynamic();
 		mesh.vertices = vertices;
 		mesh.uv = uvs;
+		mesh.normals = normals;
 		mesh.SetIndices(indices, MeshTopology.Triangles, 0);
 	}
 
