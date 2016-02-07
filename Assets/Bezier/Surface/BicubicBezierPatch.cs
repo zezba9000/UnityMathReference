@@ -1,22 +1,22 @@
 ﻿using System.Runtime.InteropServices;
 using UnityEngine;
 
-struct ControlPoint
+struct BicubicBezierPatchPoint
 {
-	public Vector3 point, controlPoint1, controlPoint2;
+	public Vector3 point, controlPoint1, controlPoint2, surfaceControlPoint;
 
-	public ControlPoint(Vector3 point, Vector3 controlPoint1, Vector3 controlPoint2)
+	public BicubicBezierPatchPoint(Vector3 point, Vector3 controlPoint1, Vector3 controlPoint2, Vector3 surfaceControlPoint)
 	{
 		this.point = point;
 		this.controlPoint1 = controlPoint1;
 		this.controlPoint2 = controlPoint2;
+		this.surfaceControlPoint = surfaceControlPoint;
 	}
 }
 
-class BezierSurface
+class BicubicBezierPatch
 {
-	public ControlPoint point1, point2, point3, point4;
-	public Vector3 surface1, surface2, surface3, surface4;
+	public BicubicBezierPatchPoint point1, point2, point3, point4;
 	public Mesh mesh;
 	public Material material;
 
@@ -25,44 +25,38 @@ class BezierSurface
 	public Vector2[] uvs;
 	public int[] indices;
 
-	public static BezierSurface CreateIdentity(int density, Material material)
+	public static BicubicBezierPatch CreateIdentity(int density, Material material)
 	{
-		// set identity distortion
 		const float size = 1;
 
 		var cpX = new Vector3(size*.6666f, 0, 0);
 		var cpY = new Vector3(0, size*.6666f, 0);
 
 		var pos = new Vector3(-size, -size, 0);
-		var point1 = new ControlPoint(pos, pos + cpX, pos + cpY);
-		var surface1 = new Vector3(pos.x+cpX.x, pos.y+cpY.y, 0);
+		var surface = new Vector3(pos.x+cpX.x, pos.y+cpY.y, 0);
+		var point1 = new BicubicBezierPatchPoint(pos, pos + cpX, pos + cpY, surface);
 
 		pos = new Vector3(-size, size, 0);
-		var point2 = new ControlPoint(pos, pos - cpY, pos + cpX);
-		var surface2 = new Vector3(pos.x+cpX.x, pos.y-cpY.y, 0);
+		surface = new Vector3(pos.x+cpX.x, pos.y-cpY.y, 0);
+		var point2 = new BicubicBezierPatchPoint(pos, pos - cpY, pos + cpX, surface);
 
 		pos = new Vector3(size, size, 0);
-		var point3 = new ControlPoint(pos, pos - cpX, pos - cpY);
-		var surface3 = new Vector3(pos.x-cpX.x, pos.y-cpY.y, 0);
+		surface = new Vector3(pos.x-cpX.x, pos.y-cpY.y, 0);
+		var point3 = new BicubicBezierPatchPoint(pos, pos - cpX, pos - cpY, surface);
 
 		pos = new Vector3(size, -size, 0);
-		var point4 = new ControlPoint(pos, pos + cpY, pos - cpX);
-		var surface4 = new Vector3(pos.x-cpX.x, pos.y+cpY.y, 0);
+		surface = new Vector3(pos.x-cpX.x, pos.y+cpY.y, 0);
+		var point4 = new BicubicBezierPatchPoint(pos, pos + cpY, pos - cpX, surface);
 
-		return new BezierSurface(point1, point2, point3, point4, surface1, surface2, surface3, surface4, density, material);
+		return new BicubicBezierPatch(point1, point2, point3, point4, density, material);
 	}
 
-	public BezierSurface(ControlPoint point1, ControlPoint point2, ControlPoint point3, ControlPoint point4, Vector3 surface1, Vector3 surface2, Vector3 surface3, Vector3 surface4, int density, Material material)
+	public BicubicBezierPatch(BicubicBezierPatchPoint point1, BicubicBezierPatchPoint point2, BicubicBezierPatchPoint point3, BicubicBezierPatchPoint point4, int density, Material material)
 	{
 		this.point1 = point1;
 		this.point2 = point2;
 		this.point3 = point3;
 		this.point4 = point4;
-
-		this.surface1 = surface1;
-		this.surface2 = surface2;
-		this.surface3 = surface3;
-		this.surface4 = surface4;
 
 		this.density = density;
 		this.material = material;
@@ -138,8 +132,8 @@ class BezierSurface
 		}
 
 		// update buffers
-		mesh.vertices = vertices;
 		mesh.normals = normals;
+		mesh.vertices = vertices;
 	}
 
 	public void Draw(Vector3 offset)
@@ -177,8 +171,8 @@ class BezierSurface
 	{
 		var p1 = bezierCurve(point1.point, point1.controlPoint2, point2.point, point2.controlPoint1, y);
 		var p2 = bezierCurve(point4.point, point4.controlPoint1, point3.point, point3.controlPoint2, y);
-		var cp1 = bezierCurve(point1.controlPoint1, surface1, point2.controlPoint2, surface2, y);
-		var cp2 = bezierCurve(point4.controlPoint2, surface4, point3.controlPoint1, surface3, y);
+		var cp1 = bezierCurve(point1.controlPoint1, point1.surfaceControlPoint, point2.controlPoint2, point2.surfaceControlPoint, y);
+		var cp2 = bezierCurve(point4.controlPoint2, point4.surfaceControlPoint, point3.controlPoint1, point3.surfaceControlPoint, y);
 		return bezierCurve(p1, cp1, p2, cp2, x);
 	}
 

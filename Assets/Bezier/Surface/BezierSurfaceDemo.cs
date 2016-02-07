@@ -5,14 +5,14 @@ public class BezierSurfaceDemo : MonoBehaviour
 {
 	public Material surfaceMaterial;
 
-	private BezierSurface surface;
+	private BicubicBezierPatch surface;
 	private float rot;
 
 	void Start()
 	{
-		surface = BezierSurface.CreateIdentity(50, surfaceMaterial);
-		Debug.Log("DisplacmentMesh Vertices: " + surface.vertices.Length);
-		Debug.Log("DisplacmentMesh Indices: " + surface.indices.Length);
+		surface = BicubicBezierPatch.CreateIdentity(50, surfaceMaterial);
+		Debug.Log("BicubicBezierPatch Vertices: " + surface.vertices.Length);
+		Debug.Log("BicubicBezierPatch Indices: " + surface.indices.Length);
 	}
 	
 	void Update()
@@ -28,10 +28,10 @@ public class BezierSurfaceDemo : MonoBehaviour
 		surface.point4.controlPoint1.z = Mathf.Cos(rot);
 		surface.point4.controlPoint2.z = Mathf.Sin(rot);
 		
-		surface.surface1.z = Mathf.Sin(rot);
-		surface.surface2.z = Mathf.Sin(rot);
-		surface.surface3.z = Mathf.Sin(rot);
-		surface.surface4.z = Mathf.Sin(rot);
+		surface.point1.surfaceControlPoint.z = Mathf.Sin(rot);
+		surface.point2.surfaceControlPoint.z = Mathf.Sin(rot);
+		surface.point3.surfaceControlPoint.z = Mathf.Sin(rot);
+		surface.point4.surfaceControlPoint.z = Mathf.Sin(rot);
 
 		rot += 1 * Time.deltaTime;
 
