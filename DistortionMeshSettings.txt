@@ -1,0 +1,10 @@
+CameraOffset = (-0.032, 0, 0)
+DistortionMesh_Radius = 1.989501
+DistortionMesh_Scale = 0.01599984
+DistortionMesh_Power = 89.60935
+DistortionMesh_Aspect = 1.066
+DistortionMesh_AberrationRed = -0.00549999
+DistortionMesh_AberrationGreen = 0
+DistortionMesh_AberrationBlue = 0.01149999
+DistortionMesh_Offset = (-0.0175, 0)
+DistortionMesh_Center = (0.002500004, 0)

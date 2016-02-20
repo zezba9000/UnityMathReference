@@ -105,7 +105,7 @@ class CubicBezierCurve
 
 	public void Draw(Vector3 offset)
 	{
-		Graphics.DrawMesh(mesh, offset, Quaternion.identity, material, 10);
+		Graphics.DrawMesh(mesh, offset, Quaternion.identity, material, 0);
 	}
 
 	private Vector3 lerp(Vector3 p1, Vector3 p2, float value)
