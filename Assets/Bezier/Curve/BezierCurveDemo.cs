@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using Reign;
 
 public class BezierCurveDemo : MonoBehaviour
 {
@@ -22,20 +22,20 @@ public class BezierCurveDemo : MonoBehaviour
 		const float size = 1;
 		float controlPointDis = CubicBezierCurvePoint.CalculateControlPointForCircle(4);
 
-		var point1 = new CubicBezierCurvePoint(new Vector3(-size, 0, 0), new Vector3(-size, controlPointDis));
-		var point2 = new CubicBezierCurvePoint(new Vector3(0, size, 0), new Vector3(-controlPointDis, size));
+		var point1 = new CubicBezierCurvePoint(new Vec3(-size, 0, 0), new Vec3(-size, controlPointDis, 0));
+		var point2 = new CubicBezierCurvePoint(new Vec3(0, size, 0), new Vec3(-controlPointDis, size, 0));
 		circleCurve1 = new CubicBezierCurve(point1, point2, transform.position, 50, curveMaterial);
 
-		point1 = new CubicBezierCurvePoint(new Vector3(0, size, 0), new Vector3(controlPointDis, size));
-		point2 = new CubicBezierCurvePoint(new Vector3(size, 0, 0), new Vector3(size, controlPointDis));
+		point1 = new CubicBezierCurvePoint(new Vec3(0, size, 0), new Vec3(controlPointDis, size, 0));
+		point2 = new CubicBezierCurvePoint(new Vec3(size, 0, 0), new Vec3(size, controlPointDis, 0));
 		circleCurve2 = new CubicBezierCurve(point1, point2, transform.position, 50, curveMaterial);
 
-		point1 = new CubicBezierCurvePoint(new Vector3(size, 0, 0), new Vector3(size, -controlPointDis));
-		point2 = new CubicBezierCurvePoint(new Vector3(0, -size, 0), new Vector3(controlPointDis, -size));
+		point1 = new CubicBezierCurvePoint(new Vec3(size, 0, 0), new Vec3(size, -controlPointDis, 0));
+		point2 = new CubicBezierCurvePoint(new Vec3(0, -size, 0), new Vec3(controlPointDis, -size, 0));
 		circleCurve3 = new CubicBezierCurve(point1, point2, transform.position, 50, curveMaterial);
 
-		point1 = new CubicBezierCurvePoint(new Vector3(0, -size, 0), new Vector3(-controlPointDis, -size));
-		point2 = new CubicBezierCurvePoint(new Vector3(-size, 0, 0), new Vector3(-size, -controlPointDis));
+		point1 = new CubicBezierCurvePoint(new Vec3(0, -size, 0), new Vec3(-controlPointDis, -size, 0));
+		point2 = new CubicBezierCurvePoint(new Vec3(-size, 0, 0), new Vec3(-size, -controlPointDis, 0));
 		circleCurve4 = new CubicBezierCurve(point1, point2, transform.position, 50, curveMaterial);
 	}
 	
@@ -49,12 +49,12 @@ public class BezierCurveDemo : MonoBehaviour
 		rot += 1 * Time.deltaTime;
 
 		animatingCurve.UpdateMesh(transform.position);
-		animatingCurve.Draw(Vector3.zero);
+		animatingCurve.Draw(Vec3.zero);
 
 		// circle
-		circleCurve1.Draw(Vector3.zero);
-		circleCurve2.Draw(Vector3.zero);
-		circleCurve3.Draw(Vector3.zero);
-		circleCurve4.Draw(Vector3.zero);
+		circleCurve1.Draw(Vec3.zero);
+		circleCurve2.Draw(Vec3.zero);
+		circleCurve3.Draw(Vec3.zero);
+		circleCurve4.Draw(Vec3.zero);
 	}
 }

@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using Reign;
 
 public class BezierSurfaceDemo : MonoBehaviour
 {
@@ -36,6 +36,6 @@ public class BezierSurfaceDemo : MonoBehaviour
 		rot += 1 * Time.deltaTime;
 
 		surface.UpdateMesh();
-		surface.Draw(Vector3.zero);
+		surface.Draw(Vec3.zero);
 	}
 }

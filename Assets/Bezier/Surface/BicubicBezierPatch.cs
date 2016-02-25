@@ -1,11 +1,11 @@
-﻿using System.Runtime.InteropServices;
-using UnityEngine;
+﻿using UnityEngine;
+using Reign;
 
 struct BicubicBezierPatchPoint
 {
-	public Vector3 point, controlPoint1, controlPoint2, surfaceControlPoint;
+	public Vec3 point, controlPoint1, controlPoint2, surfaceControlPoint;
 
-	public BicubicBezierPatchPoint(Vector3 point, Vector3 controlPoint1, Vector3 controlPoint2, Vector3 surfaceControlPoint)
+	public BicubicBezierPatchPoint(Vec3 point, Vec3 controlPoint1, Vec3 controlPoint2, Vec3 surfaceControlPoint)
 	{
 		this.point = point;
 		this.controlPoint1 = controlPoint1;
@@ -21,31 +21,31 @@ class BicubicBezierPatch
 	public Material material;
 
 	public int density;
-	public Vector3[] vertices, normals;
-	public Vector2[] uvs;
+	public Vec3[] vertices, normals;
+	public Vec2[] uvs;
 	public int[] indices;
 
 	private static void getIdentity(out BicubicBezierPatchPoint point1, out BicubicBezierPatchPoint point2, out BicubicBezierPatchPoint point3, out BicubicBezierPatchPoint point4)
 	{
 		const float size = 1;
 
-		var cpX = new Vector3(size*.6666f, 0, 0);
-		var cpY = new Vector3(0, size*.6666f, 0);
+		var cpX = new Vec3(size*.6666f, 0, 0);
+		var cpY = new Vec3(0, size*.6666f, 0);
 
-		var pos = new Vector3(-size, -size, 0);
-		var surface = new Vector3(pos.x+cpX.x, pos.y+cpY.y, 0);
+		var pos = new Vec3(-size, -size, 0);
+		var surface = new Vec3(pos.x+cpX.x, pos.y+cpY.y, 0);
 		point1 = new BicubicBezierPatchPoint(pos, pos + cpX, pos + cpY, surface);
 
-		pos = new Vector3(-size, size, 0);
-		surface = new Vector3(pos.x+cpX.x, pos.y-cpY.y, 0);
+		pos = new Vec3(-size, size, 0);
+		surface = new Vec3(pos.x+cpX.x, pos.y-cpY.y, 0);
 		point2 = new BicubicBezierPatchPoint(pos, pos - cpY, pos + cpX, surface);
 
-		pos = new Vector3(size, size, 0);
-		surface = new Vector3(pos.x-cpX.x, pos.y-cpY.y, 0);
+		pos = new Vec3(size, size, 0);
+		surface = new Vec3(pos.x-cpX.x, pos.y-cpY.y, 0);
 		point3 = new BicubicBezierPatchPoint(pos, pos - cpX, pos - cpY, surface);
 
-		pos = new Vector3(size, -size, 0);
-		surface = new Vector3(pos.x-cpX.x, pos.y+cpY.y, 0);
+		pos = new Vec3(size, -size, 0);
+		surface = new Vec3(pos.x-cpX.x, pos.y+cpY.y, 0);
 		point4 = new BicubicBezierPatchPoint(pos, pos + cpY, pos - cpX, surface);
 	}
 
@@ -74,9 +74,9 @@ class BicubicBezierPatch
 		// create mesh
 		int vertexCount = density * density;
 		int indexCount = ((density-1) * (density-1)) * 6;
-		vertices = new Vector3[vertexCount];
-		normals = new Vector3[vertexCount];
-		uvs = new Vector2[vertexCount];
+		vertices = new Vec3[vertexCount];
+		normals = new Vec3[vertexCount];
+		uvs = new Vec2[vertexCount];
 		indices = new int[indexCount];
 
 		// compute mesh verts
@@ -90,7 +90,7 @@ class BicubicBezierPatch
 				int i = x + (y * density);
 				
 				vertices[i] = getPoint(u, v, delta, out normals[i]);
-				uvs[i] = new Vector2(u, v);
+				uvs[i] = new Vec2(u, v);
 			}
 		}
 
@@ -120,9 +120,9 @@ class BicubicBezierPatch
 		// set buffers
 		mesh = new Mesh();
 		mesh.MarkDynamic();
-		mesh.vertices = vertices;
-		mesh.uv = uvs;
-		mesh.normals = normals;
+		mesh.vertices = vertices.ToVector3();
+		mesh.uv = uvs.ToVector2();
+		mesh.normals = normals.ToVector3();
 		mesh.SetIndices(indices, MeshTopology.Triangles, 0);
 	}
 
@@ -143,42 +143,27 @@ class BicubicBezierPatch
 		}
 
 		// update buffers
-		mesh.normals = normals;
-		mesh.vertices = vertices;
+		mesh.normals = normals.ToVector3();
+		mesh.vertices = vertices.ToVector3();
 	}
 
-	public void Draw(Vector3 offset)
+	public void Draw(Vec3 offset)
 	{
-		Graphics.DrawMesh(mesh, offset, Quaternion.identity, material, 0);
+		Graphics.DrawMesh(mesh, offset.ToVector3(), Quaternion.identity, material, 0);
 	}
 
-	private Vector3 lerp(Vector3 p1, Vector3 p2, float value)
+	private Vec3 bezierCurve(Vec3 p1, Vec3 cp1, Vec3 p2, Vec3 cp2, float value)
 	{
-		return p1 + ((p2 - p1) * value);
+		var a = Vec3.Lerp(p1, cp1, value);
+		var b = Vec3.Lerp(cp2, p2, value);
+		var c = Vec3.Lerp(cp1, cp2, value);
+
+		a = Vec3.Lerp(a, c, value);
+		b = Vec3.Lerp(c, b, value);
+		return Vec3.Lerp(a, b, value);
 	}
 
-	private Vector3 bezierCurve(Vector3 p1, Vector3 cp1, Vector3 p2, Vector3 cp2, float value)
-	{
-		var a = lerp(p1, cp1, value);
-		var b = lerp(cp2, p2, value);
-		var c = lerp(cp1, cp2, value);
-
-		a = lerp(a, c, value);
-		b = lerp(c, b, value);
-		return lerp(a, b, value);
-	}
-
-	private Vector3 cross(Vector3 vector1, Vector3 vector2)
-	{
-		return new Vector3
-		(
-			((vector1.y*vector2.z) - (vector1.z*vector2.y)),
-			((vector1.z*vector2.x) - (vector1.x*vector2.z)),
-			((vector1.x*vector2.y) - (vector1.y*vector2.x))
-		);
-	}
-
-	public Vector3 getPoint(float x, float y)
+	public Vec3 getPoint(float x, float y)
 	{
 		var p1 = bezierCurve(point1.point, point1.controlPoint2, point2.point, point2.controlPoint1, y);
 		var p2 = bezierCurve(point4.point, point4.controlPoint1, point3.point, point3.controlPoint2, y);
@@ -187,7 +172,7 @@ class BicubicBezierPatch
 		return bezierCurve(p1, cp1, p2, cp2, x);
 	}
 
-	public Vector3 getPoint(float x, float y, float delta, out Vector3 normal)
+	public Vec3 getPoint(float x, float y, float delta, out Vec3 normal)
 	{
 		var p = getPoint(x, y);
 		
@@ -196,10 +181,9 @@ class BicubicBezierPatch
 		var dpyMin = getPoint(x, y - delta) - p;
 		var dpyMag = getPoint(x, y + delta) - p;
 
-		var n = cross(dpxMin, dpyMin);
-		var n2 = cross(dpxMag, dpyMag);
-		normal = ((n + n2) * .5f);
-		normal.Normalize();
+		var n = dpxMin.Cross(dpyMin);
+		var n2 = dpxMag.Cross(dpyMag);
+		normal = ((n + n2) * .5f).Normalize();
 		
 		return p;
 	}

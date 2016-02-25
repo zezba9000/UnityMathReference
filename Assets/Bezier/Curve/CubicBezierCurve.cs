@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
-using System.Collections;
+using Reign;
 
 struct CubicBezierCurvePoint
 {
-	public Vector3 point, controlPoint;
+	public Vec3 point, controlPoint;
 
-	public CubicBezierCurvePoint(Vector3 point, Vector3 controlPoint)
+	public CubicBezierCurvePoint(Vec3 point, Vec3 controlPoint)
 	{
 		this.point = point;
 		this.controlPoint = controlPoint;
@@ -25,19 +25,19 @@ class CubicBezierCurve
 	public Material material;
 
 	public int density;
-	public Vector3[] vertices, normals;
-	public Vector2[] uvs;
+	public Vec3[] vertices, normals;
+	public Vec2[] uvs;
 	public int[] indices;
 
 	private static void getIdentity(out CubicBezierCurvePoint point1, out CubicBezierCurvePoint point2)
 	{
 		const float size = 1;
-		var cpX = new Vector3(size*.6666f, 0, 0);
+		var cpX = new Vec3(size*.6666f, 0, 0);
 
-		var pos = new Vector3(-size, 0, 0);
+		var pos = new Vec3(-size, 0, 0);
 		point1 = new CubicBezierCurvePoint(pos, pos + cpX);
 
-		pos = new Vector3(size, 0, 0);
+		pos = new Vec3(size, 0, 0);
 		point2 = new CubicBezierCurvePoint(pos, pos - cpX);
 	}
 
@@ -46,14 +46,14 @@ class CubicBezierCurve
 		getIdentity(out point1, out point2);
 	}
 
-	public static CubicBezierCurve CreateIdentity(Vector3 cameraPosition, int density, Material material)
+	public static CubicBezierCurve CreateIdentity(Vec3 cameraPosition, int density, Material material)
 	{
 		CubicBezierCurvePoint point1, point2;
 		getIdentity(out point1, out point2);
 		return new CubicBezierCurve(point1, point2, cameraPosition, density, material);
 	}
 
-	public CubicBezierCurve(CubicBezierCurvePoint point1, CubicBezierCurvePoint point2, Vector3 cameraPosition, int density, Material material)
+	public CubicBezierCurve(CubicBezierCurvePoint point1, CubicBezierCurvePoint point2, Vec3 cameraPosition, int density, Material material)
 	{
 		this.point1 = point1;
 		this.point2 = point2;
@@ -64,9 +64,9 @@ class CubicBezierCurve
 		// create mesh
 		int vertexCount = density;
 		int indexCount = density;
-		vertices = new Vector3[vertexCount];
-		normals = new Vector3[vertexCount];
-		uvs = new Vector2[vertexCount];
+		vertices = new Vec3[vertexCount];
+		normals = new Vec3[vertexCount];
+		uvs = new Vec2[vertexCount];
 		indices = new int[indexCount];
 
 		// compute mesh verts and indices
@@ -75,20 +75,20 @@ class CubicBezierCurve
 		{
 			float u = i / (float)(density - 1);
 			vertices[i] = getPoint(u, cameraPosition, delta, out normals[i]);
-			uvs[i] = new Vector2(u, .5f);
+			uvs[i] = new Vec2(u, .5f);
 			indices[i] = i;
 		}
 
 		// set buffers
 		mesh = new Mesh();
 		mesh.MarkDynamic();
-		mesh.vertices = vertices;
-		mesh.uv = uvs;
-		mesh.normals = normals;
+		mesh.vertices = vertices.ToVector3();
+		mesh.uv = uvs.ToVector2();
+		mesh.normals = normals.ToVector3();
 		mesh.SetIndices(indices, MeshTopology.LineStrip, 0);
 	}
 
-	public void UpdateMesh(Vector3 cameraPosition)
+	public void UpdateMesh(Vec3 cameraPosition)
 	{
 		// compute mesh verts
 		float delta = 1.0f / density;
@@ -99,47 +99,32 @@ class CubicBezierCurve
 		}
 
 		// update buffers
-		mesh.normals = normals;
-		mesh.vertices = vertices;
+		mesh.normals = normals.ToVector3();
+		mesh.vertices = vertices.ToVector3();
 	}
 
-	public void Draw(Vector3 offset)
+	public void Draw(Vec3 offset)
 	{
-		Graphics.DrawMesh(mesh, offset, Quaternion.identity, material, 0);
+		Graphics.DrawMesh(mesh, offset.ToVector3(), Quaternion.identity, material, 0);
 	}
 
-	private Vector3 lerp(Vector3 p1, Vector3 p2, float value)
+	private Vec3 bezierCurve(Vec3 p1, Vec3 cp1, Vec3 p2, Vec3 cp2, float value)
 	{
-		return p1 + ((p2 - p1) * value);
+		var a = Vec3.Lerp(p1, cp1, value);
+		var b = Vec3.Lerp(cp2, p2, value);
+		var c = Vec3.Lerp(cp1, cp2, value);
+
+		a = Vec3.Lerp(a, c, value);
+		b = Vec3.Lerp(c, b, value);
+		return Vec3.Lerp(a, b, value);
 	}
 
-	private Vector3 bezierCurve(Vector3 p1, Vector3 cp1, Vector3 p2, Vector3 cp2, float value)
-	{
-		var a = lerp(p1, cp1, value);
-		var b = lerp(cp2, p2, value);
-		var c = lerp(cp1, cp2, value);
-
-		a = lerp(a, c, value);
-		b = lerp(c, b, value);
-		return lerp(a, b, value);
-	}
-
-	private Vector3 cross(Vector3 vector1, Vector3 vector2)
-	{
-		return new Vector3
-		(
-			((vector1.y*vector2.z) - (vector1.z*vector2.y)),
-			((vector1.z*vector2.x) - (vector1.x*vector2.z)),
-			((vector1.x*vector2.y) - (vector1.y*vector2.x))
-		);
-	}
-
-	public Vector3 getPoint(float value)
+	public Vec3 getPoint(float value)
 	{
 		return bezierCurve(point1.point, point1.controlPoint, point2.point, point2.controlPoint, value);
 	}
 
-	public Vector3 getPoint(float value, Vector3 cameraPosition, float delta, out Vector3 normal)
+	public Vec3 getPoint(float value, Vec3 cameraPosition, float delta, out Vec3 normal)
 	{
 		var p = getPoint(value);
 		var z = cameraPosition - p;
@@ -150,10 +135,9 @@ class CubicBezierCurve
 		var dMin = getPoint(value - delta) - p;
 		var dMag = getPoint(value + delta) - p;
 
-		var n = cross(dMin, z);
-		var n2 = -cross(dMag, z);
-		normal = ((n + n2) * .5f);
-		normal.Normalize();
+		var n = dMin.Cross(z);
+		var n2 = -dMag.Cross(z);
+		normal = ((n + n2) * .5f).Normalize();
 		
 		return p;
 	}

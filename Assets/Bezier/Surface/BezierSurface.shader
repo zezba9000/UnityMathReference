@@ -8,7 +8,7 @@
 	SubShader
 	{
 		Tags { "RenderType"="Opaque" }
-		Cull Front
+		Cull front
 
 		Pass
 		{
