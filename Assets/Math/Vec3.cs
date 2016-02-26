@@ -497,6 +497,18 @@ namespace Reign
 			return this - (planeNormal * this.Dot(planeNormal) * 2);
 		}
 
+		public Vec3 Refract(Vec3 normal, float refractionIndex)
+		{
+			//float refractionIndex = refractionIndexEnter / refractionIndexExit;
+			float cosI = -normal.Dot(this);
+			float sinT2 = refractionIndex * refractionIndex * (1.0f - cosI * cosI);
+
+			if (sinT2 > 1.0f) return this;
+
+			float cosT = (float)Math.Sqrt(1.0f - sinT2);
+			return this * refractionIndex + normal * (refractionIndex * cosI - cosT);
+		}
+
 		public Vec3 InersectNormal(Vec3 normal)
 		{
 			return (normal * this.Dot(normal));
