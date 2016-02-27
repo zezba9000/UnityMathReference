@@ -1,3 +1,5 @@
 # UnityMathReference
-Useful math reference for games and more. All visualized in Unity3D.
-Built with Unity 5.3.3
+Math reference for games and more.
+Visualized in Unity3D.
+Uses internal math types allowing it to be ported to any lang or enviroment.
+Last built with Unity 5.3.3
