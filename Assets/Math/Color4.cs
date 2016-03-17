@@ -52,7 +52,16 @@
 		#endregion
 
 		#region Methods
-		// TODO
+		//// Converts from linear RGB space to sRGB.
+		//float3 LinearToSRGB(in float3 color)
+		//{
+		//	return pow(color, 1/2.2f);
+		//}
+		//// Converts from sRGB space to linear RGB.
+		//float3 SRGBToLinear(in float3 color)
+		//{
+		//	return pow(color, 2.2f);
+		//}
 		#endregion
 	}
 }
