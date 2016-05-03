@@ -67,11 +67,6 @@ namespace Reign
 			return ((degrees / 180) * pi);
 		}
 
-		public static void DegToRad(float degrees, out float result)
-		{
-			result = ((degrees / 180) * pi);
-		}
-
 		/// <summary>
 		/// Converts Radians to Degrees.
 		/// </summary>
