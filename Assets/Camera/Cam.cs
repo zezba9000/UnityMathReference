@@ -58,14 +58,14 @@ public class Cam : MonoBehaviour
 
 	Matrix4x4 CreateView_LeftHanded(Vec3 position, Vec3 forward, Vec3 up)
 	{
-		var right = forward.Cross(up).Normalize();
+		var right = forward.Cross(up);
 		up = right.Cross(forward);
 
 		var result = new Matrix4x4();
 		result.m00 = -right.x;
 		result.m01 = -right.y;
 		result.m02 = -right.z;
-		result.m03 = position.Dot(-right);
+		result.m03 = position.Dot(right);
 
 		result.m10 = up.x;
 		result.m11 = up.y;
@@ -86,7 +86,7 @@ public class Cam : MonoBehaviour
 
 	Matrix4x4 CreateView_RightHanded(Vec3 position, Vec3 forward, Vec3 up)
 	{
-		var right = forward.Cross(up).Normalize();
+		var right = forward.Cross(up);
 		up = right.Cross(forward);
 
 		var result = new Matrix4x4();

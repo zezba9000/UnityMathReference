@@ -12,6 +12,6 @@ public class CameraDemo : MonoBehaviour
 	
 	void Update()
 	{
-		transform.Rotate(new Vector3(1, 1, 1).normalized, 1);
+		transform.Rotate(new Vector3(1, .5f, .8f).normalized, 1);
 	}
 }
