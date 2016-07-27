@@ -10,7 +10,7 @@ public class RayIntersectAxisDemo : MonoBehaviour
 		Debug.DrawLine(rayOrigin, rayOrigin + (rayDir*5), Color.green, 0, false);
 
 		Vector3 p1;
-		if (IntersectLineAxisZ3(rayOrigin, rayDir, 0, out p1))
+		if (IntersectRayAxisZ3(rayOrigin, rayDir, 0, out p1))
 		{
 			Debug.DrawLine(rayOrigin, p1, Color.red, 0, false);
 		}
@@ -18,7 +18,7 @@ public class RayIntersectAxisDemo : MonoBehaviour
 
 	// TODO: refactor to use Vec types
 
-	bool IntersectLineAxisZ3(Vector3 rayOrigin, Vector3 rayDir, float zOffset, out Vector3 point)
+	bool IntersectRayAxisZ3(Vector3 rayOrigin, Vector3 rayDir, float zOffset, out Vector3 point)
 	{
 		point = new Vector3();
 		if (rayDir.z == 0) return false;
