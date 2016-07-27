@@ -19,6 +19,7 @@ _ReSharper*/
 *.opensdf
 *.pidb
 *.userprefs
+*.gitgamegui-user
 
 # System Files
 *.DS_Store

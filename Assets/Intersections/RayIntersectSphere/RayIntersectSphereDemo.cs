@@ -1,29 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LineIntersectSphereDemo : MonoBehaviour
+public class RayIntersectSphereDemo : MonoBehaviour
 {
-	
-
-	void Start()
-	{
-
-	}
-	
 	void Update()
 	{
-		Vector3 lineStart = new Vector3(-2, .3f, .25f);
-		Vector3 dir = new Vector3(1, .25f, -.4f).normalized;
-		Debug.DrawLine(lineStart, lineStart + (dir*5), Color.green, 0, false);
+		Vector3 rayOrigin = new Vector3(-2, .3f, .25f);
+		Vector3 rayDir = new Vector3(1, .25f, -.4f).normalized;
+		Debug.DrawLine(rayOrigin, rayOrigin + (rayDir*5), Color.green, 0, false);
 
 		Vector3 p1, p2;
-		if (IntersectLineCircle3(lineStart, dir, new Vector3(), 1, out p1, out p2))
+		if (IntersectRayCircle3(rayOrigin, rayDir, new Vector3(), 1, out p1, out p2))
 		{
 			Debug.DrawLine(p1, p2, Color.red, 0, false);
 		}
 	}
 
-	bool IntersectLineCircle2(
+	// TODO: refactor these methods and put them in the Vector structs
+
+	bool IntersectRayCircle2(
 	Vector2 O,  // Line origin
 	Vector2 D,  // Line direction
 	Vector2 C,  // Circle center
@@ -64,7 +59,7 @@ public class LineIntersectSphereDemo : MonoBehaviour
 		return true;
 	}
 
-	bool IntersectLineCircle3(
+	bool IntersectRayCircle3(
 	Vector3 O,  // Line origin
 	Vector3 D,  // Line direction
 	Vector3 C,  // Circle center
