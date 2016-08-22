@@ -410,13 +410,15 @@ namespace Reign
 			euler.x = (float)Math.Atan2(2*x*w - 2*y*z, -sqx + sqy - sqz + sqw);
 		}
 
-		public static Quat Slerp(Quat start, Quat end, float interpolationAmount)
+		public Quat Slerp(Quat target, float interpolationAmount)
 		{
-			float cosHalfTheta = start.w * end.w + start.x * end.x + start.y * end.y + start.z * end.z;
+			var start = this;
+
+			float cosHalfTheta = start.w * target.w + start.x * target.x + start.y * target.y + start.z * target.z;
             if (cosHalfTheta < 0)
             {
                 //Negating a quaternion results in the same orientation, but we need cosHalfTheta to be positive to get the shortest path.
-                end = -end;
+                target = -target;
                 cosHalfTheta = -cosHalfTheta;
             }
 
@@ -428,12 +430,12 @@ namespace Reign
             float sinHalfTheta = (float)Math.Sqrt(1.0 - cosHalfTheta * cosHalfTheta);
 
             //Check to see if we're 180 degrees away from the target.
-            if (Math.Abs(sinHalfTheta) < 0.00001f) return (start + end) * .5f;
+            if (Math.Abs(sinHalfTheta) < 0.00001f) return (start + target) * .5f;
 
             //Blend the two quaternions to get the result!
 			float aFraction = (float)Math.Sin((1 - interpolationAmount) * halfTheta) / sinHalfTheta;
             float bFraction = (float)Math.Sin(interpolationAmount * halfTheta) / sinHalfTheta;
-			return start * aFraction + end * bFraction;
+			return start * aFraction + target * bFraction;
 		}
 		#endregion
 	}
