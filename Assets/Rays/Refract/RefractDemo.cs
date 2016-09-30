@@ -12,7 +12,7 @@ public class RefractDemo : MonoBehaviour
 	{
 		var dir = new Vec3(Mathf.Cos(rot), -Mathf.Abs(Mathf.Sin(rot)), 0).Normalize();
 		rot += 1 * Time.deltaTime;
-
+		
 		Debug.DrawRay(new Vector3(), Vector3.up, Color.blue);
 		Debug.DrawRay(new Vector3(), Vector3.right, Color.blue);
 		Debug.DrawRay(new Vector3(), -Vector3.right, Color.blue);
