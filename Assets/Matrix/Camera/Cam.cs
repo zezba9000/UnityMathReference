@@ -6,6 +6,9 @@ public class Cam : MonoBehaviour
 {
 	internal new Camera camera;
 	internal new Transform transform;
+	public Camera unityCamera;
+	public bool isProj = true;
+	public Material cameraMatrixMaterial;
 
 	void Start()
 	{
@@ -15,6 +18,8 @@ public class Cam : MonoBehaviour
 
 	void Update()
 	{
+		if (Input.GetMouseButton(0)) isProj = !isProj;
+
 		float width = Screen.width;
 		float height = Screen.height;
 		float near = camera.nearClipPlane;
@@ -22,8 +27,57 @@ public class Cam : MonoBehaviour
 		float depth = far - near;
 		float fov = camera.fieldOfView;
 		
-		camera.projectionMatrix = CreateProjection(near, far, fov, width * .5f, height);
+		if (isProj)
+		{
+			unityCamera.orthographic = false;
+			camera.projectionMatrix = CreateProjection(near, far, fov, width * .5f, height);
+		}
+		else
+		{
+			unityCamera.orthographic = true;
+			camera.projectionMatrix = ProjectionOrthographicCentered(near, far, width * .5f, height);
+		}
+
 		camera.worldToCameraMatrix = CreateView_LeftHanded(transform.position, transform.forward, transform.up);
+
+		//cameraMatrixMaterial.SetMatrix("camera", camera.projectionMatrix * camera.worldToCameraMatrix);
+		//cameraMatrixMaterial.SetMatrix("camera", camera.worldToCameraMatrix * camera.projectionMatrix);
+		cameraMatrixMaterial.SetMatrix("viewMatrix", camera.worldToCameraMatrix);
+		cameraMatrixMaterial.SetMatrix("projMatrix", camera.projectionMatrix);
+	}
+
+	public static Matrix4x4 ProjectionOrthographicCentered(float near, float far, float width, float height)
+	{
+		return OrthographicCentered(0, width, 0, height, near, far);
+	}
+
+	public static Matrix4x4 OrthographicCentered(float left, float right, float bottom, float top, float near, float far)
+	{
+		float width = right - left;
+		float height = top - bottom;
+		float depth = far - near;
+
+		Matrix4x4 result;
+		result.m00 = (2/width);
+		result.m01 = 0;
+		result.m02 = 0;
+		result.m03 = 0;
+
+		result.m10 = 0;
+		result.m11 = (2/height);
+		result.m12 = 0;
+		result.m13 = 0;
+
+		result.m20 = 0;
+		result.m21 = 0;
+		result.m22 = (-2)/depth;
+		result.m23 = -((far+near)/depth);
+
+		result.m30 = 0;
+		result.m31 = 0;
+		result.m32 = 0;
+		result.m33 = 1;
+		return result;
 	}
 
 	Matrix4x4 CreateProjection(float near, float far, float fov, float width, float height)
