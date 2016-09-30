@@ -39,11 +39,7 @@ public class Cam : MonoBehaviour
 		}
 
 		camera.worldToCameraMatrix = CreateView_LeftHanded(transform.position, transform.forward, transform.up);
-
-		//cameraMatrixMaterial.SetMatrix("camera", camera.projectionMatrix * camera.worldToCameraMatrix);
-		//cameraMatrixMaterial.SetMatrix("camera", camera.worldToCameraMatrix * camera.projectionMatrix);
-		cameraMatrixMaterial.SetMatrix("viewMatrix", camera.worldToCameraMatrix);
-		cameraMatrixMaterial.SetMatrix("projMatrix", camera.projectionMatrix);
+		cameraMatrixMaterial.SetMatrix("camera", GL.GetGPUProjectionMatrix(camera.projectionMatrix, false) * camera.worldToCameraMatrix);
 	}
 
 	public static Matrix4x4 ProjectionOrthographicCentered(float near, float far, float width, float height)
