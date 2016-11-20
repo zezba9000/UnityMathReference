@@ -8,4 +8,4 @@
 
 - Uses internal types (not Unity's) allowing it to be ported to any lang or enviroment.
 
-- Last built with Unity 5.4.1
+- Last built with Unity 5.4.3
