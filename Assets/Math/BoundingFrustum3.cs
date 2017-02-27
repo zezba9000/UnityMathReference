@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 
 namespace Reign
 {
@@ -9,6 +10,7 @@ namespace Reign
 		Disjoint
 	}
 
+	[StructLayout(LayoutKind.Sequential)]
 	public class BoundingFrustum3
 	{
 		#region Properties

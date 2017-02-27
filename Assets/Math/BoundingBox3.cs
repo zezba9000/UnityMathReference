@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace Reign
 {
+	[StructLayout(LayoutKind.Sequential)]
 	public struct BoundingBox3
 	{
 		#region Properties

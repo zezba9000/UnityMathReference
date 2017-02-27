@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 
 namespace Reign
 {
+	[StructLayout(LayoutKind.Sequential)]
 	public struct Vec2
 	{
 		#region Properties
@@ -21,10 +23,12 @@ namespace Reign
 			this.y = y;
 		}
 
+		#if REIGN_UNITY_HELPER
 		public static implicit operator Vec2(UnityEngine.Vector2 vec)
 		{
 			return new Vec2(vec.x, vec.y);
 		}
+		#endif
 
 		public static readonly Vec2 one = new Vec2(1);
 		public static readonly Vec2 minusOne = new Vec2(-1);
@@ -146,10 +150,12 @@ namespace Reign
 			return new Size2((int)x, (int)y);
 		}
 
+		#if REIGN_UNITY_HELPER
 		public UnityEngine.Vector2 ToVector2()
 		{
 			return new UnityEngine.Vector2(x, y);
 		}
+		#endif
 		#endregion
 
 		#region Methods

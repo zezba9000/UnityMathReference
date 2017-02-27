@@ -1,5 +1,8 @@
-﻿namespace Reign
+﻿using System.Runtime.InteropServices;
+
+namespace Reign
 {
+	[StructLayout(LayoutKind.Sequential)]
 	public struct Mat3x2
 	{
 		#region Properties

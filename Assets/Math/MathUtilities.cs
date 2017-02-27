@@ -109,6 +109,7 @@ namespace Reign
 		#endregion
 
 		#region Extention Methods
+		#if REIGN_UNITY_HELPER
 		public static UnityEngine.Vector2[] ToVector2(this Vec2[] vectors)
 		{
 			var result = new UnityEngine.Vector2[vectors.Length];
@@ -148,6 +149,7 @@ namespace Reign
 				unityVectors[i] = vectors[i].ToVector3();
 			}
 		}
+		#endif
 		#endregion
 	}
 }

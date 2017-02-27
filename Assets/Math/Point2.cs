@@ -1,5 +1,8 @@
-﻿namespace Reign
+﻿using System.Runtime.InteropServices;
+
+namespace Reign
 {
+	[StructLayout(LayoutKind.Sequential)]
 	public struct Point2
 	{
 		#region Properties

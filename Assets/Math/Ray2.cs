@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 
 namespace Reign
 {
+	[StructLayout(LayoutKind.Sequential)]
 	public struct Ray2
 	{
 		#region Properties
