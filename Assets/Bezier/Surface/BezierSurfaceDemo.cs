@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using Reign;
+using UnityMathReference;
 
 public class BezierSurfaceDemo : MonoBehaviour
 {

@@ -1,5 +1,5 @@
 ﻿
-namespace Reign
+namespace UnityMathReference
 {
 	struct RayTraceHit
 	{

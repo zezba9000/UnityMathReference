@@ -1,6 +1,6 @@
 ﻿
 
-namespace Reign
+namespace UnityMathReference
 {
 	class RayTraceSphere
 	{

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace Reign
+namespace UnityMathReference
 {
 	public enum ContainmentTypes
 	{

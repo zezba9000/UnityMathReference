@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace Reign
+namespace UnityMathReference
 {
 	[StructLayout(LayoutKind.Sequential)]
 	public struct BoundingBox2

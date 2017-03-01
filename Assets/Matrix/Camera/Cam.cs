@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Reign;
+using UnityMathReference;
 
 public class Cam : MonoBehaviour
 {
