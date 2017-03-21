@@ -185,6 +185,16 @@ namespace UnityMathReference
 		// ==
 		public static bool operator==(Mat3x2 p1, Mat3x2 p2) {return (p1.x==p2.x && p1.y==p2.y && p1.z==p2.z);}
 		public static bool operator!=(Mat3x2 p1, Mat3x2 p2) {return (p1.x!=p2.x || p1.y!=p2.y || p1.z!=p2.z);}
+
+		public override bool Equals(object obj)
+		{
+			return (Mat3x2)obj == this;
+		}
+
+		public override int GetHashCode()
+		{
+			return base.GetHashCode();
+		}
 		#endregion
 
 		#region Methods
