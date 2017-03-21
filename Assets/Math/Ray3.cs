@@ -52,7 +52,7 @@ namespace UnityMathReference
 			return new Vec3((slopeX * dis) + origin.x, (slopeY * dis) + origin.y, planePosition);
 		}
 
-		public bool Intersects(BoundingBox3 boundingBox, out float result)
+		public bool Intersects(Bound3 boundingBox, out float result)
         {
 			// X
             if (Math.Abs(direction.x) < MathUtilities.epsilon && (origin.x < boundingBox.min.x || origin.x > boundingBox.max.x))

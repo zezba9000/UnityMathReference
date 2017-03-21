@@ -3,15 +3,15 @@
 namespace UnityMathReference
 {
 	[StructLayout(LayoutKind.Sequential)]
-	public struct BoundingSphere3
+	public struct Sphere2
 	{
 		#region Properties
-		public Vec3 center;
+		public Vec2 center;
 		public float radius;
 		#endregion
 
 		#region Constructors
-		public BoundingSphere3(Vec3 center, float radius)
+		public Sphere2(Vec2 center, float radius)
         {
             this.center = center;
             this.radius = radius;
@@ -19,9 +19,9 @@ namespace UnityMathReference
 		#endregion
 
 		#region Methods
-		public bool Intersects(BoundingBox3 boundingBox)
+		public bool Intersects(Bound2 boundingBox)
         {
-			Vec3 clampedLocation;
+		   Vec2 clampedLocation;
             if (center.x > boundingBox.max.x)
 			{
                 clampedLocation.x = boundingBox.max.x;
@@ -46,19 +46,6 @@ namespace UnityMathReference
             else
 			{
                 clampedLocation.y = center.y;
-			}
-
-            if (center.z > boundingBox.max.z)
-			{
-                clampedLocation.z = boundingBox.max.z;
-			}
-            else if (center.z < boundingBox.min.z)
-			{
-                clampedLocation.z = boundingBox.min.z;
-			}
-            else
-			{
-                clampedLocation.z = center.z;
 			}
 
             return clampedLocation.DistanceSquared(center) <= (radius * radius);

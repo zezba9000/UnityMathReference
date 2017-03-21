@@ -164,12 +164,12 @@ namespace UnityMathReference
 			result = x >= rect.left && x <= rect.right && y >= rect.bottom && y <= rect.top;
 		}
 
-		public bool Intersects(BoundingBox2 boundingBox)
+		public bool Intersects(Bound2 boundingBox)
 		{
 			return x >= boundingBox.left && x <= boundingBox.right && y >= boundingBox.bottom && y <= boundingBox.top;
 		}
 
-		public void Intersects(BoundingBox2 boundingBox, out bool result)
+		public void Intersects(Bound2 boundingBox, out bool result)
 		{
 			result = x >= boundingBox.left && x <= boundingBox.right && y >= boundingBox.bottom && y <= boundingBox.top;
 		}
