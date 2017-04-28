@@ -371,6 +371,14 @@ namespace UnityMathReference
 			return new Quat(-x, -y, -z, w);
 		}
 
+		public Vec3 AngularVel()
+		{
+			Vec3 axis;
+			float angle;
+			RotationAxis(out axis, out angle);
+			return axis * angle;
+		}
+
 		public void RotationAxis(out Vec3 axis, out float angle)
 		{
 			angle = (float)Math.Acos(w) * MathUtilities.pi2;
