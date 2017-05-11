@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DepthBuffToWorldPosRotObj : MonoBehaviour
+public class RotObj : MonoBehaviour
 {
 	private new Transform transform;
 	private float rot;

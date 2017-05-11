@@ -2,12 +2,11 @@
 {
 	Properties
 	{
-		_MainTex ("Texture", 2D) = "white" {}
+		
 	}
 
 	SubShader
 	{
-		// No culling or depth
 		Cull Off ZWrite Off ZTest Always
 
 		Pass
@@ -50,7 +49,6 @@
 				return o;
 			}
 			
-			sampler2D _MainTex;
 			sampler2D_float _CameraDepthTexture;
 			float4 _CameraDepthTexture_ST;
 
@@ -62,8 +60,7 @@
 				depth = LinearEyeDepth(depth);
 				float3 worldspace = i.worldDirection * depth + _WorldSpaceCameraPos;
 
-				float4 color = 0;//tex2D(_MainTex, i.uv);
-				color.rgb = worldspace;
+				float4 color = float4(worldspace, 1.0);
 				return color;
 			}
 			ENDCG
