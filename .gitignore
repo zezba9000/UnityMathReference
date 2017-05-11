@@ -5,6 +5,7 @@
 obj/
 Lib/
 ipch/
+.vs/
 
 # Tooling
 _ReSharper*/

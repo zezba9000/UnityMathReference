@@ -1,16 +1,18 @@
 ﻿using UnityEngine;
 using UnityMathReference;
 
-public class RayTraceBenchmark : MonoBehaviour
+namespace UnityMathReference
 {
-
-	void Start()
+	public class RayTraceBenchmark : MonoBehaviour
 	{
-		RayTraceEngine.Init();
-	}
+		void Start()
+		{
+			RayTraceEngine.Init();
+		}
 	
-	void Update()
-	{
-		if (Input.GetKeyUp(KeyCode.R)) RayTraceEngine.Render();
+		void Update()
+		{
+			if (Input.GetKeyUp(KeyCode.R)) RayTraceEngine.Render();
+		}
 	}
 }
