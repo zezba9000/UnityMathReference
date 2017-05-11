@@ -21,7 +21,6 @@
 			struct appdata
 			{
 				float4 vertex : POSITION;
-				float depth : TEXCOORD0;
 			};
 
 			struct v2f
