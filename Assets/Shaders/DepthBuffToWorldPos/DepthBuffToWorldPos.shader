@@ -52,8 +52,6 @@
 			sampler2D_float _CameraDepthTexture;
 			float4 _CameraDepthTexture_ST;
 
-			float3 camForward;
-
 			float4 frag (v2f i) : SV_Target
 			{
 				float depth = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, i.uv.xy);

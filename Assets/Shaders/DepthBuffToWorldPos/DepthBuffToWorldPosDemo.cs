@@ -16,8 +16,6 @@ public class DepthBuffToWorldPosDemo : PostProcess
 
 	protected override void OnRenderImage(RenderTexture source, RenderTexture destination)
 	{
-		material.SetVector("camForward", transform.forward);
-		
 		//var clipToWorld = (camera.projectionMatrix * camera.worldToCameraMatrix).inverse;// << Is there a way to make this method work indead?
 		// NOTE: code was ported from: https://gamedev.stackexchange.com/questions/131978/shader-reconstructing-position-from-depth-in-vr-through-projection-matrix
 		// More clerification of whats going on is needed!
