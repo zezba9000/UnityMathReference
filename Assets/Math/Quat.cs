@@ -371,6 +371,11 @@ namespace UnityMathReference
 			return new Quat(-x, -y, -z, w);
 		}
 
+		public Quat Inverse()
+		{
+			return Conjugate() * (1.0f / ((x * x) + (y * y) + (z * z) + (w * w)));
+		}
+
 		public Vec3 AngularVel()
 		{
 			Vec3 axis;
@@ -381,7 +386,7 @@ namespace UnityMathReference
 
 		public void RotationAxis(out Vec3 axis, out float angle)
 		{
-			angle = (float)Math.Acos(w) * MathUtilities.pi2;
+			angle = (float)(Math.Acos(w) * 2);
 			float sinAngle = (float)Math.Sqrt(1 - (w*w));
 			if (sinAngle == 0) sinAngle = 1;
 			sinAngle = 1 / sinAngle;

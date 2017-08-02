@@ -14,10 +14,10 @@ public class AngularVelocityDemo : MonoBehaviour
 	{
 		// get dumby current and last rotation values
 		var rotationLast = Quat.FromEuler(0, 0, 0);
-		var rotationCurrent = Quat.FromEuler(1, 1, 1);
+		var rotationCurrent = Quat.FromEuler(0, 0, 1);
 
 		// generate angular velocity
-		var angleVel = (rotationCurrent - rotationLast).AngularVel();
+		var angleVel = rotationLast.Inverse().Multiply(rotationCurrent).AngularVel();
 
 		// apply velocity to rigidbody
 		rigidbody.angularVelocity = angleVel.ToVector3();
