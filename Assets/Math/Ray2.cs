@@ -19,24 +19,26 @@ namespace UnityMathReference
 		#endregion
 
 		#region Methods
-		public Vec2 InersectPlaneX(float planePosition)
+		public bool IntersectPlaneX(float planePosition, out Vec2 point)
 		{
-			if (direction.x == 0) return origin;
-			if ((planePosition >= origin.x && direction.x <= origin.x) || (planePosition <= origin.x && direction.x >= origin.x)) return origin;
+			point = origin;
+			if (direction.x == 0) return false;
 
 			float dis = planePosition - origin.x;
 			float slopeY = direction.y / direction.x;
-			return new Vec2(planePosition, (slopeY * dis) + origin.y);
+			point = new Vec2(planePosition, (slopeY * dis) + origin.y);
+			return true;
 		}
 
-		public Vec2 InersectPlaneY(float planePosition)
+		public bool IntersectPlaneY(float planePosition, out Vec2 point)
 		{
-			if (direction.y == 0) return origin;
-			if ((planePosition >= origin.y && direction.y <= origin.y) || (planePosition <= origin.y && direction.y >= origin.y)) return origin;
+			point = origin;
+			if (direction.y == 0) return false;
 
 			float dis = planePosition - origin.y;
 			float slopeX = direction.x / direction.y;
-			return new Vec2((slopeX * dis) + origin.x, planePosition);
+			point = new Vec2((slopeX * dis) + origin.x, planePosition);
+			return true;
 		}
 
 		public bool Intersects(Bound2 boundingBox, out float result)

@@ -19,37 +19,57 @@ namespace UnityMathReference
 		#endregion
 
 		#region Methods
-		public Vec3 InersectPlaneX(float planePosition)
+		public bool IntersectPlaneX(float planePosition, out Vec3 point)
 		{
-			if (direction.x == 0) return origin;
-			if ((planePosition >= origin.x && direction.x <= origin.x) || (planePosition <= origin.x && direction.x >= origin.x)) return origin;
+			point = origin;
+			if (direction.x == 0) return false;
 
 			float dis = planePosition - origin.x;
 			float slopeY = direction.y / direction.x;
 			float slopeZ = direction.z / direction.x;
-			return new Vec3(planePosition, (slopeY * dis) + origin.y, (slopeZ * dis) + origin.z);
+			point = new Vec3(planePosition, (slopeY * dis) + origin.y, (slopeZ * dis) + origin.z);
+			return true;
 		}
 
-		public Vec3 InersectPlaneY(float planePosition)
+		public bool IntersectPlaneY(float planePosition, out Vec3 point)
 		{
-			if (direction.y == 0) return origin;
-			if ((planePosition >= origin.y && direction.y <= origin.y) || (planePosition <= origin.y && direction.y >= origin.y)) return origin;
+			point = origin;
+			if (direction.y == 0) return false;
 
 			float dis = planePosition - origin.y;
 			float slopeX = direction.x / direction.y;
 			float slopeZ = direction.z / direction.y;
-			return new Vec3((slopeX * dis) + origin.x, planePosition, (slopeZ * dis) + origin.z);
+			point = new Vec3((slopeX * dis) + origin.x, planePosition, (slopeZ * dis) + origin.z);
+			return true;
 		}
 
-		public Vec3 InersectPlaneZ(float planePosition)
+		public bool IntersectPlaneZ(float planePosition, out Vec3 point)
 		{
-			if (direction.z == 0) return origin;
-			if ((planePosition >= origin.z && direction.z <= origin.z) || (planePosition <= origin.z && direction.z >= origin.z)) return origin;
+			point = origin;
+			if (direction.z == 0) return false;
 
 			float dis = planePosition - origin.z;
 			float slopeX = direction.x / direction.z;
 			float slopeY = direction.y / direction.z;
-			return new Vec3((slopeX * dis) + origin.x, (slopeY * dis) + origin.y, planePosition);
+			point = new Vec3((slopeX * dis) + origin.x, (slopeY * dis) + origin.y, planePosition);
+			return true;
+		}
+
+		public bool IntersectPlane(Vec3 planeNormal, Vec3 planeLocation, out Vec3 point)
+		{
+			float denom = planeNormal.Dot(direction);
+			if (Math.Abs(denom) > 0.0001f)
+			{
+				float t = (planeLocation - origin).Dot(planeNormal) / denom;
+				if (t >= 0)
+				{
+					point = origin + (direction * t);
+					return true;
+				}
+			}
+
+			point = origin;
+			return false;
 		}
 
 		public bool Intersects(Bound3 boundingBox, out float result)

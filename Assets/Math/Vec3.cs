@@ -505,7 +505,6 @@ namespace UnityMathReference
 
 		public Vec3 Refract(Vec3 normal, float refractionIndex)
 		{
-			//float refractionIndex = refractionIndexEnter / refractionIndexExit;
 			float cosI = -normal.Dot(this);
 			float sinT2 = refractionIndex * refractionIndex * (1.0f - cosI * cosI);
 
