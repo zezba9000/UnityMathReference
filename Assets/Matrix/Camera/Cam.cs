@@ -24,7 +24,6 @@ public class Cam : MonoBehaviour
 		float height = Screen.height;
 		float near = camera.nearClipPlane;
 		float far = camera.farClipPlane;
-		float depth = far - near;
 		float fov = camera.fieldOfView;
 		
 		if (isProj)

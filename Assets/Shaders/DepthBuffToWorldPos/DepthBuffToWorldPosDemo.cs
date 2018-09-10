@@ -6,12 +6,10 @@ using UnityMathReference;
 public class DepthBuffToWorldPosDemo : PostProcess
 {
 	private new Camera camera;
-	private new Transform transform;
 
 	private void Start()
 	{
 		camera = GetComponent<Camera>();
-		transform = GetComponent<Transform>();
 	}
 
 	protected override void OnRenderImage(RenderTexture source, RenderTexture destination)

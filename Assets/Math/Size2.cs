@@ -150,8 +150,6 @@ namespace UnityMathReference
 
 		public Size2 FitWithinFrame(Size2 frame)
 		{
-			float frameSlope = frame.width / (float)frame.height;
-			float objSlope = this.width / (float)this.height;
 			Size2 size;
 			float scale = FitWithinFrameScale(frame);
 			size.width = (int)(this.width * scale);
