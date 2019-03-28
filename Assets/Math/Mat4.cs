@@ -598,4 +598,20 @@ namespace UnityMathReference
 		}
 		#endregion
 	}
+
+	#if MATH_UNITY_HELPER
+	public static class Mat4Ext
+	{
+		public static Mat4 ToMat4(this UnityEngine.Matrix4x4 self)
+		{
+			return new Mat4
+			(
+				new Vec4(self.m00, self.m01, self.m02, self.m03),
+				new Vec4(self.m10, self.m11, self.m12, self.m13),
+				new Vec4(self.m20, self.m21, self.m22, self.m23),
+				new Vec4(self.m30, self.m31, self.m32, self.m33)
+			);
+		}
+	}
+	#endif
 }

@@ -9,6 +9,20 @@ namespace UnityMathReference
 		public Vec3 x, y;
 		#endregion
 
+		#region Constructors
+		public Mat2x3(float value)
+		{
+			x = new Vec3(value);
+			y = new Vec3(value);
+		}
+
+		public Mat2x3(Vec3 x, Vec3 y)
+		{
+			this.x = x;
+			this.y = y;
+		}
+		#endregion
+
 		#region Operators
 		// +
 		public static Mat2x3 operator+(Mat2x3 p1, Mat2x3 p2)
@@ -210,4 +224,18 @@ namespace UnityMathReference
         }
 		#endregion
 	}
+
+	#if MATH_UNITY_HELPER
+	public static class Mat2x3Ext
+	{
+		public static Mat2x3 ToMat2x3(this UnityEngine.Matrix4x4 self)
+		{
+			return new Mat2x3
+			(
+				new Vec3(self.m00, self.m01, self.m02),
+				new Vec3(self.m10, self.m11, self.m12)
+			);
+		}
+	}
+	#endif
 }

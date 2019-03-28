@@ -576,4 +576,19 @@ namespace UnityMathReference
 		}
 		#endregion
 	}
+
+	#if MATH_UNITY_HELPER
+	public static class Mat3Ext
+	{
+		public static Mat3 ToMat3(this UnityEngine.Matrix4x4 self)
+		{
+			return new Mat3
+			(
+				new Vec3(self.m00, self.m01, self.m02),
+				new Vec3(self.m10, self.m11, self.m12),
+				new Vec3(self.m20, self.m21, self.m22)
+			);
+		}
+	}
+	#endif
 }

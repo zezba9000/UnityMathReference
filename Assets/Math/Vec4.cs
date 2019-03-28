@@ -67,7 +67,7 @@ namespace UnityMathReference
 			this.w = w;
 		}
 
-		#if REIGN_UNITY_HELPER
+		#if MATH_UNITY_HELPER
 		public static implicit operator Vec4(UnityEngine.Vector4 vec)
 		{
 			return new Vec4(vec.x, vec.y, vec.z, vec.w);
@@ -549,4 +549,14 @@ namespace UnityMathReference
 		}
 		#endregion
 	}
+
+	#if MATH_UNITY_HELPER
+	public static class Vec4Ext
+	{
+		public static Vec4 ToVec4(this UnityEngine.Vector4 self)
+		{
+			return new Vec4(self.x, self.y, self.z, self.w);
+		}
+	}
+	#endif
 }

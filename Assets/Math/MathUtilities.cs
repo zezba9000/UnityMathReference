@@ -109,7 +109,7 @@ namespace UnityMathReference
 		#endregion
 
 		#region Extention Methods
-		#if REIGN_UNITY_HELPER
+		#if MATH_UNITY_HELPER
 		public static UnityEngine.Vector2[] ToVector2(this Vec2[] vectors)
 		{
 			var result = new UnityEngine.Vector2[vectors.Length];

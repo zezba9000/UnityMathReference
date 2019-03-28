@@ -32,7 +32,7 @@ namespace UnityMathReference
 			this.z = z;
 		}
 
-		#if REIGN_UNITY_HELPER
+		#if MATH_UNITY_HELPER
 		public static implicit operator Vec3(UnityEngine.Vector3 vec)
 		{
 			return new Vec3(vec.x, vec.y, vec.z);
@@ -225,7 +225,7 @@ namespace UnityMathReference
 			return new Vec2(x, y);
 		}
 
-		#if REIGN_UNITY_HELPER
+		#if MATH_UNITY_HELPER
 		public UnityEngine.Vector3 ToVector3()
 		{
 			return new UnityEngine.Vector3(x, y, z);
@@ -514,38 +514,94 @@ namespace UnityMathReference
 			return this * refractionIndex + normal * (refractionIndex * cosI - cosT);
 		}
 
-		public Vec3 InersectNormal(Vec3 normal)
+		public Vec3 IntersectNormal(Vec3 normal)
 		{
 			return (normal * this.Dot(normal));
 		}
 
-		public Vec3 InersectRay(Vec3 rayOrigin, Vec3 rayDirection)
+		public Vec3 IntersectRay(Vec3 rayOrigin, Vec3 rayDirection)
 		{
 			return (rayDirection * (this-rayOrigin).Dot(rayDirection)) + rayOrigin;
 		}
 
-		public Vec3 InersectLine(Line3 line)
+		public Vec3 IntersectLine(Line3 line)
 		{
 			Vec3 pointOffset = (this-line.point1), vector = (line.point2-line.point1).Normalize();
 			return (vector * pointOffset.Dot(vector)) + line.point1;
 		}
 
-		public Vec3 InersectPlane(Vec3 planeNormal)
+		public Vec3 IntersectPlane(Vec3 planeNormal)
 		{
 			return this - (planeNormal * this.Dot(planeNormal));
 		}
 
-		public Vec3 InersectPlane(Vec3 planeNormal, Vec3 planeLocation)
+		public Vec3 IntersectPlane(Vec3 planeNormal, Vec3 planeLocation)
 		{
 			return this - (planeNormal * (this-planeLocation).Dot(planeNormal));
 		}
 
-		/*public bool InersectTriangle(out Vector3f pInersectPoint, Vector3f pPolygonPoint1, Vector3f pPolygonPoint2, Vector3f pPolygonPoint3, Vector3f pPolygonNormal, Bound3D pPolygonBoundingBox, Vector3f pPoint)
+		/// <summary>
+		/// Barycentric Technique
+		/// </summary>
+		public bool Within(Vec3 trianglePoint1, Vec3 trianglePoint2, Vec3 trianglePoint3)
 		{
-			pInersectPoint = pPoint.InersectPlane(pPolygonNormal, pPolygonPoint1);
-			if (pInersectPoint.WithinTriangle(pPolygonBoundingBox) == false) return false;
-			return Within(pPolygonPoint1, pPolygonPoint2, pPolygonPoint3);
-		}*/
+			// Compute vectors        
+			var v0 = trianglePoint3 - trianglePoint1;
+			var v1 = trianglePoint2 - trianglePoint1;
+			var v2 = this - trianglePoint1;
+
+			// Compute dot products
+			float dot00 = v0.Dot(v0);
+			float dot01 = v0.Dot(v1);
+			float dot02 = v0.Dot(v2);
+			float dot11 = v1.Dot(v1);
+			float dot12 = v1.Dot(v2);
+
+			// Compute barycentric coordinates
+			float invDenom = 1 / (dot00 * dot11 - dot01 * dot01);
+			float u = (dot11 * dot02 - dot01 * dot12) * invDenom;
+			float v = (dot00 * dot12 - dot01 * dot02) * invDenom;
+
+			// Check if point is in triangle
+			return (u >= 0) && (v >= 0) && (u + v < 1);
+		}
+
+		public bool Within(Triangle3 triangle)
+		{
+			return Within(triangle.point1, triangle.point2, triangle.point3);
+		}
+
+		public bool IntersectTriangle(Vec3 trianglePoint1, Vec3 trianglePoint2, Vec3 trianglePoint3, Vec3 triangleNormal, out Vec3 intersectionPoint)
+		{
+			intersectionPoint = this.IntersectPlane(triangleNormal, trianglePoint1);
+			return intersectionPoint.Within(trianglePoint1, trianglePoint2, trianglePoint3);
+		}
+
+		public bool IntersectTriangle(Triangle3 triangle, Vec3 triangleNormal, out Vec3 intersectionPoint)
+		{
+			return IntersectTriangle(triangle.point1, triangle.point2, triangle.point3, triangleNormal, out intersectionPoint);
+		}
+
+		public bool IntersectTriangle(Triangle3 triangle, out Vec3 intersectionPoint)
+		{
+			return IntersectTriangle(triangle, triangle.Normal(), out intersectionPoint);
+		}
+
+		public bool IntersectRectangle(Vec3 rectCenter, Quat rectRotation, Vec2 rectScale, out Vec3 intersectionPoint)
+		{
+			var pos = this - rectCenter;
+			pos = pos.Transform(rectRotation.Inverse());
+			rectScale *= .5f;
+			if (pos.x >= -rectScale.x && pos.x <= rectScale.x && pos.y >= -rectScale.y && pos.y <= rectScale.y)
+			{
+				pos.z = 0;
+				intersectionPoint = pos.Transform(rectRotation) + rectCenter;
+				return true;
+			}
+
+			intersectionPoint = zero;
+			return false;
+		}
 
 		public float Angle(Vec3 vector)
 		{
@@ -585,4 +641,14 @@ namespace UnityMathReference
 		}
 		#endregion
 	}
+
+	#if MATH_UNITY_HELPER
+	public static class Vec3Ext
+	{
+		public static Vec3 ToVec3(this UnityEngine.Vector3 self)
+		{
+			return new Vec3(self.x, self.y, self.z);
+		}
+	}
+	#endif
 }

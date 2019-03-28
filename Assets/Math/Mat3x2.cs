@@ -9,6 +9,22 @@ namespace UnityMathReference
 		public Vec2 x, y, z;
 		#endregion
 
+		#region Constructors
+		public Mat3x2(float value)
+		{
+			x = new Vec2(value);
+			y = new Vec2(value);
+			z = new Vec2(value);
+		}
+
+		public Mat3x2(Vec2 x, Vec2 y, Vec2 z)
+		{
+			this.x = x;
+			this.y = y;
+			this.z = z;
+		}
+		#endregion
+
 		#region Operators
 		// +
 		public static Mat3x2 operator+(Mat3x2 p1, Mat3x2 p2)
@@ -198,7 +214,7 @@ namespace UnityMathReference
 		#endregion
 
 		#region Methods
-		public Mat2x3 transpose(Mat3x2 matrix)
+		public Mat2x3 Transpose(Mat3x2 matrix)
         {
 			Mat2x3 result;
             result.x.x = matrix.x.x;
@@ -212,4 +228,19 @@ namespace UnityMathReference
         }
 		#endregion
 	}
+
+	#if MATH_UNITY_HELPER
+	public static class Mat3x2Ext
+	{
+		public static Mat3x2 ToMat3x2(this UnityEngine.Matrix4x4 self)
+		{
+			return new Mat3x2
+			(
+				new Vec2(self.m00, self.m01),
+				new Vec2(self.m10, self.m11),
+				new Vec2(self.m20, self.m21)
+			);
+		}
+	}
+	#endif
 }

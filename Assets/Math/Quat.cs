@@ -454,4 +454,14 @@ namespace UnityMathReference
 		}
 		#endregion
 	}
+
+	#if MATH_UNITY_HELPER
+	public static class QuatExt
+	{
+		public static Quat ToQuat(this UnityEngine.Quaternion self)
+		{
+			return new Quat(self.x, self.y, self.z, self.w);
+		}
+	}
+	#endif
 }
