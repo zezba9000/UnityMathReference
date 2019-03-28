@@ -558,9 +558,9 @@ namespace UnityMathReference
 			float dot12 = v1.Dot(v2);
 
 			// Compute barycentric coordinates
-			float invDenom = 1 / (dot00 * dot11 - dot01 * dot01);
-			float u = (dot11 * dot02 - dot01 * dot12) * invDenom;
-			float v = (dot00 * dot12 - dot01 * dot02) * invDenom;
+			float invDenom = 1 / ((dot00 * dot11) - (dot01 * dot01));
+			float u = ((dot11 * dot02) - (dot01 * dot12)) * invDenom;
+			float v = ((dot00 * dot12) - (dot01 * dot02)) * invDenom;
 
 			// Check if point is in triangle
 			return (u >= 0) && (v >= 0) && (u + v < 1);

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityMathReference;
 
-public class IntersectTriangleDemo : MonoBehaviour
+public class PointIntersectTriangleDemo : MonoBehaviour
 {
 	public Material triangleMaterial;
 	public Transform pointTransform;
