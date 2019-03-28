@@ -72,7 +72,23 @@ namespace UnityMathReference
 			return false;
 		}
 
-		public bool Intersects(Bound3 boundingBox, out float result)
+		public bool IntersectTriangle(Vec3 trianglePoint1, Vec3 trianglePoint2, Vec3 trianglePoint3, Vec3 triangleNormal, out Vec3 intersectionPoint)
+		{
+			if (!this.IntersectPlane(triangleNormal, trianglePoint1, out intersectionPoint)) return false;
+			return intersectionPoint.WithinTriangle(trianglePoint1, trianglePoint2, trianglePoint3);
+		}
+
+		public bool IntersectTriangle(Triangle3 triangle, Vec3 triangleNormal, out Vec3 intersectionPoint)
+		{
+			return IntersectTriangle(triangle.point1, triangle.point2, triangle.point3, triangleNormal, out intersectionPoint);
+		}
+
+		public bool IntersectTriangle(Triangle3 triangle, out Vec3 intersectionPoint)
+		{
+			return IntersectTriangle(triangle, triangle.Normal(), out intersectionPoint);
+		}
+
+		public bool IntersectsBounds(Bound3 boundingBox, out float result)
         {
 			// X
             if (Math.Abs(direction.x) < MathUtilities.epsilon && (origin.x < boundingBox.min.x || origin.x > boundingBox.max.x))
@@ -157,7 +173,7 @@ namespace UnityMathReference
 			return true;
         }
 
-		public bool IntersectRaySphere(Vec3 sphereCenter, float radius, out Vec3 point1, out Vec3 point2, out Vec3 normal1, out Vec3 normal2)
+		public bool IntersectRaySphere(Vec3 sphereCenter, float radius, out Vec3 point1, out Vec3 point2)
 		{
 			Vec3 d = origin - sphereCenter;
 			float a = direction.Dot(direction);
@@ -169,22 +185,32 @@ namespace UnityMathReference
 			{
 				point1 = origin;
 				point2 = origin;
-				normal1 = Vec3.zero;
-				normal2 = Vec3.zero;
 				return false;
 			}
-	
+
 			float sqrtDisc = (float)Math.Sqrt(disc);
 			float invA = 1.0f / a;
 			float t1 = (-b - sqrtDisc) * invA;
 			float t2 = (-b + sqrtDisc) * invA;
-	
-			float invRadius = 1.0f / radius;
+			
 			point1 = origin + t1 * direction;
 			point2 = origin + t2 * direction;
+
+			return true;
+		}
+
+		public bool IntersectRaySphere(Vec3 sphereCenter, float radius, out Vec3 point1, out Vec3 point2, out Vec3 normal1, out Vec3 normal2)
+		{
+			if (!IntersectRaySphere(sphereCenter, radius, out point1, out point2))
+			{
+				normal1 = Vec3.zero;
+				normal2 = Vec3.zero;
+				return false;
+			}
+
+			float invRadius = 1.0f / radius;
 			normal1 = (point1 - sphereCenter) * invRadius;
 			normal2 = (point2 - sphereCenter) * invRadius;
-	
 			return true;
 		}
 		#endregion

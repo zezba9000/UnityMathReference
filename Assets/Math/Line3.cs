@@ -28,7 +28,7 @@ namespace UnityMathReference
 			return (point1 - point2).Length();
 		}
 
-		public Vec3 IntersectPlane(Vec3 planeNormal, Vec3 planeLocation)
+		/*public Vec3 IntersectPlane(Vec3 planeNormal, Vec3 planeLocation)
 		{
 			float dot = (-(planeNormal.x*planeLocation.x) - (planeNormal.y*planeLocation.y) - (planeNormal.z*planeLocation.z));
 			float dot3 = (planeNormal.x*(point2.x-point1.x)) + (planeNormal.y*(point2.y-point1.y)) + (planeNormal.z*(point2.z-point1.z));
@@ -42,7 +42,7 @@ namespace UnityMathReference
 			float dot3 = (planeNormal.x*(line.point2.x-line.point1.x)) + (planeNormal.y*(line.point2.y-line.point1.y)) + (planeNormal.z*(line.point2.z-line.point1.z));
 			float dot2 = -((dot + (planeNormal.x*line.point1.x) + (planeNormal.y*line.point1.y) + (planeNormal.z*line.point1.z)) / dot3);
 			result = (line.point1 + (dot2*(line.point2-line.point1)));
-		}
+		}*/
 
 		//public bool IntersectTriangle(out Vector3f pInersectPoint, Vector3f pPolygonPoint1, Vector3f pPolygonPoint2, Vector3f pPolygonPoint3, Vector3f pPolygonNormal, Bound3D pPolygonBoundingBox, Line3f pLine)
 		//{
@@ -51,7 +51,7 @@ namespace UnityMathReference
 		//    return Within(pPolygonPoint1, pPolygonPoint2, pPolygonPoint3);
 		//}
 
-		public Line3 Intersect(Line3 line)
+		public Line3 IntersectLine(Line3 line)
 		{
 		   Vec3 vector = (point1 - line.point1), vector2 = (line.point2 - line.point1), vector3 = (point2 - point1);
 		   float dot1 = vector.Dot(vector2);

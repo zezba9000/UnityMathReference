@@ -543,7 +543,7 @@ namespace UnityMathReference
 		/// <summary>
 		/// Barycentric Technique
 		/// </summary>
-		public bool Within(Vec3 trianglePoint1, Vec3 trianglePoint2, Vec3 trianglePoint3)
+		public bool WithinTriangle(Vec3 trianglePoint1, Vec3 trianglePoint2, Vec3 trianglePoint3)
 		{
 			// Compute vectors        
 			var v0 = trianglePoint3 - trianglePoint1;
@@ -566,15 +566,15 @@ namespace UnityMathReference
 			return (u >= 0) && (v >= 0) && (u + v < 1);
 		}
 
-		public bool Within(Triangle3 triangle)
+		public bool WithinTriangle(Triangle3 triangle)
 		{
-			return Within(triangle.point1, triangle.point2, triangle.point3);
+			return WithinTriangle(triangle.point1, triangle.point2, triangle.point3);
 		}
 
 		public bool IntersectTriangle(Vec3 trianglePoint1, Vec3 trianglePoint2, Vec3 trianglePoint3, Vec3 triangleNormal, out Vec3 intersectionPoint)
 		{
 			intersectionPoint = this.IntersectPlane(triangleNormal, trianglePoint1);
-			return intersectionPoint.Within(trianglePoint1, trianglePoint2, trianglePoint3);
+			return intersectionPoint.WithinTriangle(trianglePoint1, trianglePoint2, trianglePoint3);
 		}
 
 		public bool IntersectTriangle(Triangle3 triangle, Vec3 triangleNormal, out Vec3 intersectionPoint)
