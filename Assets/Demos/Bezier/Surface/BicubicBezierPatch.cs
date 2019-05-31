@@ -183,7 +183,7 @@ class BicubicBezierPatch
 
 		var n = dpxMin.Cross(dpyMin);
 		var n2 = dpxMag.Cross(dpyMag);
-		normal = ((n + n2) * .5f).Normalize();
+		normal = (n + n2).Normalize();
 		
 		return p;
 	}
