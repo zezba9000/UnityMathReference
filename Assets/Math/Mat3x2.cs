@@ -7,6 +7,8 @@ namespace UnityMathReference
 	{
 		#region Properties
 		public Vec2 x, y, z;
+
+		public static readonly Mat3x2 zero = new Mat3x2();
 		#endregion
 
 		#region Constructors

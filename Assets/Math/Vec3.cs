@@ -8,6 +8,16 @@ namespace UnityMathReference
 	{
 		#region Properties
 		public float x, y, z;
+
+		public static readonly Vec3 one = new Vec3(1);
+		public static readonly Vec3 minusOne = new Vec3(-1);
+		public static readonly Vec3 zero = new Vec3();
+		public static readonly Vec3 right = new Vec3(1, 0, 0);
+		public static readonly Vec3 left = new Vec3(-1, 0, 0);
+		public static readonly Vec3 up = new Vec3(0, 1, 0);
+		public static readonly Vec3 down = new Vec3(0, -1, 0);
+		public static readonly Vec3 forward = new Vec3(0, 0, 1);
+		public static readonly Vec3 backward = new Vec3(0, 0, -1);
 		#endregion
 
 		#region Constructors
@@ -38,16 +48,6 @@ namespace UnityMathReference
 			return new Vec3(vec.x, vec.y, vec.z);
 		}
 		#endif
-
-		public static readonly Vec3 one = new Vec3(1);
-		public static readonly Vec3 minusOne = new Vec3(-1);
-		public static readonly Vec3 zero = new Vec3(0);
-		public static readonly Vec3 right = new Vec3(1, 0, 0);
-		public static readonly Vec3 left = new Vec3(-1, 0, 0);
-		public static readonly Vec3 up = new Vec3(0, 1, 0);
-		public static readonly Vec3 down = new Vec3(0, -1, 0);
-		public static readonly Vec3 forward = new Vec3(0, 0, 1);
-		public static readonly Vec3 backward = new Vec3(0, 0, -1);
 		#endregion
 
 		#region Operators

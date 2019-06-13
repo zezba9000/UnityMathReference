@@ -9,6 +9,8 @@ namespace UnityMathReference
 		#region Properties
 		public Vec3 min, max;
 
+		public static readonly Bound3 zero = new Bound3();
+
 		public float left
 		{
 			get {return min.x;}

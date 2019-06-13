@@ -9,29 +9,17 @@ namespace UnityMathReference
 		#region Properties
 		public float x, y, z, w;
 
-		public float R
-		{
-			get {return x;}
-			set {x = value;}
-		}
-
-		public float G
-		{
-			get {return y;}
-			set {y = value;}
-		}
-
-		public float B
-		{
-			get {return z;}
-			set {z = value;}
-		}
-
-		public float A
-		{
-			get {return w;}
-			set {w = value;}
-		}
+		public static readonly Vec4 one = new Vec4(1);
+		public static readonly Vec4 minusOne = new Vec4(-1);
+		public static readonly Vec4 zero = new Vec4();
+		public static readonly Vec4 right = new Vec4(1, 0, 0, 0);
+		public static readonly Vec4 left = new Vec4(-1, 0, 0, 0);
+		public static readonly Vec4 up = new Vec4(0, 1, 0, 0);
+		public static readonly Vec4 down = new Vec4(0, -1, 0, 0);
+		public static readonly Vec4 forward = new Vec4(0, 0, 1, 0);
+		public static readonly Vec4 backward = new Vec4(0, 0, -1, 0);
+		public static readonly Vec4 high = new Vec4(0, 0, 0, 1);
+		public static readonly Vec4 low = new Vec4(0, 0, 0, -1);
 		#endregion
 
 		#region Constructors
@@ -73,18 +61,6 @@ namespace UnityMathReference
 			return new Vec4(vec.x, vec.y, vec.z, vec.w);
 		}
 		#endif
-
-		public static readonly Vec4 one = new Vec4(1);
-		public static readonly Vec4 minusOne = new Vec4(-1);
-		public static readonly Vec4 zero = new Vec4(0);
-		public static readonly Vec4 right = new Vec4(1, 0, 0, 0);
-		public static readonly Vec4 left = new Vec4(-1, 0, 0, 0);
-		public static readonly Vec4 up = new Vec4(0, 1, 0, 0);
-		public static readonly Vec4 down = new Vec4(0, -1, 0, 0);
-		public static readonly Vec4 forward = new Vec4(0, 0, 1, 0);
-		public static readonly Vec4 backward = new Vec4(0, 0, -1, 0);
-		public static readonly Vec4 high = new Vec4(0, 0, 0, 1);
-		public static readonly Vec4 low = new Vec4(0, 0, 0, -1);
 		#endregion
 
 		#region Operators

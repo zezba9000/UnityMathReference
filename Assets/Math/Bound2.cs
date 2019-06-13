@@ -9,6 +9,8 @@ namespace UnityMathReference
 		#region Properties
 		public Vec2 min, max;
 
+		public static readonly Bound3 zero = new Bound3();
+
 		public float left
 		{
 			get {return min.x;}
@@ -32,8 +34,6 @@ namespace UnityMathReference
 			get {return max.y;}
 			set {max.y = value;}
 		}
-
-		public static readonly Bound2 zero = new Bound2();
 		#endregion
 
 		#region Constructors

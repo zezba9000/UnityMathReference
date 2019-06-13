@@ -8,6 +8,14 @@ namespace UnityMathReference
 	{
 		#region Properties
 		public float x, y;
+
+		public static readonly Vec2 one = new Vec2(1);
+		public static readonly Vec2 minusOne = new Vec2(-1);
+		public static readonly Vec2 zero = new Vec2();
+		public static readonly Vec2 right = new Vec2(1, 0);
+		public static readonly Vec2 left = new Vec2(-1, 0);
+		public static readonly Vec2 up = new Vec2(0, 1);
+		public static readonly Vec2 down = new Vec2(0, -1);
 		#endregion
 
 		#region Constructors
@@ -29,14 +37,6 @@ namespace UnityMathReference
 			return new Vec2(vec.x, vec.y);
 		}
 		#endif
-
-		public static readonly Vec2 one = new Vec2(1);
-		public static readonly Vec2 minusOne = new Vec2(-1);
-		public static readonly Vec2 zero = new Vec2(0);
-		public static readonly Vec2 right = new Vec2(1, 0);
-		public static readonly Vec2 left = new Vec2(-1, 0);
-		public static readonly Vec2 up = new Vec2(0, 1);
-		public static readonly Vec2 down = new Vec2(0, -1);
 		#endregion
 
 		#region Operators

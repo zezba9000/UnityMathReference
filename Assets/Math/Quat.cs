@@ -8,6 +8,8 @@ namespace UnityMathReference
 	{
 		#region Properties
 		public float x, y, z, w;
+
+		public static readonly Quat zero = new Quat();
 		#endregion
 
 		#region Constructors

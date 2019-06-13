@@ -7,6 +7,8 @@ namespace UnityMathReference
 	{
 		#region Properties
 		public int width, height, depth;
+
+		public static readonly Size3 zero = new Size3();
 		#endregion
 
 		#region Constructors

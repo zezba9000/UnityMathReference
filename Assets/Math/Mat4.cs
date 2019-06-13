@@ -18,6 +18,8 @@ namespace UnityMathReference
 		public Vec4 high {get{return w;}}
 		public Vec4 low {get{return -w;}}
 
+		public static readonly Mat4 zero = new Mat4();
+
 		public Vec3 translation
 		{
 			get{return new Vec3(x.w, y.w, z.w);}

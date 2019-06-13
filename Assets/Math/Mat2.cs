@@ -12,6 +12,8 @@ namespace UnityMathReference
 		public Vec2 left {get{return -x;}}
 		public Vec2 up {get{return y;}}
 		public Vec2 down {get{return -y;}}
+
+		public static readonly Mat2 zero = new Mat2();
 		#endregion
 
 		#region Constructors

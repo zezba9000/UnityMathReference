@@ -7,6 +7,8 @@ namespace UnityMathReference
 	{
 		#region Fields
 		public int width, height;
+
+		public static readonly Size2 zero = new Size2();
 		#endregion
 
 		#region Constructors

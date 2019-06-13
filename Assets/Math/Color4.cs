@@ -8,6 +8,8 @@ namespace UnityMathReference
 		#region Properties
 		public byte r, g, b, a;
 
+		public static readonly Color4 black = new Color4();
+
 		public int Value
 		{
 			get
@@ -28,14 +30,6 @@ namespace UnityMathReference
 		}
 		#endregion
 
-		#region Operators
-		// convert
-		public Vec4 ToVec4()
-		{
-			return new Vec4(r/255f, g/255f, b/255f, a/255f);
-		}
-		#endregion
-
 		#region Constructors
 		public Color4(byte r, byte g, byte b, byte a)
 		{
@@ -51,6 +45,14 @@ namespace UnityMathReference
 			g = (byte)((color & 0x0000FF00) >> 8);
 			b = (byte)((color & 0x00FF0000) >> 16);
 			a = (byte)((color & 0xFF000000) >> 24);
+		}
+		#endregion
+
+		#region Operators
+		// convert
+		public Vec4 ToVec4()
+		{
+			return new Vec4(r/255f, g/255f, b/255f, a/255f);
 		}
 		#endregion
 

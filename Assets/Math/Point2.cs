@@ -7,6 +7,14 @@ namespace UnityMathReference
 	{
 		#region Properties
 		public int x, y;
+
+		public static readonly Point2 one = new Point2(1);
+		public static readonly Point2 minusOne = new Point2(-1);
+		public static readonly Point2 zero = new Point2(0);
+		public static readonly Point2 right = new Point2(1, 0);
+		public static readonly Point2 left = new Point2(-1, 0);
+		public static readonly Point2 up = new Point2(0, 1);
+		public static readonly Point2 down = new Point2(0, -1);
 		#endregion
 
 		#region Constructors
@@ -21,14 +29,6 @@ namespace UnityMathReference
 			x = value;
 			y = value;
 		}
-
-		public static readonly Point2 one = new Point2(1);
-		public static readonly Point2 minusOne = new Point2(-1);
-		public static readonly Point2 zero = new Point2(0);
-		public static readonly Point2 right = new Point2(1, 0);
-		public static readonly Point2 left = new Point2(-1, 0);
-		public static readonly Point2 up = new Point2(0, 1);
-		public static readonly Point2 down = new Point2(0, -1);
 		#endregion
 
 		#region Operators

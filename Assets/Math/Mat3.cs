@@ -15,6 +15,8 @@ namespace UnityMathReference
 		public Vec3 down {get{return -y;}}
 		public Vec3 front {get{return z;}}
 		public Vec3 back {get{return -z;}}
+
+		public static readonly Mat3 zero = new Mat3();
 		#endregion
 
 		#region Constructors
