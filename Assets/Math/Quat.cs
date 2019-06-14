@@ -295,7 +295,10 @@ namespace UnityMathReference
 		public static bool operator!=(Quat p1, Quat p2) {return (p1.x!=p2.x || p1.y!=p2.y || p1.z!=p2.z || p1.w!=p2.w);}
 
 		// convert
-		public Vec4 ToVec4() {return new Vec4(x, y, z, w);}
+		public Vec4 ToVec4()
+		{
+			return new Vec4(x, y, z, w);
+		}
 		#endregion
 
 		#region Methods

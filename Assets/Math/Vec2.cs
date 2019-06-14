@@ -30,13 +30,6 @@ namespace UnityMathReference
 			this.x = x;
 			this.y = y;
 		}
-
-		#if MATH_UNITY_HELPER
-		public static implicit operator Vec2(UnityEngine.Vector2 vec)
-		{
-			return new Vec2(vec.x, vec.y);
-		}
-		#endif
 		#endregion
 
 		#region Operators
@@ -140,6 +133,18 @@ namespace UnityMathReference
 		public static bool operator!=(Vec2 p1, Vec2 p2) {return (p1.x!=p2.x || p1.y!=p2.y);}
 
 		// convert
+		#if MATH_UNITY_HELPER
+		public static implicit operator Vec2(UnityEngine.Vector2 vec)
+		{
+			return new Vec2(vec.x, vec.y);
+		}
+
+		public UnityEngine.Vector2 ToVector2()
+		{
+			return new UnityEngine.Vector2(x, y);
+		}
+		#endif
+
 		public Point2 ToPoint2()
 		{
 			return new Point2((int)x, (int)y);
@@ -149,13 +154,6 @@ namespace UnityMathReference
 		{
 			return new Size2((int)x, (int)y);
 		}
-
-		#if MATH_UNITY_HELPER
-		public UnityEngine.Vector2 ToVector2()
-		{
-			return new UnityEngine.Vector2(x, y);
-		}
-		#endif
 		#endregion
 
 		#region Methods

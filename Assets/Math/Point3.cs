@@ -213,9 +213,19 @@ namespace UnityMathReference
 		public static bool operator!=(Point3 p1, Point3 p2) {return (p1.x!=p2.x || p1.y!=p2.y || p1.z!=p2.z);}
 
 		// convert
-		public Point2 ToVec2()
+		public Point2 ToPoint2()
 		{
 			return new Point2(x, y);
+		}
+
+		public Vec2 ToVec2()
+		{
+			return new Vec2(x, y);
+		}
+
+		public Vec3 ToVec3()
+		{
+			return new Vec3(x, y, z);
 		}
 		#endregion
 

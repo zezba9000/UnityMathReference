@@ -333,9 +333,38 @@ namespace UnityMathReference
 		public static bool operator!=(Mat4 p1, Mat4 p2) {return (p1.x!=p2.x || p1.y!=p2.y || p1.z!=p2.z || p1.w!=p2.w);}
 
 		// convert
+		#if MATH_UNITY_HELPER
+		public static implicit operator Mat4(UnityEngine.Matrix4x4 mat)
+		{
+			return new Mat4
+			(
+				new Vec4(mat.m00, mat.m01, mat.m02, mat.m03),
+				new Vec4(mat.m10, mat.m11, mat.m12, mat.m13),
+				new Vec4(mat.m20, mat.m21, mat.m22, mat.m23),
+				new Vec4(mat.m30, mat.m31, mat.m32, mat.m33)
+			);
+		}
+
+		public UnityEngine.Matrix4x4 ToMatrix4x4()
+		{
+			return new UnityEngine.Matrix4x4
+			(
+				new UnityEngine.Vector4(x.x, x.y, x.z, x.w),
+				new UnityEngine.Vector4(y.x, y.y, y.z, y.w),
+				new UnityEngine.Vector4(z.x, z.y, z.z, z.w),
+				new UnityEngine.Vector4(w.x, w.y, w.z, w.w)
+			);
+		}
+		#endif
+
+		public Mat2 ToMat2()
+		{
+			return new Mat2(x.ToVec2(), y.ToVec2());
+		}
+
 		public Mat3 ToMat3()
 		{
-			return new Mat3(x.ToVector3(), y.ToVector3(), z.ToVector3());
+			return new Mat3(x.ToVec3(), y.ToVec3(), z.ToVec3());
 		}
 		#endregion
 		

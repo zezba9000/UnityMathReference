@@ -350,6 +350,12 @@ namespace UnityMathReference
 		// ==
 		public static bool operator==(Mat3 p1, Mat3 p2) {return (p1.x==p2.x && p1.y==p2.y && p1.z==p2.z);}
 		public static bool operator!=(Mat3 p1, Mat3 p2) {return (p1.x!=p2.x || p1.y!=p2.y || p1.z!=p2.z);}
+
+		// convert
+		public Mat2 ToMat2()
+		{
+			return new Mat2(x.ToVec2(), y.ToVec2());
+		}
 		#endregion
 		
 		#region Methods
