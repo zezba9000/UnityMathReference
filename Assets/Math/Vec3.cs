@@ -47,170 +47,115 @@ namespace UnityMathReference
 		// +
 		public static Vec3 operator+(Vec3 p1, Vec3 p2)
 		{
-			p1.x += p2.x;
-			p1.y += p2.y;
-			p1.z += p2.z;
-			return p1;
+			return new Vec3(p1.x + p2.x, p1.y + p2.y, p1.z + p2.z);
 		}
 
 		public static Vec3 operator+(Vec3 p1, Vec2 p2)
 		{
-			p1.x += p2.x;
-			p1.y += p2.y;
-			return p1;
+			return new Vec3(p1.x + p2.x, p1.y + p2.y, p1.z);
 		}
 
 		public static Vec3 operator+(Vec2 p1, Vec3 p2)
 		{
-			p2.x = p1.x + p2.x;
-			p2.y = p1.y + p2.y;
-			return p2;
+			return new Vec3(p1.x + p2.x, p1.y + p2.y, p2.z);
 		}
 
 		public static Vec3 operator+(Vec3 p1, float p2)
 		{
-			p1.x += p2;
-			p1.y += p2;
-			p1.z += p2;
-			return p1;
+			return new Vec3(p1.x + p2, p1.y + p2, p1.z + p2);
 		}
 
 		public static Vec3 operator+(float p1, Vec3 p2)
 		{
-			p2.x = p1 + p2.x;
-			p2.y = p1 + p2.y;
-			p2.z = p1 + p2.z;
-			return p2;
+			return new Vec3(p1 + p2.x, p1 + p2.y, p1 + p2.z);
 		}
 
 		// -
 		public static Vec3 operator-(Vec3 p1, Vec3 p2)
 		{
-			p1.x -= p2.x;
-			p1.y -= p2.y;
-			p1.z -= p2.z;
-			return p1;
+			return new Vec3(p1.x - p2.x, p1.y - p2.y, p1.z - p2.z);
 		}
 
 		public static Vec3 operator-(Vec3 p1, Vec2 p2)
 		{
-			p1.x -= p2.x;
-			p1.y -= p2.y;
-			return p1;
+			return new Vec3(p1.x - p2.x, p1.x - p2.x, p1.z);
 		}
 
 		public static Vec3 operator-(Vec2 p1, Vec3 p2)
 		{
-			p2.x = p1.x - p2.x;
-			p2.y = p1.y - p2.y;
-			return p2;
+			return new Vec3(p1.x - p2.x, p1.x - p2.x, p2.z);
 		}
 
 		public static Vec3 operator-(Vec3 p1, float p2)
 		{
-			p1.x -= p2;
-			p1.y -= p2;
-			p1.z -= p2;
-			return p1;
+			return new Vec3(p1.x - p2, p1.y - p2, p1.z - p2);
 		}
 
 		public static Vec3 operator-(float p1, Vec3 p2)
 		{
-			p2.x = p1 - p2.x;
-			p2.y = p1 - p2.y;
-			p2.z = p1 - p2.z;
-			return p2;
+			return new Vec3(p1 - p2.x, p1 - p2.y, p1 - p2.z);
 		}
 
-		public static Vec3 operator-(Vec3 p2)
+		public static Vec3 operator-(Vec3 p1)
 		{
-			p2.x = -p2.x;
-			p2.y = -p2.y;
-			p2.z = -p2.z;
-			return p2;
+			return new Vec3(-p1.x, -p1.y, -p1.z);
 		}
 
 		// *
 		public static Vec3 operator*(Vec3 p1, Vec3 p2)
 		{
-			p1.x *= p2.x;
-			p1.y *= p2.y;
-			p1.z *= p2.z;
-			return p1;
+			return new Vec3(p1.x * p2.x, p1.y * p2.y, p1.z * p2.z);
 		}
 
 		public static Vec3 operator*(Vec3 p1, Vec2 p2)
 		{
-			p1.x *= p2.x;
-			p1.y *= p2.y;
-			return p1;
+			return new Vec3(p1.x * p2.x, p1.y * p2.y, p1.z);
 		}
 
 		public static Vec3 operator*(Vec2 p1, Vec3 p2)
 		{
-			p2.x = p1.x * p2.x;
-			p2.y = p1.y * p2.y;
-			return p2;
+			return new Vec3(p1.x * p2.x, p1.y * p2.y, p2.z);
 		}
 
 		public static Vec3 operator*(Vec3 p1, float p2)
 		{
-			p1.x *= p2;
-			p1.y *= p2;
-			p1.z *= p2;
-			return p1;
+			return new Vec3(p1.x * p2, p1.y * p2, p1.z * p2);
 		}
 
 		public static Vec3 operator*(float p1, Vec3 p2)
 		{
-			p2.x = p1 * p2.x;
-			p2.y = p1 * p2.y;
-			p2.z = p1 * p2.z;
-			return p2;
+			return new Vec3(p1 * p2.x, p1 * p2.y, p1 * p2.z);
 		}
 
 		// /
 		public static Vec3 operator/(Vec3 p1, Vec3 p2)
 		{
-			p1.x /= p2.x;
-			p1.y /= p2.y;
-			p1.z /= p2.z;
-			return p1;
+			return new Vec3(p1.x / p2.x, p1.y / p2.y, p1.z / p2.z);
 		}
 
 		public static Vec3 operator/(Vec3 p1, Vec2 p2)
 		{
-			p1.x /= p2.x;
-			p1.y /= p2.y;
-			return p1;
+			return new Vec3(p1.x / p2.x, p1.y / p2.y, p1.z);
 		}
 
 		public static Vec3 operator/(Vec2 p1, Vec3 p2)
 		{
-			p2.x = p1.x / p2.x;
-			p2.y = p1.y / p2.y;
-			return p2;
+			return new Vec3(p1.x / p2.x, p1.y / p2.y, p2.z);
 		}
 
 		public static Vec3 operator/(Vec3 p1, float p2)
 		{
-			p1.x /= p2;
-			p1.y /= p2;
-			p1.z /= p2;
-			return p1;
+			return new Vec3(p1.x / p2, p1.y / p2, p1.z / p2);
 		}
 
 		public static Vec3 operator/(float p1, Vec3 p2)
 		{
-			p2.x = p1 / p2.x;
-			p2.y = p1 / p2.y;
-			p2.z = p1 / p2.z;
-			return p2;
+			return new Vec3(p1 / p2.x, p1 / p2.y, p1 / p2.z);
 		}
 
 		// ==
-		public static bool operator==(Vec3 p1, Vec3 p2) {return (p1.x==p2.x && p1.y==p2.y && p1.z==p2.z);}
-		public static bool operator!=(Vec3 p1, Vec3 p2) {return (p1.x!=p2.x || p1.y!=p2.y || p1.z!=p2.z);}
+		public static bool operator==(Vec3 p1, Vec3 p2) {return p1.x==p2.x && p1.y==p2.y && p1.z==p2.z;}
+		public static bool operator!=(Vec3 p1, Vec3 p2) {return p1.x!=p2.x || p1.y!=p2.y || p1.z!=p2.z;}
 
 		// convert
 		#if MATH_UNITY_HELPER

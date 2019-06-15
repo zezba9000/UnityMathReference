@@ -138,199 +138,115 @@ namespace UnityMathReference
 		// +
 		public static Mat4 operator+(Mat4 p1, Mat4 p2)
 		{
-			p1.x += p2.x;
-			p1.y += p2.y;
-			p1.z += p2.z;
-			p1.w += p2.w;
-			return p1;
+			return new Mat4(p1.x + p2.x, p1.y + p2.y, p1.z + p2.z, p1.w + p2.w);
 		}
 
 		public static Mat4 operator+(Mat4 p1, Vec4 p2)
 		{
-			p1.x += p2;
-			p1.y += p2;
-			p1.z += p2;
-			p1.w += p2;
-			return p1;
+			return new Mat4(p1.x + p2, p1.y + p2, p1.z + p2, p1.w + p2);
 		}
 
 		public static Mat4 operator+(Vec4 p1, Mat4 p2)
 		{
-			p2.x = p1 + p2.x;
-			p2.y = p1 + p2.y;
-			p2.z = p1 + p2.z;
-			p2.w = p1 + p2.w;
-			return p2;
+			return new Mat4(p1 + p2.x, p1 + p2.y, p1 + p2.z, p1 + p2.w);
 		}
 
 		public static Mat4 operator+(Mat4 p1, float p2)
 		{
-			p1.x += p2;
-			p1.y += p2;
-			p1.z += p2;
-			p1.w += p2;
-			return p1;
+			return new Mat4(p1.x + p2, p1.y + p2, p1.z + p2, p1.w + p2);
 		}
 
 		public static Mat4 operator+(float p1, Mat4 p2)
 		{
-			p2.x = p1 + p2.x;
-			p2.y = p1 + p2.y;
-			p2.z = p1 + p2.z;
-			p2.w = p1 + p2.w;
-			return p2;
+			return new Mat4(p1 + p2.x, p1 + p2.y, p1 + p2.z, p1 + p2.w);
 		}
 
 		// -
 		public static Mat4 operator-(Mat4 p1, Mat4 p2)
 		{
-			p1.x -= p2.x;
-			p1.y -= p2.y;
-			p1.z -= p2.z;
-			p1.w -= p2.w;
-			return p1;
+			return new Mat4(p1.x - p2.x, p1.y - p2.y, p1.z - p2.z, p1.w - p2.w);
 		}
 
 		public static Mat4 operator-(Mat4 p1, Vec4 p2)
 		{
-			p1.x -= p2;
-			p1.y -= p2;
-			p1.z -= p2;
-			p1.w -= p2;
-			return p1;
+			return new Mat4(p1.x - p2, p1.y - p2, p1.z - p2, p1.w - p2);
 		}
 
 		public static Mat4 operator-(Vec4 p1, Mat4 p2)
 		{
-			p2.x = p1 - p2.x;
-			p2.y = p1 - p2.y;
-			p2.z = p1 - p2.z;
-			p2.w = p1 - p2.w;
-			return p2;
+			return new Mat4(p1 - p2.x, p1 - p2.y, p1 - p2.z, p1 - p2.w);
 		}
 
 		public static Mat4 operator-(Mat4 p1, float p2)
 		{
-			p1.x -= p2;
-			p1.y -= p2;
-			p1.z -= p2;
-			p1.w -= p2;
-			return p1;
+			return new Mat4(p1.x - p2, p1.y - p2, p1.z - p2, p1.w - p2);
 		}
 
 		public static Mat4 operator-(float p1, Mat4 p2)
 		{
-			p2.x = p1 - p2.x;
-			p2.y = p1 - p2.y;
-			p2.z = p1 - p2.z;
-			p2.w = p1 - p2.w;
-			return p2;
+			return new Mat4(p1 - p2.x, p1 - p2.y, p1 - p2.z, p1 - p2.w);
 		}
 
 		public static Mat4 operator-(Mat4 p2)
 		{
-			p2.x = -p2.x;
-			p2.y = -p2.y;
-			p2.z = -p2.z;
-			p2.w = -p2.w;
-			return p2;
+			return new Mat4(-p2.x, -p2.y, -p2.z, -p2.w);
 		}
 
 		// *
 		public static Mat4 operator*(Mat4 p1, Mat4 p2)
 		{
-			p1.x *= p2.x;
-			p1.y *= p2.y;
-			p1.z *= p2.z;
-			p1.w *= p2.w;
-			return p1;
+			return new Mat4(p1.x * p2.x, p1.y * p2.y, p1.z * p2.z, p1.w * p2.w);
 		}
 
 		public static Mat4 operator*(Mat4 p1, Vec4 p2)
 		{
-			p1.x *= p2;
-			p1.y *= p2;
-			p1.z *= p2;
-			p1.w *= p2;
-			return p1;
+			return new Mat4(p1.x * p2, p1.y * p2, p1.z * p2, p1.w * p2);
 		}
 
 		public static Mat4 operator*(Vec4 p1, Mat4 p2)
 		{
-			p2.x = p1 * p2.x;
-			p2.y = p1 * p2.y;
-			p2.z = p1 * p2.z;
-			p2.w = p1 * p2.w;
-			return p2;
+			return new Mat4(p1 * p2.x, p1 * p2.y, p1 * p2.z, p1 * p2.w);
 		}
 
 		public static Mat4 operator*(Mat4 p1, float p2)
 		{
-			p1.x *= p2;
-			p1.y *= p2;
-			p1.z *= p2;
-			p1.w *= p2;
-			return p1;
+			return new Mat4(p1.x * p2, p1.y * p2, p1.z * p2, p1.w * p2);
 		}
 
 		public static Mat4 operator*(float p1, Mat4 p2)
 		{
-			p2.x = p1 * p2.x;
-			p2.y = p1 * p2.y;
-			p2.z = p1 * p2.z;
-			p2.w = p1 * p2.w;
-			return p2;
+			return new Mat4(p1 * p2.x, p1 * p2.y, p1 * p2.z, p1 * p2.w);
 		}
 
 		// /
 		public static Mat4 operator/(Mat4 p1, Mat4 p2)
 		{
-			p1.x /= p2.x;
-			p1.y /= p2.y;
-			p1.z /= p2.z;
-			p1.w /= p2.w;
-			return p1;
+			return new Mat4(p1.x / p2.x, p1.y / p2.y, p1.z / p2.z, p1.w / p2.w);
 		}
 
 		public static Mat4 operator/(Mat4 p1, Vec4 p2)
 		{
-			p1.x /= p2;
-			p1.y /= p2;
-			p1.z /= p2;
-			p1.w /= p2;
-			return p1;
+			return new Mat4(p1.x / p2, p1.y / p2, p1.z / p2, p1.w / p2);
 		}
 
 		public static Mat4 operator/(Vec4 p1, Mat4 p2)
 		{
-			p2.x = p1 / p2.x;
-			p2.y = p1 / p2.y;
-			p2.z = p1 / p2.z;
-			p2.w = p1 / p2.w;
-			return p2;
+			return new Mat4(p1 / p2.x, p1 / p2.y, p1 / p2.z, p1 / p2.w);
 		}
 
 		public static Mat4 operator/(Mat4 p1, float p2)
 		{
-			p1.x /= p2;
-			p1.y /= p2;
-			p1.z /= p2;
-			p1.w /= p2;
-			return p1;
+			return new Mat4(p1.x / p2, p1.y / p2, p1.z / p2, p1.w / p2);
 		}
 
 		public static Mat4 operator/(float p1, Mat4 p2)
 		{
-			p2.x = p1 / p2.x;
-			p2.y = p1 / p2.y;
-			p2.z = p1 / p2.z;
-			p2.w = p1 / p2.w;
-			return p2;
+			return new Mat4(p1 / p2.x, p1 / p2.y, p1 / p2.z, p1 / p2.w);
 		}
 
 		// ==
-		public static bool operator==(Mat4 p1, Mat4 p2) {return (p1.x==p2.x && p1.y==p2.y && p1.z==p2.z && p1.w==p2.w);}
-		public static bool operator!=(Mat4 p1, Mat4 p2) {return (p1.x!=p2.x || p1.y!=p2.y || p1.z!=p2.z || p1.w!=p2.w);}
+		public static bool operator==(Mat4 p1, Mat4 p2) {return p1.x==p2.x && p1.y==p2.y && p1.z==p2.z && p1.w==p2.w;}
+		public static bool operator!=(Mat4 p1, Mat4 p2) {return p1.x!=p2.x || p1.y!=p2.y || p1.z!=p2.z || p1.w!=p2.w;}
 
 		// convert
 		#if MATH_UNITY_HELPER

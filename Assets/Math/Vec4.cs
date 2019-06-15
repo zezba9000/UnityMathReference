@@ -60,247 +60,155 @@ namespace UnityMathReference
 		// +
 		public static Vec4 operator+(Vec4 p1, Vec4 p2)
 		{
-			p1.x += p2.x;
-			p1.y += p2.y;
-			p1.z += p2.z;
-			p1.w += p2.w;
-			return p1;
+			return new Vec4(p1.x + p2.x, p1.y + p2.y, p1.z + p2.z, p1.w + p2.w);
 		}
 
 		public static Vec4 operator+(Vec4 p1, Vec3 p2)
 		{
-			p1.x += p2.x;
-			p1.y += p2.y;
-			p1.z += p2.z;
-			return p1;
+			return new Vec4(p1.x + p2.x, p1.y + p2.y, p1.z + p2.z, p1.w);
 		}
 
 		public static Vec4 operator+(Vec3 p1, Vec4 p2)
 		{
-			p2.x = p1.x + p2.x;
-			p2.y = p1.y + p2.y;
-			p2.z = p1.z + p2.z;
-			return p2;
+			return new Vec4(p1.x + p2.x, p1.y + p2.y, p1.z + p2.z, p2.w);
 		}
 
 		public static Vec4 operator+(Vec4 p1, Vec2 p2)
 		{
-			p1.x += p2.x;
-			p1.y += p2.y;
-			return p1;
+			return new Vec4(p1.x + p2.x, p1.y + p2.y, p1.z, p1.w);
 		}
 
 		public static Vec4 operator+(Vec2 p1, Vec4 p2)
 		{
-			p2.x = p1.x + p2.x;
-			p2.y = p1.y + p2.y;
-			return p2;
+			return new Vec4(p1.x + p2.x, p1.x + p2.x, p2.z, p2.w);
 		}
 
 		public static Vec4 operator+(Vec4 p1, float p2)
 		{
-			p1.x += p2;
-			p1.y += p2;
-			p1.z += p2;
-			p1.w += p2;
-			return p1;
+			return new Vec4(p1.x + p2, p1.y + p2, p1.z + p2, p1.w + p2);
 		}
 
 		public static Vec4 operator+(float p1, Vec4 p2)
 		{
-			p2.x = p1 + p2.x;
-			p2.y = p1 + p2.y;
-			p2.z = p1 + p2.z;
-			p2.w = p1 + p2.w;
-			return p2;
+			return new Vec4(p1 + p2.x, p1 + p2.y, p1 + p2.z, p1 + p2.w);
 		}
 
 		// -
 		public static Vec4 operator-(Vec4 p1, Vec4 p2)
 		{
-			p1.x -= p2.x;
-			p1.y -= p2.y;
-			p1.z -= p2.z;
-			p1.w -= p2.w;
-			return p1;
+			return new Vec4(p1.x - p2.x, p1.y - p2.y, p1.z - p2.z, p1.w - p2.w);
 		}
 
 		public static Vec4 operator-(Vec4 p1, Vec3 p2)
 		{
-			p1.x -= p2.x;
-			p1.y -= p2.y;
-			p1.z -= p2.z;
-			return p1;
+			return new Vec4(p1.x - p2.x, p1.y - p2.y, p1.z - p2.z, p1.w);
 		}
 
 		public static Vec4 operator-(Vec3 p1, Vec4 p2)
 		{
-			p2.x = p1.x - p2.x;
-			p2.y = p1.y - p2.y;
-			p2.z = p1.z - p2.z;
-			return p2;
+			return new Vec4(p1.x - p2.x, p1.y - p2.y, p1.z - p2.z, p2.w);
 		}
 
 		public static Vec4 operator-(Vec4 p1, Vec2 p2)
 		{
-			p1.x -= p2.x;
-			p1.y -= p2.y;
-			return p1;
+			return new Vec4(p1.x - p2.x, p1.y - p2.y, p1.z, p1.w);
 		}
 
 		public static Vec4 operator-(Vec2 p1, Vec4 p2)
 		{
-			p2.x = p1.x - p2.x;
-			p2.y = p1.y - p2.y;
-			return p2;
+			return new Vec4(p1.x - p2.x, p1.y - p2.y, p2.z, p2.w);
 		}
 
 		public static Vec4 operator-(Vec4 p1, float p2)
 		{
-			p1.x -= p2;
-			p1.y -= p2;
-			p1.z -= p2;
-			p1.w -= p2;
-			return p1;
+			return new Vec4(p1.x - p2, p1.y - p2, p1.z - p2, p1.w - p2);
 		}
 
 		public static Vec4 operator-(float p1, Vec4 p2)
 		{
-			p2.x = p1 - p2.x;
-			p2.y = p1 - p2.y;
-			p2.z = p1 - p2.z;
-			p2.w = p1 - p2.w;
-			return p2;
+			return new Vec4(p1 - p2.x, p1 - p2.y, p1 - p2.z, p1 - p2.w);
 		}
 
-		public static Vec4 operator-(Vec4 p2)
+		public static Vec4 operator-(Vec4 p1)
 		{
-			p2.x = -p2.x;
-			p2.y = -p2.y;
-			p2.z = -p2.z;
-			p2.w = -p2.w;
-			return p2;
+			return new Vec4(-p1.x, -p1.y, -p1.z, -p1.w);
 		}
 
 		// *
 		public static Vec4 operator*(Vec4 p1, Vec4 p2)
 		{
-			p1.x *= p2.x;
-			p1.y *= p2.y;
-			p1.z *= p2.z;
-			p1.w *= p2.w;
-			return p1;
+			return new Vec4(p1.x * p2.x, p1.y * p2.y, p1.z * p2.z, p1.w * p2.w);
 		}
 
 		public static Vec4 operator*(Vec4 p1, Vec3 p2)
 		{
-			p1.x *= p2.x;
-			p1.y *= p2.y;
-			p1.z *= p2.z;
-			return p1;
+			return new Vec4(p1.x * p2.x, p1.y * p2.y, p1.z * p2.z, p1.w);
 		}
 
 		public static Vec4 operator*(Vec3 p1, Vec4 p2)
 		{
-			p2.x = p1.x * p2.x;
-			p2.y = p1.y * p2.y;
-			p2.z = p1.z * p2.z;
-			return p2;
+			return new Vec4(p1.x * p2.x, p1.y * p2.y, p1.z * p2.z, p2.w);
 		}
 
 		public static Vec4 operator*(Vec4 p1, Vec2 p2)
 		{
-			p1.x *= p2.x;
-			p1.y *= p2.y;
-			return p1;
+			return new Vec4(p1.x * p2.x, p1.y * p2.y, p1.z, p1.w);
 		}
 
 		public static Vec4 operator*(Vec2 p1, Vec4 p2)
 		{
-			p2.x = p1.x * p2.x;
-			p2.y = p1.y * p2.y;
-			return p2;
+			return new Vec4(p1.x * p2.x, p1.y * p2.y, p2.z, p2.w);
 		}
 
 		public static Vec4 operator*(Vec4 p1, float p2)
 		{
-			p1.x *= p2;
-			p1.y *= p2;
-			p1.z *= p2;
-			p1.w *= p2;
-			return p1;
+			return new Vec4(p1.x * p2, p1.y * p2, p1.z * p2, p1.w * p2);
 		}
 
 		public static Vec4 operator*(float p1, Vec4 p2)
 		{
-			p2.x = p1 * p2.x;
-			p2.y = p1 * p2.y;
-			p2.z = p1 * p2.z;
-			p2.w = p1 * p2.w;
-			return p2;
+			return new Vec4(p1 * p2.x, p1 * p2.y, p1 * p2.z, p1 * p2.w);
 		}
 
 		// /
 		public static Vec4 operator/(Vec4 p1, Vec4 p2)
 		{
-			p1.x /= p2.x;
-			p1.y /= p2.y;
-			p1.z /= p2.z;
-			p1.w /= p2.w;
-			return p1;
+			return new Vec4(p1.x / p2.x, p1.y / p2.y, p1.z / p2.z, p1.w / p2.w);
 		}
 
 		public static Vec4 operator/(Vec4 p1, Vec3 p2)
 		{
-			p1.x /= p2.x;
-			p1.y /= p2.y;
-			p1.z /= p2.z;
-			return p1;
+			return new Vec4(p1.x / p2.x, p1.y / p2.y, p1.z / p2.z, p1.w);
 		}
 
 		public static Vec4 operator/(Vec3 p1, Vec4 p2)
 		{
-			p2.x = p1.x / p2.x;
-			p2.y = p1.y / p2.y;
-			p2.z = p1.z / p2.z;
-			return p2;
+			return new Vec4(p1.x / p2.x, p1.y / p2.y, p1.z / p2.z, p2.w);
 		}
 
 		public static Vec4 operator/(Vec4 p1, Vec2 p2)
 		{
-			p1.x /= p2.x;
-			p1.y /= p2.y;
-			return p1;
+			return new Vec4(p1.x / p2.x, p1.y / p2.y, p1.z, p1.w);
 		}
 
 		public static Vec4 operator/(Vec2 p1, Vec4 p2)
 		{
-			p2.x = p1.x / p2.x;
-			p2.y = p1.y / p2.y;
-			return p2;
+			return new Vec4(p1.x / p2.x, p1.y / p2.y, p2.z, p2.w);
 		}
 
 		public static Vec4 operator/(Vec4 p1, float p2)
 		{
-			p1.x /= p2;
-			p1.y /= p2;
-			p1.z /= p2;
-			p1.w /= p2;
-			return p1;
+			return new Vec4(p1.x / p2, p1.y / p2, p1.z / p2, p1.w / p2);
 		}
 
 		public static Vec4 operator/(float p1, Vec4 p2)
 		{
-			p2.x = p1 / p2.x;
-			p2.y = p1 / p2.y;
-			p2.z = p1 / p2.z;
-			p2.w = p1 / p2.w;
-			return p2;
+			return new Vec4(p1 / p2.x, p1 / p2.y, p1 / p2.z, p1 / p2.w);
 		}
 
 		// ==
-		public static bool operator==(Vec4 p1, Vec4 p2) {return (p1.x==p2.x && p1.y==p2.y && p1.z==p2.z && p1.w==p2.w);}
-		public static bool operator!=(Vec4 p1, Vec4 p2) {return (p1.x!=p2.x || p1.y!=p2.y || p1.z!=p2.z || p1.w!=p2.w);}
+		public static bool operator==(Vec4 p1, Vec4 p2) {return p1.x==p2.x && p1.y==p2.y && p1.z==p2.z && p1.w==p2.w;}
+		public static bool operator!=(Vec4 p1, Vec4 p2) {return p1.x!=p2.x || p1.y!=p2.y || p1.z!=p2.z || p1.w!=p2.w;}
 
 		// convert
 		#if MATH_UNITY_HELPER

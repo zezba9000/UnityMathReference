@@ -172,127 +172,75 @@ namespace UnityMathReference
 		// +
 		public static Quat operator+(Quat p1, Quat p2)
 		{
-			p1.x += p2.x;
-			p1.y += p2.y;
-			p1.z += p2.z;
-			p1.w += p2.w;
-			return p1;
+			return new Quat(p1.x + p2.x, p1.y + p2.y, p1.z + p2.z, p1.w + p2.w);
 		}
 
 		public static Quat operator+(Quat p1, float p2)
 		{
-			p1.x += p2;
-			p1.y += p2;
-			p1.z += p2;
-			p1.w += p2;
-			return p1;
+			return new Quat(p1.x = p2, p1.y + p2, p1.z + p2, p1.w + p2);
 		}
 
 		public static Quat operator+(float p1, Quat p2)
 		{
-			p2.x = p1 + p2.x;
-			p2.y = p1 + p2.y;
-			p2.z = p1 + p2.z;
-			p2.w = p1 + p2.w;
-			return p2;
+			return new Quat(p1 + p2.x, p1 + p2.y, p1 + p2.z, p1 + p2.w);
 		}
 
 		// -
 		public static Quat operator-(Quat p1, Quat p2)
 		{
-			p1.x -= p2.x;
-			p1.y -= p2.y;
-			p1.z -= p2.z;
-			p1.w -= p2.w;
-			return p1;
+			return new Quat(p1.x - p2.x, p1.y - p2.y, p1.z - p2.z, p1.w - p2.w);
 		}
 
 		public static Quat operator-(Quat p1, float p2)
 		{
-			p1.x -= p2;
-			p1.y -= p2;
-			p1.z -= p2;
-			p1.w -= p2;
-			return p1;
+			return new Quat(p1.x - p2, p1.y - p2, p1.z - p2, p1.w - p2);
 		}
 
 		public static Quat operator-(float p1, Quat p2)
 		{
-			p2.x = p1 - p2.x;
-			p2.y = p1 - p2.y;
-			p2.z = p1 - p2.z;
-			p2.w = p1 - p2.w;
-			return p2;
+			return new Quat(p1 - p2.x, p1 - p2.y, p1 - p2.z, p1 - p2.w);
 		}
 
 		public static Quat operator-(Quat p2)
 		{
-			p2.x = -p2.x;
-			p2.y = -p2.y;
-			p2.z = -p2.z;
-			p2.w = -p2.w;
-			return p2;
+			return new Quat(-p2.x, -p2.y, -p2.z, -p2.w);
 		}
 
 		// *
 		public static Quat operator*(Quat p1, Quat p2)
 		{
-			p1.x *= p2.x;
-			p1.y *= p2.y;
-			p1.z *= p2.z;
-			p1.w *= p2.w;
-			return p1;
+			return new Quat(p1.x * p2.x, p1.y * p2.y, p1.z * p2.z, p1.w * p2.w);
 		}
 
 		public static Quat operator*(Quat p1, float p2)
 		{
-			p1.x *= p2;
-			p1.y *= p2;
-			p1.z *= p2;
-			p1.w *= p2;
-			return p1;
+			return new Quat(p1.x * p2, p1.y * p2, p1.z * p2, p1.w * p2);
 		}
 
 		public static Quat operator*(float p1, Quat p2)
 		{
-			p2.x = p1 * p2.x;
-			p2.y = p1 * p2.y;
-			p2.z = p1 * p2.z;
-			p2.w = p1 * p2.w;
-			return p2;
+			return new Quat(p1 * p2.x, p1 * p2.y, p1 * p2.z, p1 * p2.w);
 		}
 
 		// /
 		public static Quat operator/(Quat p1, Quat p2)
 		{
-			p1.x /= p2.x;
-			p1.y /= p2.y;
-			p1.z /= p2.z;
-			p1.w /= p2.w;
-			return p1;
+			return new Quat(p1.x / p2.x, p1.y / p2.y, p1.z / p2.z, p1.w / p2.w);
 		}
 
 		public static Quat operator/(Quat p1, float p2)
 		{
-			p1.x /= p2;
-			p1.y /= p2;
-			p1.z /= p2;
-			p1.w /= p2;
-			return p1;
+			return new Quat(p1.x / p2, p1.y / p2, p1.z / p2, p1.w / p2);
 		}
 
 		public static Quat operator/(float p1, Quat p2)
 		{
-			p2.x = p1 / p2.x;
-			p2.y = p1 / p2.y;
-			p2.z = p1 / p2.z;
-			p2.w = p1 / p2.w;
-			return p2;
+			return new Quat(p1 / p2.x, p1 / p2.y, p1 / p2.z, p1 / p2.w);
 		}
 
 		// ==
-		public static bool operator==(Quat p1, Quat p2) {return (p1.x==p2.x && p1.y==p2.y && p1.z==p2.z && p1.w==p2.w);}
-		public static bool operator!=(Quat p1, Quat p2) {return (p1.x!=p2.x || p1.y!=p2.y || p1.z!=p2.z || p1.w!=p2.w);}
+		public static bool operator==(Quat p1, Quat p2) {return p1.x==p2.x && p1.y==p2.y && p1.z==p2.z && p1.w==p2.w;}
+		public static bool operator!=(Quat p1, Quat p2) {return p1.x!=p2.x || p1.y!=p2.y || p1.z!=p2.z || p1.w!=p2.w;}
 
 		// convert
 		public Vec4 ToVec4()

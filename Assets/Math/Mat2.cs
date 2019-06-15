@@ -45,157 +45,115 @@ namespace UnityMathReference
 		// +
 		public static Mat2 operator+(Mat2 p1, Mat2 p2)
 		{
-			p1.x += p2.x;
-			p1.y += p2.y;
-			return p1;
+			return new Mat2(p1.x + p2.x, p1.y + p2.y);
 		}
 
 		public static Mat2 operator+(Mat2 p1, Vec2 p2)
 		{
-			p1.x += p2;
-			p1.y += p2;
-			return p1;
+			return new Mat2(p1.x + p2, p1.y + p2);
 		}
 
 		public static Mat2 operator+(Vec2 p1, Mat2 p2)
 		{
-			p2.x = p1 + p2.x;
-			p2.y = p1 + p2.y;
-			return p2;
+			return new Mat2(p1 + p2.x, p1 + p2.y);
 		}
 
 		public static Mat2 operator+(Mat2 p1, float p2)
 		{
-			p1.x += p2;
-			p1.y += p2;
-			return p1;
+			return new Mat2(p1.x + p2, p1.y + p2);
 		}
 
 		public static Mat2 operator+(float p1, Mat2 p2)
 		{
-			p2.x = p1 + p2.x;
-			p2.y = p1 + p2.y;
-			return p2;
+			return new Mat2(p1 + p2.x, p1 + p2.y);
 		}
 
 		// -
 		public static Mat2 operator-(Mat2 p1, Mat2 p2)
 		{
-			p1.x -= p2.x;
-			p1.y -= p2.y;
-			return p1;
+			return new Mat2(p1.x - p2.x, p1.y - p2.y);
 		}
 
 		public static Mat2 operator-(Mat2 p1, Vec2 p2)
 		{
-			p1.x -= p2;
-			p1.y -= p2;
-			return p1;
+			return new Mat2(p1.x - p2, p1.y - p2);
 		}
 
 		public static Mat2 operator-(Vec2 p1, Mat2 p2)
 		{
-			p2.x = p1 - p2.x;
-			p2.y = p1 - p2.y;
-			return p2;
+			return new Mat2(p1 - p2.x, p1 - p2.y);
 		}
 
 		public static Mat2 operator-(Mat2 p1, float p2)
 		{
-			p1.x -= p2;
-			p1.y -= p2;
-			return p1;
+			return new Mat2(p1.x - p2, p1.x - p2);
 		}
 
 		public static Mat2 operator-(float p1, Mat2 p2)
 		{
-			p2.x = p1 - p2.x;
-			p2.y = p1 - p2.y;
-			return p2;
+			return new Mat2(p1 - p2.x, p1 - p2.y);
 		}
 
 		public static Mat2 operator-(Mat2 p2)
 		{
-			p2.x = -p2.x;
-			p2.y = -p2.y;
-			return p2;
+			return new Mat2(-p2.x, -p2.y);
 		}
 
 		// *
 		public static Mat2 operator*(Mat2 p1, Mat2 p2)
 		{
-			p1.x *= p2.x;
-			p1.y *= p2.y;
-			return p1;
+			return new Mat2(p1.x * p2.x, p1.x * p2.x);
 		}
 
 		public static Mat2 operator*(Mat2 p1, Vec2 p2)
 		{
-			p1.x *= p2;
-			p1.y *= p2;
-			return p1;
+			return new Mat2(p1.x * p2, p1.x * p2);
 		}
 
 		public static Mat2 operator*(Vec2 p1, Mat2 p2)
 		{
-			p2.x = p1 * p2.x;
-			p2.y = p1 * p2.y;
-			return p2;
+			return new Mat2(p1 * p2.x, p1 * p2.y);
 		}
 
 		public static Mat2 operator*(Mat2 p1, float p2)
 		{
-			p1.x *= p2;
-			p1.y *= p2;
-			return p1;
+			return new Mat2(p1.x * p2, p1.y * p2);
 		}
 
 		public static Mat2 operator*(float p1, Mat2 p2)
 		{
-			p2.x = p1 * p2.x;
-			p2.y = p1 * p2.y;
-			return p2;
+			return new Mat2(p1 * p2.x, p1 * p2.y);
 		}
 
 		// /
 		public static Mat2 operator/(Mat2 p1, Mat2 p2)
 		{
-			p1.x /= p2.x;
-			p1.y /= p2.y;
-			return p1;
+			return new Mat2(p1.x / p2.x, p1.y / p2.y);
 		}
 
 		public static Mat2 operator/(Mat2 p1, Vec2 p2)
 		{
-			p1.x /= p2;
-			p1.y /= p2;
-			return p1;
+			return new Mat2(p1.x / p2, p1.x / p2);
 		}
 
 		public static Mat2 operator/(Vec2 p1, Mat2 p2)
 		{
-			p2.x = p1 / p2.x;
-			p2.y = p1 / p2.y;
-			return p2;
+			return new Mat2(p1 / p2.x, p1 / p2.y);
 		}
 
 		public static Mat2 operator/(Mat2 p1, float p2)
 		{
-			p1.x /= p2;
-			p1.y /= p2;
-			return p1;
+			return new Mat2(p1.x / p2, p1.y / p2);
 		}
 
 		public static Mat2 operator/(float p1, Mat2 p2)
 		{
-			p2.x = p1 / p2.x;
-			p2.y = p1 / p2.y;
-			return p2;
+			return new Mat2(p1 / p2.x, p1 / p2.y);
 		}
 
 		// ==
-		public static bool operator==(Mat2 p1, Mat2 p2) {return (p1.x==p2.x && p1.y==p2.y);}
-		public static bool operator!=(Mat2 p1, Mat2 p2) {return (p1.x!=p2.x || p1.y!=p2.y);}
+		public static bool operator==(Mat2 p1, Mat2 p2) {return p1.x==p2.x && p1.y==p2.y;}
+		public static bool operator!=(Mat2 p1, Mat2 p2) {return p1.x!=p2.x || p1.y!=p2.y;}
 		#endregion
 		
 		#region Methods

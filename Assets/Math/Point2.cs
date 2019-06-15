@@ -35,101 +35,75 @@ namespace UnityMathReference
 		// +
 		public static Point2 operator+(Point2 p1, Point2 p2)
 		{
-			p1.x += p2.x;
-			p1.y += p2.y;
-			return p1;
+			return new Point2(p1.x + p2.x, p1.y + p2.y);
 		}
 
 		public static Point2 operator+(Point2 p1, int p2)
 		{
-			p1.x += p2;
-			p1.y += p2;
-			return p1;
+			return new Point2(p1.x = p2, p1.y + p2);
 		}
 
 		public static Point2 operator+(int p1, Point2 p2)
 		{
-			p2.x = p1 + p2.x;
-			p2.y = p1 + p2.y;
-			return p2;
+			return new Point2(p1 + p2.x, p1 + p2.y);
 		}
 
 		// -
 		public static Point2 operator-(Point2 p1, Point2 p2)
 		{
-			p1.x -= p2.x;
-			p1.y -= p2.y;
-			return p1;
+			return new Point2(p1.x - p2.x, p1.y - p2.y);
 		}
 
 		public static Point2 operator-(Point2 p1, int p2)
 		{
-			p1.x -= p2;
-			p1.y -= p2;
-			return p1;
+			return new Point2(p1.x - p2, p1.y - p2);
 		}
 
 		public static Point2 operator-(int p1, Point2 p2)
 		{
-			p2.x = p1 - p2.x;
-			p2.y = p1 - p2.y;
-			return p2;
+			return new Point2(p1 - p2.x, p1 - p2.y);
 		}
 
 		public static Point2 operator-(Point2 p2)
 		{
-			p2.x = -p2.x;
-			p2.y = -p2.y;
-			return p2;
+			return new Point2(-p2.x, -p2.y);
 		}
 
 		// *
 		public static Point2 operator*(Point2 p1, Point2 p2)
 		{
-			p1.x *= p2.x;
-			p1.y *= p2.y;
-			return p1;
+			return new Point2(p1.x * p2.x, p1.y * p2.y);
 		}
 
 		public static Point2 operator*(Point2 p1, int p2)
 		{
-			p1.x *= p2;
-			p1.y *= p2;
-			return p1;
+			return new Point2(p1.x * p2, p1.y * p2);
 		}
 
 		public static Point2 operator*(int p1, Point2 p2)
 		{
-			p2.x = p1 * p2.x;
-			p2.y = p1 * p2.y;
-			return p2;
+			return new Point2(p1 * p2.x, p1 * p2.y);
 		}
 
 		// /
 		public static Point2 operator/(Point2 p1, Point2 p2)
 		{
-			p1.x /= p2.x;
-			p1.y /= p2.y;
-			return p1;
+			return new Point2(p1.x / p2.x, p1.y / p2.y);
 		}
 
 		public static Point2 operator/(Point2 p1, int p2)
 		{
-			p1.x /= p2;
-			p1.y /= p2;
-			return p1;
+			return new Point2(p1.x / p2, p1.y / p2);
 		}
 
 		public static Point2 operator/(int p1, Point2 p2)
 		{
-			p2.x = p1 / p2.x;
-			p2.y = p1 / p2.y;
-			return p2;
+			return new Point2(p1 / p2.x, p1 / p2.y);
 		}
 
 		// ==
-		public static bool operator==(Point2 p1, Point2 p2) {return (p1.x==p2.x && p1.y==p2.y);}
-		public static bool operator!=(Point2 p1, Point2 p2) {return (p1.x!=p2.x || p1.y!=p2.y);}
+		public static bool operator==(Point2 p1, Point2 p2) {return p1.x==p2.x && p1.y==p2.y;}
+		public static bool operator!=(Point2 p1, Point2 p2) {return p1.x!=p2.x || p1.y!=p2.y;}
 
 		// convert
 		public Vec2 ToVec2()

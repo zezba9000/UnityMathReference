@@ -47,170 +47,115 @@ namespace UnityMathReference
 		// +
 		public static Point3 operator+(Point3 p1, Point3 p2)
 		{
-			p1.x += p2.x;
-			p1.y += p2.y;
-			p1.z += p2.z;
-			return p1;
+			return new Point3(p1.x + p2.x, p1.y + p2.y, p1.z + p2.z);
 		}
 
 		public static Point3 operator+(Point3 p1, Point2 p2)
 		{
-			p1.x += p2.x;
-			p1.y += p2.y;
-			return p1;
+			return new Point3(p1.x + p2.x, p1.y + p2.y, p1.z);
 		}
 
 		public static Point3 operator+(Point2 p1, Point3 p2)
 		{
-			p2.x = p1.x + p2.x;
-			p2.y = p1.y + p2.y;
-			return p2;
+			return new Point3(p1.x + p2.x, p1.y + p2.y, p2.z);
 		}
 
 		public static Point3 operator+(Point3 p1, int p2)
 		{
-			p1.x += p2;
-			p1.y += p2;
-			p1.z += p2;
-			return p1;
+			return new Point3(p1.x + p2, p1.y + p2, p1.z + p2);
 		}
 
 		public static Point3 operator+(int p1, Point3 p2)
 		{
-			p2.x = p1 + p2.x;
-			p2.y = p1 + p2.y;
-			p2.z = p1 + p2.z;
-			return p2;
+			return new Point3(p1 + p2.x, p1 + p2.y, p1 + p2.z);
 		}
 
 		// -
 		public static Point3 operator-(Point3 p1, Point3 p2)
 		{
-			p1.x -= p2.x;
-			p1.y -= p2.y;
-			p1.z -= p2.z;
-			return p1;
+			return new Point3(p1.x - p2.x, p1.y - p2.y, p1.z - p2.z);
 		}
 
 		public static Point3 operator-(Point3 p1, Point2 p2)
 		{
-			p1.x -= p2.x;
-			p1.y -= p2.y;
-			return p1;
+			return new Point3(p1.x - p2.x, p1.y - p2.y, p1.z);
 		}
 
 		public static Point3 operator-(Point2 p1, Point3 p2)
 		{
-			p2.x = p1.x - p2.x;
-			p2.y = p1.y - p2.y;
-			return p2;
+			return new Point3(p1.x - p2.x, p1.y - p2.y, p2.z);
 		}
 
 		public static Point3 operator-(Point3 p1, int p2)
 		{
-			p1.x -= p2;
-			p1.y -= p2;
-			p1.z -= p2;
-			return p1;
+			return new Point3(p1.x - p2, p1.y - p2, p1.z - p2);
 		}
 
 		public static Point3 operator-(int p1, Point3 p2)
 		{
-			p2.x = p1 - p2.x;
-			p2.y = p1 - p2.y;
-			p2.z = p1 - p2.z;
-			return p2;
+			return new Point3(p1 - p2.x, p1 - p2.y, p1 - p2.z);
 		}
 
 		public static Point3 operator-(Point3 p2)
 		{
-			p2.x = -p2.x;
-			p2.y = -p2.y;
-			p2.z = -p2.z;
-			return p2;
+			return new Point3(-p2.x, -p2.y, -p2.z);
 		}
 
 		// *
 		public static Point3 operator*(Point3 p1, Point3 p2)
 		{
-			p1.x *= p2.x;
-			p1.y *= p2.y;
-			p1.z *= p2.z;
-			return p1;
+			return new Point3(p1.x * p2.x, p1.y * p2.y, p1.z * p2.z);
 		}
 
 		public static Point3 operator*(Point3 p1, Point2 p2)
 		{
-			p1.x *= p2.x;
-			p1.y *= p2.y;
-			return p1;
+			return new Point3(p1.x * p2.x, p1.y * p2.y, p1.z);
 		}
 
 		public static Point3 operator*(Point2 p1, Point3 p2)
 		{
-			p2.x = p1.x * p2.x;
-			p2.y = p1.y * p2.y;
-			return p2;
+			return new Point3(p1.x * p2.x, p1.y * p2.y, p2.z);
 		}
 
 		public static Point3 operator*(Point3 p1, int p2)
 		{
-			p1.x *= p2;
-			p1.y *= p2;
-			p1.z *= p2;
-			return p1;
+			return new Point3(p1.x * p2, p1.y * p2, p1.z * p2);
 		}
 
 		public static Point3 operator*(int p1, Point3 p2)
 		{
-			p2.x = p1 * p2.x;
-			p2.y = p1 * p2.y;
-			p2.z = p1 * p2.z;
-			return p2;
+			return new Point3(p1 * p2.x, p1 * p2.y, p1 * p2.z);
 		}
 
 		// /
 		public static Point3 operator/(Point3 p1, Point3 p2)
 		{
-			p1.x /= p2.x;
-			p1.y /= p2.y;
-			p1.z /= p2.z;
-			return p1;
+			return new Point3(p1.x / p2.x, p1.y / p2.y, p1.z / p2.z);
 		}
 
 		public static Point3 operator/(Point3 p1, Point2 p2)
 		{
-			p1.x /= p2.x;
-			p1.y /= p2.y;
-			return p1;
+			return new Point3(p1.x / p2.x, p1.y / p2.y, p1.z);
 		}
 
 		public static Point3 operator/(Point2 p1, Point3 p2)
 		{
-			p2.x = p1.x / p2.x;
-			p2.y = p1.y / p2.y;
-			return p2;
+			return new Point3(p1.x / p2.x, p1.y / p2.y, p2.z);
 		}
 
 		public static Point3 operator/(Point3 p1, int p2)
 		{
-			p1.x /= p2;
-			p1.y /= p2;
-			p1.z /= p2;
-			return p1;
+			return new Point3(p1.x / p2, p1.y / p2, p1.z / p2);
 		}
 
 		public static Point3 operator/(int p1, Point3 p2)
 		{
-			p2.x = p1 / p2.x;
-			p2.y = p1 / p2.y;
-			p2.z = p1 / p2.z;
-			return p2;
+			return new Point3(p1 / p2.x, p1 / p2.y, p1 / p2.z);
 		}
 
 		// ==
-		public static bool operator==(Point3 p1, Point3 p2) {return (p1.x==p2.x && p1.y==p2.y && p1.z==p2.z);}
-		public static bool operator!=(Point3 p1, Point3 p2) {return (p1.x!=p2.x || p1.y!=p2.y || p1.z!=p2.z);}
+		public static bool operator==(Point3 p1, Point3 p2) {return p1.x==p2.x && p1.y==p2.y && p1.z==p2.z;}
+		public static bool operator!=(Point3 p1, Point3 p2) {return p1.x!=p2.x || p1.y!=p2.y || p1.z!=p2.z;}
 
 		// convert
 		public Point2 ToPoint2()

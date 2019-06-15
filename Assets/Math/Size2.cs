@@ -23,101 +23,75 @@ namespace UnityMathReference
 		// +
 		public static Size2 operator+(Size2 p1, Size2 p2)
 		{
-			p1.width += p2.width;
-			p1.height += p2.height;
-			return p1;
+			return new Size2(p1.width + p2.width, p1.height + p2.height);
 		}
 
 		public static Size2 operator+(Size2 p1, int p2)
 		{
-			p1.width += p2;
-			p1.height += p2;
-			return p1;
+			return new Size2(p1.width + p2, p1.height + p2);
 		}
 
 		public static Size2 operator+(int p1, Size2 p2)
 		{
-			p2.width = p1 + p2.width;
-			p2.height = p1 + p2.height;
-			return p2;
+			return new Size2(p1 + p2.width, p1 + p2.height);
 		}
 
 		// -
 		public static Size2 operator-(Size2 p1, Size2 p2)
 		{
-			p1.width -= p2.width;
-			p1.height -= p2.height;
-			return p1;
+			return new Size2(p1.width - p2.width, p1.height - p2.height);
 		}
 
 		public static Size2 operator-(Size2 p1, int p2)
 		{
-			p1.width -= p2;
-			p1.height -= p2;
-			return p1;
+			return new Size2(p1.width - p2, p1.height - p2);
 		}
 
 		public static Size2 operator-(int p1, Size2 p2)
 		{
-			p2.width = p1 - p2.width;
-			p2.height = p1 - p2.height;
-			return p2;
+			return new Size2(p1 - p2.width, p1 - p2.height);
 		}
 
 		public static Size2 operator-(Size2 p2)
 		{
-			p2.width = -p2.width;
-			p2.height = -p2.height;
-			return p2;
+			return new Size2(-p2.width, -p2.height);
 		}
 
 		// *
 		public static Size2 operator*(Size2 p1, Size2 p2)
 		{
-			p1.width *= p2.width;
-			p1.height *= p2.height;
-			return p1;
+			return new Size2(p1.width * p2.width, p1.height * p2.height);
 		}
 
 		public static Size2 operator*(Size2 p1, int p2)
 		{
-			p1.width *= p2;
-			p1.height *= p2;
-			return p1;
+			return new Size2(p1.width * p2, p1.height * p2);
 		}
 
 		public static Size2 operator*(int p1, Size2 p2)
 		{
-			p2.width = p1 * p2.width;
-			p2.height = p1 * p2.height;
-			return p2;
+			return new Size2(p1 * p2.width, p1 * p2.height);
 		}
 
 		// /
 		public static Size2 operator/(Size2 p1, Size2 p2)
 		{
-			p1.width /= p2.width;
-			p1.height /= p2.height;
-			return p1;
+			return new Size2(p1.width / p2.width, p1.height / p2.height);
 		}
 
 		public static Size2 operator/(Size2 p1, int p2)
 		{
-			p1.width /= p2;
-			p1.height /= p2;
-			return p1;
+			return new Size2(p1.width / p2, p1.height / p2);
 		}
 
 		public static Size2 operator/(int p1, Size2 p2)
 		{
-			p2.width = p1 / p2.width;
-			p2.height = p1 / p2.height;
-			return p2;
+			return new Size2(p1 / p2.width, p1 / p2.height);
 		}
 
 		// ==
-		public static bool operator==(Size2 p1, Size2 p2) {return (p1.width==p2.width && p1.height==p2.height);}
-		public static bool operator!=(Size2 p1, Size2 p2) {return (p1.width!=p2.width || p1.height!=p2.height);}
+		public static bool operator==(Size2 p1, Size2 p2) {return p1.width==p2.width && p1.height==p2.height;}
+		public static bool operator!=(Size2 p1, Size2 p2) {return p1.width!=p2.width || p1.height!=p2.height;}
 
 		// convert
 		public Vec2 ToVec2()
