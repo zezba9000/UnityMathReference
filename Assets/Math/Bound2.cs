@@ -34,6 +34,21 @@ namespace UnityMathReference
 			get {return max.y;}
 			set {max.y = value;}
 		}
+
+		public float GetWidth()
+		{
+			return max.x - min.x;
+		}
+
+		public float GetHeight()
+		{
+			return max.y - min.y;
+		}
+
+		public Vec2 GetCenter()
+		{
+			return (min + max) * .5f;
+		}
 		#endregion
 
 		#region Constructors
@@ -113,23 +128,29 @@ namespace UnityMathReference
             return clampedLocation.DistanceSquared(boundingSphere.center) <= (boundingSphere.radius * boundingSphere.radius);
         }
 
-		public Bound2 Merge(Bound2 boundingBox2)
+		public Bound2 Merge(Bound2 boundingBox)
         {
-			Bound2 result;
-            if (min.x < boundingBox2.min.x) result.min.x = min.x;
-            else result.min.x = boundingBox2.min.x;
+			Bound2 result = this;
+			if (result.min.x < boundingBox.min.x) result.min.x = boundingBox.min.x;
+			if (result.max.x > boundingBox.max.x) result.max.x = boundingBox.max.x;
 
-            if (min.y < boundingBox2.min.y) result.min.y = min.y;
-            else result.min.y = boundingBox2.min.y;
-
-            if (max.x > boundingBox2.max.x) result.max.x = max.x;
-            else result.max.x = boundingBox2.max.x;
-
-            if (max.y > boundingBox2.max.y) result.max.y = max.y;
-            else result.max.y = boundingBox2.max.y;
+			if (result.min.y < boundingBox.min.y) result.min.y = boundingBox.min.y;
+			if (result.max.y > boundingBox.max.y) result.max.y = boundingBox.max.y;
 
 			return result;
         }
+
+		public Bound2 Merge(Vec2 vector)
+		{
+			Bound2 result = this;
+			if (result.min.x < vector.x) result.min.x = vector.x;
+			if (result.max.x > vector.x) result.max.x = vector.x;
+
+			if (result.min.y < vector.y) result.min.y = vector.y;
+			if (result.max.y > vector.y) result.max.y = vector.y;
+
+			return result;
+		}
 		#endregion
 	}
 }
