@@ -82,36 +82,40 @@ namespace UnityMathReference
             boundingBox.max = boundingBox.min;
 			foreach (var point in points)
             {
-                if (point.x < boundingBox.min.x)
-				{
-                    boundingBox.min.x = point.x;
-				}
-                else if (point.x > boundingBox.max.x)
-				{
-                    boundingBox.max.x = point.x;
-				}
+                if (point.x < boundingBox.min.x) boundingBox.min.x = point.x;
+                else if (point.x > boundingBox.max.x) boundingBox.max.x = point.x;
 
-                if (point.y < boundingBox.min.y)
-				{
-                    boundingBox.min.y = point.y;
-				}
-                else if (point.y > boundingBox.max.y)
-				{
-                    boundingBox.max.y = point.y;
-				}
+                if (point.y < boundingBox.min.y) boundingBox.min.y = point.y;
+                else if (point.y > boundingBox.max.y) boundingBox.max.y = point.y;
 
-                if (point.z < boundingBox.min.z)
-				{
-                    boundingBox.min.z = point.z;
-				}
-                else if (point.z > boundingBox.max.z)
-				{
-                    boundingBox.max.z = point.z;
-				}
+                if (point.z < boundingBox.min.z) boundingBox.min.z = point.z;
+                else if (point.z > boundingBox.max.z) boundingBox.max.z = point.z;
             }
 
             return boundingBox;
         }
+		#endregion
+
+		#region Operators
+		public static Bound3 operator+(Bound3 p1, Vec3 p2)
+		{
+			return new Bound3(p1.min + p2, p1.max + p2);
+		}
+
+		public static Bound3 operator -(Bound3 p1, Vec3 p2)
+		{
+			return new Bound3(p1.min - p2, p1.max - p2);
+		}
+
+		public static Bound3 operator *(Bound3 p1, Vec3 p2)
+		{
+			return new Bound3(p1.min * p2, p1.max * p2);
+		}
+
+		public static Bound3 operator /(Bound3 p1, Vec3 p2)
+		{
+			return new Bound3(p1.min / p2, p1.max / p2);
+		}
 		#endregion
 
 		#region Methods
@@ -125,51 +129,24 @@ namespace UnityMathReference
 		public bool Intersects(Sphere3 boundingSphere)
         {
 		   Vec3 clampedLocation;
-            if (boundingSphere.center.x > max.x)
-			{
-                clampedLocation.x = max.x;
-			}
-            else if (boundingSphere.center.x < min.x)
-			{
-                clampedLocation.x = min.x;
-			}
-            else
-			{
-                clampedLocation.x = boundingSphere.center.x;
-			}
+            if (boundingSphere.center.x > max.x) clampedLocation.x = max.x;
+            else if (boundingSphere.center.x < min.x) clampedLocation.x = min.x;
+            else clampedLocation.x = boundingSphere.center.x;
 
-            if (boundingSphere.center.y > max.y)
-			{
-                clampedLocation.y = max.y;
-			}
-            else if (boundingSphere.center.y < min.y)
-			{
-                clampedLocation.y = min.y;
-			}
-            else
-			{
-                clampedLocation.y = boundingSphere.center.y;
-			}
+            if (boundingSphere.center.y > max.y) clampedLocation.y = max.y;
+            else if (boundingSphere.center.y < min.y) clampedLocation.y = min.y;
+            else clampedLocation.y = boundingSphere.center.y;
 
-            if (boundingSphere.center.z > max.z)
-			{
-                clampedLocation.z = max.z;
-			}
-            else if (boundingSphere.center.z < min.z)
-			{
-                clampedLocation.z = min.z;
-			}
-            else
-			{
-                clampedLocation.z = boundingSphere.center.z;
-			}
+            if (boundingSphere.center.z > max.z) clampedLocation.z = max.z;
+            else if (boundingSphere.center.z < min.z) clampedLocation.z = min.z;
+            else clampedLocation.z = boundingSphere.center.z;
 
             return clampedLocation.DistanceSquared(boundingSphere.center) <= (boundingSphere.radius * boundingSphere.radius);
         }
 
 		public Bound3 Merge(Bound2 boundingBox)
 		{
-			Bound3 result = this;
+			var result = this;
 			if (result.min.x < boundingBox.min.x) result.min.x = boundingBox.min.x;
 			if (result.max.x > boundingBox.max.x) result.max.x = boundingBox.max.x;
 
@@ -181,7 +158,7 @@ namespace UnityMathReference
 
 		public Bound3 Merge(Bound3 boundingBox)
         {
-			Bound3 result = this;
+			var result = this;
             if (result.min.x < boundingBox.min.x) result.min.x = boundingBox.min.x;
             if (result.max.x > boundingBox.max.x) result.max.x = boundingBox.max.x;
 
@@ -196,7 +173,7 @@ namespace UnityMathReference
 
 		public Bound3 Merge(Vec2 vector)
 		{
-			Bound3 result = this;
+			var result = this;
 			if (result.min.x < vector.x) result.min.x = vector.x;
 			if (result.max.x > vector.x) result.max.x = vector.x;
 
@@ -208,7 +185,7 @@ namespace UnityMathReference
 
 		public Bound3 Merge(Vec3 vector)
 		{
-			Bound3 result = this;
+			var result = this;
 			if (result.min.x < vector.x) result.min.x = vector.x;
 			if (result.max.x > vector.x) result.max.x = vector.x;
 
@@ -218,6 +195,22 @@ namespace UnityMathReference
 			if (result.min.z < vector.z) result.min.z = vector.z;
 			if (result.max.z > vector.z) result.max.z = vector.z;
 
+			return result;
+		}
+
+		public Bound3 Transform(Mat3 matrix)
+		{
+			Bound3 result;
+			result.min = min.Transform(matrix);
+			result.max = max.Transform(matrix);
+			return result;
+		}
+
+		public Bound3 Transform(Mat4 matrix)
+		{
+			Bound3 result;
+			result.min = min.Transform(matrix);
+			result.max = max.Transform(matrix);
 			return result;
 		}
 		#endregion

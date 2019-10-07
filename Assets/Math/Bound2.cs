@@ -65,27 +65,37 @@ namespace UnityMathReference
             boundingBox.max = boundingBox.min;
 			foreach (var point in points)
             {
-                if (point.x < boundingBox.min.x)
-				{
-                    boundingBox.min.x = point.x;
-				}
-                else if (point.x > boundingBox.max.x)
-				{
-                    boundingBox.max.x = point.x;
-				}
+                if (point.x < boundingBox.min.x) boundingBox.min.x = point.x;
+                else if (point.x > boundingBox.max.x) boundingBox.max.x = point.x;
 
-                if (point.y < boundingBox.min.y)
-				{
-                    boundingBox.min.y = point.y;
-				}
-                else if (point.y > boundingBox.max.y)
-				{
-                    boundingBox.max.y = point.y;
-				}
+                if (point.y < boundingBox.min.y) boundingBox.min.y = point.y;
+                else if (point.y > boundingBox.max.y) boundingBox.max.y = point.y;
             }
 
             return boundingBox;
         }
+		#endregion
+
+		#region Operators
+		public static Bound2 operator +(Bound2 p1, Vec2 p2)
+		{
+			return new Bound2(p1.min + p2, p1.max + p2);
+		}
+
+		public static Bound2 operator -(Bound2 p1, Vec2 p2)
+		{
+			return new Bound2(p1.min - p2, p1.max - p2);
+		}
+
+		public static Bound2 operator *(Bound2 p1, Vec2 p2)
+		{
+			return new Bound2(p1.min * p2, p1.max * p2);
+		}
+
+		public static Bound2 operator /(Bound2 p1, Vec2 p2)
+		{
+			return new Bound2(p1.min / p2, p1.max / p2);
+		}
 		#endregion
 
 		#region Methods
@@ -98,39 +108,21 @@ namespace UnityMathReference
 
 		public bool Intersects(Sphere2 boundingSphere)
         {
-		   Vec2 clampedLocation;
-            if (boundingSphere.center.x > max.x)
-			{
-                clampedLocation.x = max.x;
-			}
-            else if (boundingSphere.center.x < min.x)
-			{
-                clampedLocation.x = min.x;
-			}
-            else
-			{
-                clampedLocation.x = boundingSphere.center.x;
-			}
+			Vec2 clampedLocation;
+            if (boundingSphere.center.x > max.x) clampedLocation.x = max.x;
+            else if (boundingSphere.center.x < min.x) clampedLocation.x = min.x;
+            else clampedLocation.x = boundingSphere.center.x;
 
-            if (boundingSphere.center.y > max.y)
-			{
-                clampedLocation.y = max.y;
-			}
-            else if (boundingSphere.center.y < min.y)
-			{
-                clampedLocation.y = min.y;
-			}
-            else
-			{
-                clampedLocation.y = boundingSphere.center.y;
-			}
+            if (boundingSphere.center.y > max.y) clampedLocation.y = max.y;
+            else if (boundingSphere.center.y < min.y) clampedLocation.y = min.y;
+            else clampedLocation.y = boundingSphere.center.y;
 
             return clampedLocation.DistanceSquared(boundingSphere.center) <= (boundingSphere.radius * boundingSphere.radius);
         }
 
 		public Bound2 Merge(Bound2 boundingBox)
         {
-			Bound2 result = this;
+			var result = this;
 			if (result.min.x < boundingBox.min.x) result.min.x = boundingBox.min.x;
 			if (result.max.x > boundingBox.max.x) result.max.x = boundingBox.max.x;
 
@@ -142,7 +134,7 @@ namespace UnityMathReference
 
 		public Bound2 Merge(Vec2 vector)
 		{
-			Bound2 result = this;
+			var result = this;
 			if (result.min.x < vector.x) result.min.x = vector.x;
 			if (result.max.x > vector.x) result.max.x = vector.x;
 
