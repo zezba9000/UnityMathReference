@@ -45,9 +45,9 @@ namespace UnityMathReference
 			this.w = w;
 		}
 
-		public static Quat LookAt(Vec3 forward, Vec3 up)
+		public static Quat FromCross(Vec3 forward, Vec3 up)
 		{
-			Mat3 mat = Mat3.LookAt(forward, up);
+			Mat3 mat = Mat3.FromCross(forward, up);
 			Quat q = Quat.FromMatrix3(mat);
 			return q;
 		}

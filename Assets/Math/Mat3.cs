@@ -140,7 +140,7 @@ namespace UnityMathReference
 			return FromQuaternion(quaternion);
 		}
 
-		public static Mat3 LookAt(Vec3 forward, Vec3 up)
+		public static Mat3 FromCross(Vec3 forward, Vec3 up)
 		{
 			var Z = forward.Normalize();
 			var X = up.Cross(Z).Normalize();
@@ -148,23 +148,6 @@ namespace UnityMathReference
 
 			return new Mat3(X, Y, Z);
 		}
-
-		public static Mat3 FromCross(Vec3 vector)
-        {
-			Mat3 result;
-            result.x.x = 0;
-            result.x.y = -vector.z;
-            result.x.z = vector.y;
-
-            result.y.x = vector.z;
-            result.y.y = 0;
-            result.y.z = -vector.x;
-
-            result.z.x = -vector.y;
-            result.z.y = vector.x;
-			result.z.z = 0;
-			return result;
-        }
 
 		public static readonly Mat3 identity = new Mat3
 		(
