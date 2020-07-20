@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityMathReference;
 
-public class Transform3 : MonoBehaviour
+public class Transform3Demo : MonoBehaviour
 {
 	private float rot;
 

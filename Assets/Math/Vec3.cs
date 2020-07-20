@@ -41,6 +41,16 @@ namespace UnityMathReference
 			y = vector.y;
 			this.z = z;
 		}
+
+		public static Vec3 FromSphericalRotation(float latitude, float longitude)
+		{
+			return new Vec3
+			(
+				(float)(Math.Sin(latitude) * Math.Cos(longitude)),
+				(float)Math.Sin(longitude),
+				(float)(Math.Cos(latitude) * Math.Cos(longitude))
+			);
+		}
 		#endregion
 
 		#region Operators
@@ -591,6 +601,19 @@ namespace UnityMathReference
 				value1.y * value1Blend + value2.y * value2Blend + tangent1.y * tangent1Blend + tangent2.y * tangent2Blend,
 				value1.z * value1Blend + value2.z * value2Blend + tangent1.z * tangent1Blend + tangent2.z * tangent2Blend
 			);
+		}
+
+		public void SphericalRotation(out float latitude, out float longitude)
+		{
+			var normal = this.Normalize();
+			latitude = (float)Math.Atan2(normal.x, normal.z);
+			longitude = (float)Math.Asin(normal.y);
+		}
+
+		public void SphericalRotation_PreNormalized(out float latitude, out float longitude)
+		{
+			latitude = (float)Math.Atan2(x, z);
+			longitude = (float)Math.Asin(y);
 		}
 		#endregion
 	}
