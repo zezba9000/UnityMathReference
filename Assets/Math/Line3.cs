@@ -59,9 +59,9 @@ namespace UnityMathReference
 		   float dot3 = vector.Dot(vector3);
 		   float dot4 = vector2.Dot();
 		   float dot5 = vector3.Dot();
-		   float mul1 = (((dot1 * dot2) - (dot3 * dot4)) / ((dot5 * dot4) - (dot2 * dot2)));
+		   float mul1 = ((dot1 * dot2) - (dot3 * dot4)) / ((dot5 * dot4) - (dot2 * dot2));
 		   float mul2 = (dot1 + (dot2 * mul1)) / dot4;
-		   return new Line3((point1 + (mul1 * vector3)), (line.point1 + (mul2 * vector2)));
+		   return new Line3(point1 + (mul1 * vector3), line.point1 + (mul2 * vector2));
 		}
 		#endregion
 	}

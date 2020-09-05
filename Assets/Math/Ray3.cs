@@ -213,6 +213,17 @@ namespace UnityMathReference
 			normal2 = (point2 - sphereCenter) * invRadius;
 			return true;
 		}
+
+		public Line3 IntersectRay(Ray3 ray)
+		{
+			Vec3 vector = origin - ray.origin;
+			float dot1 = vector.Dot(ray.direction);
+			float dot2 = ray.direction.Dot(direction);
+			float dot3 = vector.Dot(direction);
+			float mul1 = ((dot1 * dot2) - dot3) / (1f - (dot2 * dot2));
+			float mul2 = dot1 + (dot2 * mul1);
+			return new Line3(origin + (mul1 * direction), ray.origin + (mul2 * ray.direction));
+		}
 		#endregion
 	}
 }

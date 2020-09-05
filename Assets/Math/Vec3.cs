@@ -443,24 +443,6 @@ namespace UnityMathReference
 			return worldSpaceVector;
 		}
 
-		public bool Intersects(Triangle3 triangle)
-		{      
-			var v0 = triangle.point2 - triangle.point1;
-			var v1 = triangle.point3 - triangle.point1;
-			var v2 = this - triangle.point1;
-
-			float dot00 = v0.Dot();
-			float dot01 = v0.Dot(v1);
-			float dot02 = v0.Dot(v2);
-			float dot11 = v1.Dot();
-			float dot12 = v1.Dot(v2);
-
-			float invDenom = 1 / ((dot00*dot11) - (dot01*dot01));
-			float u = ((dot11*dot02) - (dot01*dot12)) * invDenom;
-			float v = ((dot00*dot12) - (dot01*dot02)) * invDenom;
-			return (u>0) && (v>0) && ((u+v) < 1);
-		}
-
 		public Vec3 Reflect(Vec3 planeNormal)
 		{
 			return this - (planeNormal * this.Dot(planeNormal) * 2);
