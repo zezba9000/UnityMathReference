@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityMathReference;
 
-public class RayIntersectSphereDemo : MonoBehaviour
+public class RayIntersectBoxDemo : MonoBehaviour
 {
 	void Update()
 	{
@@ -9,7 +9,7 @@ public class RayIntersectSphereDemo : MonoBehaviour
 		Debug.DrawLine(ray.origin.ToVector3(), (ray.origin + (ray.direction*5)).ToVector3(), Color.green, 0, false);
 
 		Vec3 p1, p2, n1, n2;
-		if (ray.IntersectRaySphere(new Sphere3(transform.position.ToVec3(), transform.localScale.x / 2), out p1, out p2, out n1, out n2))
+		if (ray.IntersectRayBox(new Box3(transform.position.ToVec3(), transform.localScale.ToVec3()), out p1, out p2))//, out n1, out n2))
 		{
 			Debug.DrawLine(p1.ToVector3(), p2.ToVector3(), Color.red, 0, false);
 		}

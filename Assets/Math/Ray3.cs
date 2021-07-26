@@ -173,12 +173,12 @@ namespace UnityMathReference
 			return true;
         }
 
-		public bool IntersectRaySphere(Vec3 sphereCenter, float radius, out Vec3 point1, out Vec3 point2)
+		public bool IntersectRaySphere(Sphere3 sphere, out Vec3 point1, out Vec3 point2)
 		{
-			Vec3 d = origin - sphereCenter;
+			Vec3 d = origin - sphere.center;
 			float a = direction.Dot(direction);
 			float b = d.Dot(direction);
-			float c = d.Dot() - radius * radius;
+			float c = d.Dot() - sphere.radius * sphere.radius;
 
 			float disc = b * b - a * c;
 			if (disc < 0.0f)
@@ -199,18 +199,72 @@ namespace UnityMathReference
 			return true;
 		}
 
-		public bool IntersectRaySphere(Vec3 sphereCenter, float radius, out Vec3 point1, out Vec3 point2, out Vec3 normal1, out Vec3 normal2)
+		public bool IntersectRaySphere(Sphere3 sphere, out Vec3 point1, out Vec3 point2, out Vec3 normal1, out Vec3 normal2)
 		{
-			if (!IntersectRaySphere(sphereCenter, radius, out point1, out point2))
+			if (!IntersectRaySphere(sphere, out point1, out point2))
 			{
 				normal1 = Vec3.zero;
 				normal2 = Vec3.zero;
 				return false;
 			}
 
-			float invRadius = 1.0f / radius;
-			normal1 = (point1 - sphereCenter) * invRadius;
-			normal2 = (point2 - sphereCenter) * invRadius;
+			float invRadius = 1.0f / sphere.radius;
+			normal1 = (point1 - sphere.center) * invRadius;
+			normal2 = (point2 - sphere.center) * invRadius;
+			return true;
+		}
+
+		public bool IntersectRayBox(Box3 box, out Vec3 point1, out Vec3 point2)
+		{
+			var min = (box.center - (box.size / 2)) - origin;
+			var max = (box.center + (box.size / 2)) - origin;
+			float near = float.MinValue;
+			float far = float.MaxValue;
+
+			// X
+			float t1 = min.x / direction.x;
+			float t2 = max.x / direction.x;
+			float tMin = Math.Min(t1, t2);
+			float tMax = Math.Max(t1, t2);
+			if (tMin > near) near = tMin;
+			if (tMax < far) far = tMax;
+			if (near > far || far < 0)
+			{
+				point1 = Vec3.zero;
+				point2 = Vec3.zero;
+				return false;
+			}
+
+			// Y
+			t1 = min.y / direction.y;
+			t2 = max.y / direction.y;
+			tMin = Math.Min(t1, t2);
+			tMax = Math.Max(t1, t2);
+			if (tMin > near) near = tMin;
+			if (tMax < far) far = tMax;
+			if (near > far || far < 0)
+			{
+				point1 = Vec3.zero;
+				point2 = Vec3.zero;
+				return false;
+			}
+
+			// Z
+			t1 = min.z / direction.z;
+			t2 = max.z / direction.z;
+			tMin = Math.Min(t1, t2);
+			tMax = Math.Max(t1, t2);
+			if (tMin > near) near = tMin;
+			if (tMax < far) far = tMax;
+			if (near > far || far < 0)
+			{
+				point1 = Vec3.zero;
+				point2 = Vec3.zero;
+				return false;
+			}
+
+			point1 = origin + direction * near;
+			point2 = origin + direction * far;
 			return true;
 		}
 
