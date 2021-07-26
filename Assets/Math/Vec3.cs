@@ -548,6 +548,22 @@ namespace UnityMathReference
 			return false;
 		}
 
+		public Vec3 ClosestPointToQuad(Vec3 quadPos, Quat quadRot, Vec2 quadSize)
+		{
+			return ClosestPointToQuad(quadPos, quadRot, quadRot.Inverse(), quadSize);
+		}
+
+		public Vec3 ClosestPointToQuad(Vec3 quadPos, Quat quadRot, Quat quadRotInv, Vec2 quadSize)
+		{
+			var p = (this - quadPos).Transform(quadRotInv);
+			p.z = 0;
+			if (p.x < -quadSize.x) p.x = -quadSize.x;
+			if (p.x > quadSize.x) p.x = quadSize.x;
+			if (p.y < -quadSize.y) p.y = -quadSize.y;
+			if (p.y > quadSize.y) p.y = quadSize.y;
+			return p.Transform(quadRot) + quadPos;
+		}
+
 		public float Angle(Vec3 vector)
 		{
 			var vec = this.Normalize();

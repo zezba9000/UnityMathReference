@@ -243,6 +243,18 @@ namespace UnityMathReference
 		public static bool operator!=(Quat p1, Quat p2) {return p1.x!=p2.x || p1.y!=p2.y || p1.z!=p2.z || p1.w!=p2.w;}
 
 		// convert
+		#if MATH_UNITY_HELPER
+		public static implicit operator Quat(UnityEngine.Quaternion quat)
+		{
+			return new Quat(quat.x, quat.y, quat.z, quat.w);
+		}
+
+		public UnityEngine.Quaternion ToVector3()
+		{
+			return new UnityEngine.Quaternion(x, y, z, w);
+		}
+		#endif
+
 		public Vec4 ToVec4()
 		{
 			return new Vec4(x, y, z, w);

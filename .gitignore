@@ -33,6 +33,7 @@ _ReSharper*/
 /[Bb]uild/
 /[Bb]uilds/
 /Assets/AssetStoreTools*
+/[Ll]ogs
 
 *.sln
 *.csproj
