@@ -11,7 +11,7 @@ public class PointToQuadDemo : MonoBehaviour
 	private void Update()
 	{
 		point.position = new Vector3(Mathf.Cos(rot), Mathf.Sin(rot), 0) * 1.25f;
-		var closestPoint = point.position.ToVec3().ClosestPointToQuad(transform.position, transform.rotation, new Vec2(transform.localScale.x, transform.localScale.y) / 2);
+		var closestPoint = point.position.ToVec3().ClosestPointToQuad(transform.position, transform.rotation, new Vec2(transform.localScale.x, transform.localScale.y));
 		Debug.DrawLine(point.position, closestPoint.ToVector3(), Color.blue);
 		rot += Time.deltaTime * 2;
 	}

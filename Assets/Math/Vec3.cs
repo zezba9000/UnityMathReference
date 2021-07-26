@@ -555,6 +555,7 @@ namespace UnityMathReference
 
 		public Vec3 ClosestPointToQuad(Vec3 quadPos, Quat quadRot, Quat quadRotInv, Vec2 quadSize)
 		{
+			quadSize *= .5f;
 			var p = (this - quadPos).Transform(quadRotInv);
 			p.z = 0;
 			if (p.x < -quadSize.x) p.x = -quadSize.x;
