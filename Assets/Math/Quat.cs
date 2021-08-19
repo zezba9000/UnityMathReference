@@ -341,7 +341,12 @@ namespace UnityMathReference
 			return Conjugate() * (1.0f / ((x * x) + (y * y) + (z * z) + (w * w)));
 		}
 
-		public Vec3 AngularVel()
+		public Quat Delta(Quat quat)
+		{
+			return quat.Multiply(Inverse());
+		}
+
+		public Vec3 AngularVelocity()
 		{
 			Vec3 axis;
 			float angle;
