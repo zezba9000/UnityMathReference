@@ -19,7 +19,7 @@ public class AngularVelocityDemo : MonoBehaviour
 
 		// generate angular velocity
 		//var angularVelocity = rotationLast.Inverse().Multiply(rotationCurrent).AngularVelocity();// NOTE: this common order of operations approch seems to have gimbal-lock issues (maybe someone can explain why?)
-		var angularVelocity = rotationLast.Multiply(rotationCurrent.Inverse()).AngularVelocity();// USE-THIS: correct order of operations with no gimbal-lock issues
+		var angularVelocity = rotationCurrent.Delta(rotationLast).AngularVelocity();// USE-THIS: correct order of operations with no gimbal-lock issues
 
 		// apply velocity to rigidbody
 		rigidbody.angularVelocity = angularVelocity.ToVector3();
