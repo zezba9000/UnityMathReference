@@ -75,25 +75,34 @@ namespace UnityMathReference
             this.max = max;
         }
 
-		public static Bound3 FromPoints(IList<Vec3> points)
+		public Bound3(IList<Vec3> points)
         {
-            Bound3 boundingBox;
-            boundingBox.min = points[0];
-            boundingBox.max = boundingBox.min;
+            max = min = points[0];
 			foreach (var point in points)
             {
-                if (point.x < boundingBox.min.x) boundingBox.min.x = point.x;
-                else if (point.x > boundingBox.max.x) boundingBox.max.x = point.x;
+                if (point.x < min.x) min.x = point.x;
+                else if (point.x > max.x) max.x = point.x;
 
-                if (point.y < boundingBox.min.y) boundingBox.min.y = point.y;
-                else if (point.y > boundingBox.max.y) boundingBox.max.y = point.y;
+                if (point.y < min.y) min.y = point.y;
+                else if (point.y > max.y) max.y = point.y;
 
-                if (point.z < boundingBox.min.z) boundingBox.min.z = point.z;
-                else if (point.z > boundingBox.max.z) boundingBox.max.z = point.z;
+                if (point.z < min.z) min.z = point.z;
+                else if (point.z > max.z) max.z = point.z;
             }
-
-            return boundingBox;
         }
+
+		public Bound3(Line3 line)
+		{
+			max = min = line.point1;
+			MergeSelf(line.point2);
+		}
+
+		public Bound3(Triangle3 triangle)
+		{
+			max = min = triangle.point1;
+			MergeSelf(triangle.point2);
+			MergeSelf(triangle.point3);
+		}
 		#endregion
 
 		#region Operators
@@ -122,80 +131,98 @@ namespace UnityMathReference
 		public bool Intersects(Bound3 boundingBox)
         {
             return
-				!(boundingBox.min.x > max.x || boundingBox.min.y > max.y || boundingBox.min.z > max.z ||
-				  min.x > boundingBox.max.x || min.y > boundingBox.max.y || min.z > boundingBox.max.z);
+			!(
+				boundingBox.min.x > max.x || boundingBox.min.y > max.y || boundingBox.min.z > max.z ||
+				min.x > boundingBox.max.x || min.y > boundingBox.max.y || min.z > boundingBox.max.z
+			);
         }
 
 		public bool Intersects(Sphere3 boundingSphere)
         {
-		   Vec3 clampedLocation;
-            if (boundingSphere.center.x > max.x) clampedLocation.x = max.x;
-            else if (boundingSphere.center.x < min.x) clampedLocation.x = min.x;
-            else clampedLocation.x = boundingSphere.center.x;
+			Vec3 clampedLocation;
+			if (boundingSphere.center.x > max.x) clampedLocation.x = max.x;
+			else if (boundingSphere.center.x < min.x) clampedLocation.x = min.x;
+			else clampedLocation.x = boundingSphere.center.x;
 
-            if (boundingSphere.center.y > max.y) clampedLocation.y = max.y;
-            else if (boundingSphere.center.y < min.y) clampedLocation.y = min.y;
-            else clampedLocation.y = boundingSphere.center.y;
+			if (boundingSphere.center.y > max.y) clampedLocation.y = max.y;
+			else if (boundingSphere.center.y < min.y) clampedLocation.y = min.y;
+			else clampedLocation.y = boundingSphere.center.y;
 
-            if (boundingSphere.center.z > max.z) clampedLocation.z = max.z;
-            else if (boundingSphere.center.z < min.z) clampedLocation.z = min.z;
-            else clampedLocation.z = boundingSphere.center.z;
+			if (boundingSphere.center.z > max.z) clampedLocation.z = max.z;
+			else if (boundingSphere.center.z < min.z) clampedLocation.z = min.z;
+			else clampedLocation.z = boundingSphere.center.z;
 
-            return clampedLocation.DistanceSquared(boundingSphere.center) <= (boundingSphere.radius * boundingSphere.radius);
+			return clampedLocation.DistanceSquared(boundingSphere.center) <= (boundingSphere.radius * boundingSphere.radius);
         }
 
 		public Bound3 Merge(Bound2 boundingBox)
 		{
 			var result = this;
-			if (result.min.x < boundingBox.min.x) result.min.x = boundingBox.min.x;
-			if (result.max.x > boundingBox.max.x) result.max.x = boundingBox.max.x;
-
-			if (result.min.y < boundingBox.min.y) result.min.y = boundingBox.min.y;
-			if (result.max.y > boundingBox.max.y) result.max.y = boundingBox.max.y;
-
+			result.MergeSelf(boundingBox);
 			return result;
 		}
 
 		public Bound3 Merge(Bound3 boundingBox)
         {
 			var result = this;
-            if (result.min.x < boundingBox.min.x) result.min.x = boundingBox.min.x;
-            if (result.max.x > boundingBox.max.x) result.max.x = boundingBox.max.x;
-
-            if (result.min.y < boundingBox.min.y) result.min.y = boundingBox.min.y;
-            if (result.max.y > boundingBox.max.y) result.max.y = boundingBox.max.y;
-
-            if (result.min.z < boundingBox.min.z) result.min.z = boundingBox.min.z;
-            if (result.max.z > boundingBox.max.z) result.max.z = boundingBox.max.z;
-
+			result.MergeSelf(boundingBox);
 			return result;
-        }
+		}
 
 		public Bound3 Merge(Vec2 vector)
 		{
 			var result = this;
-			if (result.min.x < vector.x) result.min.x = vector.x;
-			if (result.max.x > vector.x) result.max.x = vector.x;
-
-			if (result.min.y < vector.y) result.min.y = vector.y;
-			if (result.max.y > vector.y) result.max.y = vector.y;
-
+			result.MergeSelf(vector);
 			return result;
 		}
 
 		public Bound3 Merge(Vec3 vector)
 		{
 			var result = this;
-			if (result.min.x < vector.x) result.min.x = vector.x;
-			if (result.max.x > vector.x) result.max.x = vector.x;
-
-			if (result.min.y < vector.y) result.min.y = vector.y;
-			if (result.max.y > vector.y) result.max.y = vector.y;
-
-			if (result.min.z < vector.z) result.min.z = vector.z;
-			if (result.max.z > vector.z) result.max.z = vector.z;
-
+			result.MergeSelf(vector);
 			return result;
+		}
+
+		public void MergeSelf(Bound2 boundingBox)
+		{
+			if (boundingBox.min.x < min.x) min.x = boundingBox.min.x;
+			if (boundingBox.max.x > max.x) max.x = boundingBox.max.x;
+
+			if (boundingBox.min.y < min.y) min.y = boundingBox.min.y;
+			if (boundingBox.max.y > max.y) max.y = boundingBox.max.y;
+		}
+
+		public void MergeSelf(Bound3 boundingBox)
+		{
+			if (boundingBox.min.x < min.x) min.x = boundingBox.min.x;
+			if (boundingBox.max.x > max.x) max.x = boundingBox.max.x;
+
+			if (boundingBox.min.y < min.y) min.y = boundingBox.min.y;
+			if (boundingBox.max.y > max.y) max.y = boundingBox.max.y;
+
+			if (boundingBox.min.z < min.z) min.z = boundingBox.min.z;
+			if (boundingBox.max.z > max.z) max.z = boundingBox.max.z;
+		}
+
+		public void MergeSelf(Vec2 vector)
+		{
+			if (vector.x < min.x) min.x = vector.x;
+			if (vector.x > max.x) max.x = vector.x;
+
+			if (vector.y < min.y) min.y = vector.y;
+			if (vector.y > max.y) max.y = vector.y;
+		}
+
+		public void MergeSelf(Vec3 vector)
+		{
+			if (vector.x < min.x) min.x = vector.x;
+			if (vector.x > max.x) max.x = vector.x;
+
+			if (vector.y < min.y) min.y = vector.y;
+			if (vector.y > max.y) max.y = vector.y;
+
+			if (vector.z < min.z) min.z = vector.z;
+			if (vector.z > max.z) max.z = vector.z;
 		}
 
 		public Bound3 Transform(Mat3 matrix)

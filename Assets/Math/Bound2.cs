@@ -58,22 +58,31 @@ namespace UnityMathReference
             this.max = max;
         }
 
-		public static Bound2 FromPoints(IList<Vec2> points)
-        {
-            Bound2 boundingBox;
-            boundingBox.min = points[0];
-            boundingBox.max = boundingBox.min;
+		public Bound2(IList<Vec2> points)
+		{
+			max = min = points[0];
 			foreach (var point in points)
-            {
-                if (point.x < boundingBox.min.x) boundingBox.min.x = point.x;
-                else if (point.x > boundingBox.max.x) boundingBox.max.x = point.x;
+			{
+				if (point.x < min.x) min.x = point.x;
+				else if (point.x > max.x) max.x = point.x;
 
-                if (point.y < boundingBox.min.y) boundingBox.min.y = point.y;
-                else if (point.y > boundingBox.max.y) boundingBox.max.y = point.y;
-            }
+				if (point.y < min.y) min.y = point.y;
+				else if (point.y > max.y) max.y = point.y;
+			}
+		}
 
-            return boundingBox;
-        }
+		public Bound2(Line2 line)
+		{
+			max = min = line.point1;
+			MergeSelf(line.point2);
+		}
+
+		public Bound2(Triangle2 triangle)
+		{
+			max = min = triangle.point1;
+			MergeSelf(triangle.point2);
+			MergeSelf(triangle.point3);
+		}
 		#endregion
 
 		#region Operators
@@ -102,8 +111,10 @@ namespace UnityMathReference
 		public bool Intersects(Bound2 boundingBox)
         {
             return
-				!(boundingBox.min.x > max.x || boundingBox.min.y > max.y ||
-				  min.x > boundingBox.max.x || min.y > boundingBox.max.y);
+			!(
+				boundingBox.min.x > max.x || boundingBox.min.y > max.y ||
+				min.x > boundingBox.max.x || min.y > boundingBox.max.y
+			);
         }
 
 		public bool Intersects(Sphere2 boundingSphere)
@@ -123,25 +134,33 @@ namespace UnityMathReference
 		public Bound2 Merge(Bound2 boundingBox)
         {
 			var result = this;
-			if (result.min.x < boundingBox.min.x) result.min.x = boundingBox.min.x;
-			if (result.max.x > boundingBox.max.x) result.max.x = boundingBox.max.x;
-
-			if (result.min.y < boundingBox.min.y) result.min.y = boundingBox.min.y;
-			if (result.max.y > boundingBox.max.y) result.max.y = boundingBox.max.y;
-
+			result.MergeSelf(boundingBox);
 			return result;
-        }
+		}
 
 		public Bound2 Merge(Vec2 vector)
 		{
 			var result = this;
-			if (result.min.x < vector.x) result.min.x = vector.x;
-			if (result.max.x > vector.x) result.max.x = vector.x;
-
-			if (result.min.y < vector.y) result.min.y = vector.y;
-			if (result.max.y > vector.y) result.max.y = vector.y;
-
+			result.MergeSelf(vector);
 			return result;
+		}
+
+		public void MergeSelf(Bound2 boundingBox)
+		{
+			if (boundingBox.min.x < min.x) min.x = boundingBox.min.x;
+			if (boundingBox.max.x > max.x) max.x = boundingBox.max.x;
+
+			if (boundingBox.min.y < min.y) min.y = boundingBox.min.y;
+			if (boundingBox.max.y > max.y) max.y = boundingBox.max.y;
+		}
+
+		public void MergeSelf(Vec2 vector)
+		{
+			if (vector.x < min.x) min.x = vector.x;
+			if (vector.x > max.x) max.x = vector.x;
+
+			if (vector.y < min.y) min.y = vector.y;
+			if (vector.y > max.y) max.y = vector.y;
 		}
 		#endregion
 	}

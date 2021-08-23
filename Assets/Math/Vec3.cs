@@ -469,10 +469,15 @@ namespace UnityMathReference
 			return (rayDirection * (this-rayOrigin).Dot(rayDirection)) + rayOrigin;
 		}
 
+		public Vec3 IntersectLine(Vec3 point1, Vec3 point2)
+		{
+			Vec3 pointOffset = (this - point1), vector = (point2 - point1).Normalize();
+			return (vector * pointOffset.Dot(vector)) + point1;
+		}
+
 		public Vec3 IntersectLine(Line3 line)
 		{
-			Vec3 pointOffset = (this-line.point1), vector = (line.point2-line.point1).Normalize();
-			return (vector * pointOffset.Dot(vector)) + line.point1;
+			return IntersectLine(line.point1, line.point2);
 		}
 
 		public Vec3 IntersectPlane(Vec3 planeNormal)
@@ -483,37 +488,6 @@ namespace UnityMathReference
 		public Vec3 IntersectPlane(Vec3 planeNormal, Vec3 planeLocation)
 		{
 			return this - (planeNormal * (this-planeLocation).Dot(planeNormal));
-		}
-
-		/// <summary>
-		/// Barycentric Technique
-		/// </summary>
-		public bool WithinTriangle(Vec3 trianglePoint1, Vec3 trianglePoint2, Vec3 trianglePoint3)
-		{
-			// Compute vectors        
-			var v0 = trianglePoint3 - trianglePoint1;
-			var v1 = trianglePoint2 - trianglePoint1;
-			var v2 = this - trianglePoint1;
-
-			// Compute dot products
-			float dot00 = v0.Dot(v0);
-			float dot01 = v0.Dot(v1);
-			float dot02 = v0.Dot(v2);
-			float dot11 = v1.Dot(v1);
-			float dot12 = v1.Dot(v2);
-
-			// Compute barycentric coordinates
-			float invDenom = 1 / ((dot00 * dot11) - (dot01 * dot01));
-			float u = ((dot11 * dot02) - (dot01 * dot12)) * invDenom;
-			float v = ((dot00 * dot12) - (dot01 * dot02)) * invDenom;
-
-			// Check if point is in triangle
-			return (u >= 0) && (v >= 0) && (u + v < 1);
-		}
-
-		public bool WithinTriangle(Triangle3 triangle)
-		{
-			return WithinTriangle(triangle.point1, triangle.point2, triangle.point3);
 		}
 
 		public bool IntersectTriangle(Vec3 trianglePoint1, Vec3 trianglePoint2, Vec3 trianglePoint3, Vec3 triangleNormal, out Vec3 intersectionPoint)
@@ -563,6 +537,87 @@ namespace UnityMathReference
 			if (p.y < -quadSize.y) p.y = -quadSize.y;
 			if (p.y > quadSize.y) p.y = quadSize.y;
 			return p.Transform(quadRot) + quadPos;
+		}
+
+		public Vec3 ClosestPointToLine(Vec3 point1, Vec3 point2)
+		{
+			var closestPoint = IntersectLine(point1, point2);
+			var bound = new Bound3();
+			bound.MergeSelf(point1);
+			bound.MergeSelf(point2);
+			if (closestPoint.WithinBound(bound)) return closestPoint;
+
+			if (closestPoint.x <= bound.min.x) closestPoint.x = bound.left;
+			else if (closestPoint.x >= bound.max.x) closestPoint.x = bound.right;
+
+			if (closestPoint.y <= bound.min.y) closestPoint.y = bound.bottom;
+			else if (closestPoint.y >= bound.max.y) closestPoint.y = bound.top;
+
+			if (closestPoint.z <= bound.min.z) closestPoint.z = bound.back;
+			else if (closestPoint.z >= bound.max.z) closestPoint.z = bound.front;
+
+			return closestPoint;
+		}
+
+		public Vec3 ClosestPointToLine(Line3 line)
+		{
+			return ClosestPointToLine(line.point1, line.point2);
+		}
+
+		public Vec3 ClosestPointToTriangle(Vec3 point1, Vec3 point2, Vec3 point3)
+		{
+			var normal = Triangle3.Normal(point1, point2, point3);
+			if (IntersectTriangle(point1, point2, point3, normal, out var closestPoint)) return closestPoint;
+			var lp1 = ClosestPointToLine(point1, point2);
+			var lp2 = ClosestPointToLine(point2, point3);
+			var lp3 = ClosestPointToLine(point3, point1);
+			float d1 = Distance(lp1);
+			float d2 = Distance(lp2);
+			float d3 = Distance(lp3);
+			if (d1 <= d2 && d1 <= d3) return lp1;
+			if (d2 <= d1 && d2 <= d3) return lp2;
+			return lp3;
+		}
+
+		public Vec3 ClosestPointToTriangle(Triangle3 triangle)
+		{
+			return ClosestPointToTriangle(triangle.point1, triangle.point2, triangle.point3);
+		}
+
+		/// <summary>
+		/// Barycentric Technique
+		/// </summary>
+		public bool WithinTriangle(Vec3 trianglePoint1, Vec3 trianglePoint2, Vec3 trianglePoint3)
+		{
+			// Compute vectors        
+			var v0 = trianglePoint3 - trianglePoint1;
+			var v1 = trianglePoint2 - trianglePoint1;
+			var v2 = this - trianglePoint1;
+
+			// Compute dot products
+			float dot00 = v0.Dot(v0);
+			float dot01 = v0.Dot(v1);
+			float dot02 = v0.Dot(v2);
+			float dot11 = v1.Dot(v1);
+			float dot12 = v1.Dot(v2);
+
+			// Compute barycentric coordinates
+			float invDenom = 1 / ((dot00 * dot11) - (dot01 * dot01));
+			float u = ((dot11 * dot02) - (dot01 * dot12)) * invDenom;
+			float v = ((dot00 * dot12) - (dot01 * dot02)) * invDenom;
+
+			// Check if point is in triangle
+			return (u >= 0) && (v >= 0) && (u + v < 1);
+		}
+
+		public bool WithinTriangle(Triangle3 triangle)
+		{
+			return WithinTriangle(triangle.point1, triangle.point2, triangle.point3);
+		}
+
+		public bool WithinBound(Bound3 bound)
+		{
+			return x >= bound.min.x && x <= bound.max.x && y >= bound.min.y && y <= bound.max.y && z >= bound.min.z && z <= bound.max.z;
 		}
 
 		public float Angle(Vec3 vector)
