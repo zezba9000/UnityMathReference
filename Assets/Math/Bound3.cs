@@ -91,6 +91,11 @@ namespace UnityMathReference
             }
         }
 
+		public Bound3(Vec3 point)
+		{
+			max = min = point;
+		}
+
 		public Bound3(Line3 line)
 		{
 			max = min = line.point1;

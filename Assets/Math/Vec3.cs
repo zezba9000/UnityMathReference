@@ -542,21 +542,9 @@ namespace UnityMathReference
 		public Vec3 ClosestPointToLine(Vec3 point1, Vec3 point2)
 		{
 			var closestPoint = IntersectLine(point1, point2);
-			var bound = new Bound3();
-			bound.MergeSelf(point1);
+			var bound = new Bound3(point1);
 			bound.MergeSelf(point2);
-			if (closestPoint.WithinBound(bound)) return closestPoint;
-
-			if (closestPoint.x <= bound.min.x) closestPoint.x = bound.left;
-			else if (closestPoint.x >= bound.max.x) closestPoint.x = bound.right;
-
-			if (closestPoint.y <= bound.min.y) closestPoint.y = bound.bottom;
-			else if (closestPoint.y >= bound.max.y) closestPoint.y = bound.top;
-
-			if (closestPoint.z <= bound.min.z) closestPoint.z = bound.back;
-			else if (closestPoint.z >= bound.max.z) closestPoint.z = bound.front;
-
-			return closestPoint;
+			return closestPoint.KeepWithinBound(bound);
 		}
 
 		public Vec3 ClosestPointToLine(Line3 line)
@@ -618,6 +606,20 @@ namespace UnityMathReference
 		public bool WithinBound(Bound3 bound)
 		{
 			return x >= bound.min.x && x <= bound.max.x && y >= bound.min.y && y <= bound.max.y && z >= bound.min.z && z <= bound.max.z;
+		}
+
+		public Vec3 KeepWithinBound(Bound3 bound)
+		{
+			var result = this;
+			if (result.x < bound.min.x) result.x = bound.min.x;
+			else if (result.x > bound.max.x) result.x = bound.max.x;
+
+			if (result.y < bound.min.y) result.y = bound.min.y;
+			else if (result.y > bound.max.y) result.y = bound.max.y;
+
+			if (result.z < bound.min.z) result.z = bound.min.z;
+			else if (result.z > bound.max.z) result.z = bound.max.z;
+			return result;
 		}
 
 		public float Angle(Vec3 vector)

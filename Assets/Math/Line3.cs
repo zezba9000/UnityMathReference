@@ -28,40 +28,104 @@ namespace UnityMathReference
 			return (point1 - point2).Length();
 		}
 
-		/*public Vec3 IntersectPlane(Vec3 planeNormal, Vec3 planeLocation)
+		public Line3 IntersectLine(Vec3 point1, Vec3 point2)
 		{
-			float dot = (-(planeNormal.x*planeLocation.x) - (planeNormal.y*planeLocation.y) - (planeNormal.z*planeLocation.z));
-			float dot3 = (planeNormal.x*(point2.x-point1.x)) + (planeNormal.y*(point2.y-point1.y)) + (planeNormal.z*(point2.z-point1.z));
-			float dot2 = -((dot + (planeNormal.x*point1.x) + (planeNormal.y*point1.y) + (planeNormal.z*point1.z)) / dot3);
-			return (point1 + (dot2*(point2-point1)));
+			Vec3 vector = (this.point1 - point1), vector2 = (point2 - point1), vector3 = (this.point2 - this.point1);
+			float dot1 = vector.Dot(vector2);
+			float dot2 = vector2.Dot(vector3);
+			float dot3 = vector.Dot(vector3);
+			float dot4 = vector2.Dot();
+			float dot5 = vector3.Dot();
+			float mul1 = ((dot1 * dot2) - (dot3 * dot4)) / ((dot5 * dot4) - (dot2 * dot2));
+			float mul2 = (dot1 + (dot2 * mul1)) / dot4;
+			return new Line3(this.point1 + (mul1 * vector3), point1 + (mul2 * vector2));
 		}
-
-		public static void IntersectPlane(ref Line3 line, ref Vec3 planeNormal, ref Vec3 planeLocation, out Vec3 result)
-		{
-			float dot = (-(planeNormal.x*planeLocation.x) - (planeNormal.y*planeLocation.y) - (planeNormal.z*planeLocation.z));
-			float dot3 = (planeNormal.x*(line.point2.x-line.point1.x)) + (planeNormal.y*(line.point2.y-line.point1.y)) + (planeNormal.z*(line.point2.z-line.point1.z));
-			float dot2 = -((dot + (planeNormal.x*line.point1.x) + (planeNormal.y*line.point1.y) + (planeNormal.z*line.point1.z)) / dot3);
-			result = (line.point1 + (dot2*(line.point2-line.point1)));
-		}*/
-
-		//public bool IntersectTriangle(out Vector3f pInersectPoint, Vector3f pPolygonPoint1, Vector3f pPolygonPoint2, Vector3f pPolygonPoint3, Vector3f pPolygonNormal, Bound3D pPolygonBoundingBox, Line3f pLine)
-		//{
-		//    pInersectPoint = Intersect(pPolygonNormal, pPolygonPoint1, pLine);
-		//    if (pInersectPoint.WithinTriangle(pPolygonBoundingBox) == false) return false;
-		//    return Within(pPolygonPoint1, pPolygonPoint2, pPolygonPoint3);
-		//}
 
 		public Line3 IntersectLine(Line3 line)
 		{
-		   Vec3 vector = (point1 - line.point1), vector2 = (line.point2 - line.point1), vector3 = (point2 - point1);
-		   float dot1 = vector.Dot(vector2);
-		   float dot2 = vector2.Dot(vector3);
-		   float dot3 = vector.Dot(vector3);
-		   float dot4 = vector2.Dot();
-		   float dot5 = vector3.Dot();
-		   float mul1 = ((dot1 * dot2) - (dot3 * dot4)) / ((dot5 * dot4) - (dot2 * dot2));
-		   float mul2 = (dot1 + (dot2 * mul1)) / dot4;
-		   return new Line3(point1 + (mul1 * vector3), line.point1 + (mul2 * vector2));
+			return IntersectLine(line.point1, line.point2);
+		}
+
+		public Line3 ClosestLineToLine(Vec3 point1, Vec3 point2)
+		{
+			var result = IntersectLine(point1, point2);
+			var boundThis = new Bound3(this);
+			var boundOther = new Bound3(point1);
+			boundOther.MergeSelf(point2);
+
+			var lastPoint2 = result.point2;
+			if (!result.point1.WithinBound(boundThis))
+			{
+				var p1 = this.point1.ClosestPointToLine(point1, point2);
+				var p2 = this.point2.ClosestPointToLine(point1, point2);
+				if (this.point1.Distance(p1) <= this.point2.Distance(p2)) result.point2 = p1;
+				else result.point2 = p2;
+			}
+
+			if (!lastPoint2.WithinBound(boundOther))
+			{
+				var p1 = point1.ClosestPointToLine(this);
+				var p2 = point2.ClosestPointToLine(this);
+				if (point1.Distance(p1) <= point2.Distance(p2)) result.point1 = p1;
+				else result.point1 = p2;
+			}
+
+			result.point1 = result.point1.KeepWithinBound(boundThis);
+			result.point2 = result.point2.KeepWithinBound(boundOther);
+			return result;
+		}
+
+		public Line3 ClosestLineToLine(Line3 line)
+		{
+			return ClosestLineToLine(line.point1, line.point2);
+		}
+
+		public Line3 ClosestLineToTriangle(Vec3 point1, Vec3 point2, Vec3 point3)
+		{
+			var ray = new Ray3(this.point1, (this.point2 - this.point1).Normalize());
+			var normal = Triangle3.Normal(point1, point2, point3);
+			if (ray.IntersectTriangle(point1, point2, point3, normal, out var intersectionPoint) && intersectionPoint.WithinTriangle(point1, point2, point3))
+			{
+				float dis1 = this.point1.Distance(intersectionPoint);
+				float dis2 = this.point2.Distance(intersectionPoint);
+				float lineLength = Length();
+				float disSum = dis1 + dis2;
+				const float tolerance = 0.0001f;
+				if (disSum >= (lineLength - tolerance) && disSum <= (lineLength + tolerance)) return new Line3(intersectionPoint, intersectionPoint);
+			}
+
+			var p1 = this.point1.ClosestPointToTriangle(point1, point2, point3);
+			var p2 = this.point2.ClosestPointToTriangle(point1, point2, point3);
+			float pd1 = this.point1.Distance(p1);
+			float pd2 = this.point2.Distance(p2);
+
+			var l1 = ClosestLineToLine(point1, point2);
+			var l2 = ClosestLineToLine(point2, point3);
+			var l3 = ClosestLineToLine(point3, point1);
+			float d1 = l1.Length();
+			float d2 = l2.Length();
+			float d3 = l3.Length();
+
+			if (d1 <= d2 && d1 <= d3)
+			{
+				if (d1 <= pd1 && d1 <= pd2) return l1;
+			}
+			else if (d2 <= d1 && d2 <= d3)
+			{
+				if (d2 <= pd1 && d2 <= pd2) return l2;
+			}
+			else if (d3 <= pd1 && d3 <= pd2)
+			{
+				return l3;
+			}
+
+			if (pd1 <= pd2) return new Line3(this.point1, p1);
+			return new Line3(this.point2, p2);
+		}
+
+		public Line3 ClosestLineToTriangle(Triangle3 triangle)
+		{
+			return ClosestLineToTriangle(triangle.point1, triangle.point2, triangle.point3);
 		}
 		#endregion
 	}

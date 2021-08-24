@@ -5,12 +5,13 @@ using UnityMathReference;
 
 public class PointToTriangleDemo : MonoBehaviour
 {
-	public Transform pointTransform;
+	public Transform p;
+	public Transform triP1, triP2, triP3;
 
 	private void Update()
 	{
-		var point = pointTransform.position.ToVec3();
-		var triangle = new Triangle3(new Vec3(-1, 1, 0), new Vec3(0, 1, 1), new Vec3(1, 1, 0));
+		var point = p.position.ToVec3();
+		var triangle = new Triangle3(triP1.position, triP2.position, triP3.position);
 		var closestPoint = point.ClosestPointToTriangle(triangle);
 
 		Debug.DrawLine(triangle.point1.ToVector3(), triangle.point2.ToVector3(), Color.green);
