@@ -84,14 +84,13 @@ namespace UnityMathReference
 		{
 			var ray = new Ray3(this.point1, (this.point2 - this.point1).Normalize());
 			var normal = Triangle3.Normal(point1, point2, point3);
-			if (ray.IntersectTriangle(point1, point2, point3, normal, out var intersectionPoint) && intersectionPoint.WithinTriangle(point1, point2, point3))
+			if (ray.IntersectTriangle(point1, point2, point3, normal, out var intersectionPoint))
 			{
 				float dis1 = this.point1.Distance(intersectionPoint);
 				float dis2 = this.point2.Distance(intersectionPoint);
 				float lineLength = Length();
-				float disSum = dis1 + dis2;
-				const float tolerance = 0.0001f;
-				if (disSum >= (lineLength - tolerance) && disSum <= (lineLength + tolerance)) return new Line3(intersectionPoint, intersectionPoint);
+				float disSum = (dis1 + dis2) - 0.0001f;
+				if (disSum <= lineLength) return new Line3(intersectionPoint, intersectionPoint);
 			}
 
 			var p1 = this.point1.ClosestPointToTriangle(point1, point2, point3);

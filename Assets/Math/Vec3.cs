@@ -552,7 +552,7 @@ namespace UnityMathReference
 			return ClosestPointToLine(line.point1, line.point2);
 		}
 
-		public Vec3 ClosestPointToTriangle(Vec3 point1, Vec3 point2, Vec3 point3)
+		public Vec3 ClosestPointToTriangle(Vec3 point1, Vec3 point2, Vec3 point3, Vec3 planeNormal)
 		{
 			var normal = Triangle3.Normal(point1, point2, point3);
 			if (IntersectTriangle(point1, point2, point3, normal, out var closestPoint)) return closestPoint;
@@ -565,6 +565,12 @@ namespace UnityMathReference
 			if (d1 <= d2 && d1 <= d3) return lp1;
 			if (d2 <= d1 && d2 <= d3) return lp2;
 			return lp3;
+		}
+
+		public Vec3 ClosestPointToTriangle(Vec3 point1, Vec3 point2, Vec3 point3)
+		{
+			var normal = Triangle3.Normal(point1, point2, point3);
+			return ClosestPointToTriangle(point1, point2, point3, normal);
 		}
 
 		public Vec3 ClosestPointToTriangle(Triangle3 triangle)
