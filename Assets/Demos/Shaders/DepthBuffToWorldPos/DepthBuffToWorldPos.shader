@@ -27,36 +27,42 @@
 			struct v2f
 			{
 				float2 uv : TEXCOORD0;
-				float3 worldDirection : TEXCOORD1;
 				float4 vertex : SV_POSITION;
 			};
 
 			float4x4 clipToWorld;
+			sampler2D_float _CameraDepthTexture;
+			float4 _CameraDepthTexture_ST;
 
 			v2f vert (appdata v)
 			{
 				v2f o;
-
 				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.uv = v.uv;
-
-				float4 clip = float4(o.vertex.xy, 0.0, 1.0);
-				o.worldDirection = mul(clipToWorld, clip) - _WorldSpaceCameraPos;
-
 				return o;
 			}
-			
-			sampler2D_float _CameraDepthTexture;
-			float4 _CameraDepthTexture_ST;
+
+			float4 ComputeClipSpacePosition(float2 positionNDC, float deviceDepth)
+			{
+				float4 positionCS = float4(positionNDC * 2.0 - 1.0, deviceDepth, 1.0);
+				#if UNITY_UV_STARTS_AT_TOP
+				positionCS.y = -positionCS.y;
+				#endif
+				return positionCS;
+			}
+
+			float3 ComputeWorldSpacePosition(float2 positionNDC, float deviceDepth, float4x4 invViewProjMatrix)
+			{
+				float4 positionCS = ComputeClipSpacePosition(positionNDC, deviceDepth);
+				float4 hpositionWS = mul(invViewProjMatrix, positionCS);
+				return hpositionWS.xyz / hpositionWS.w;
+			}
 
 			float4 frag (v2f i) : SV_Target
 			{
 				float depth = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, i.uv.xy);
-				depth = LinearEyeDepth(depth);
-				float3 worldspace = i.worldDirection * depth + _WorldSpaceCameraPos;
-
-				float4 color = float4(worldspace, 1.0);
-				return color;
+				float3 worldspace = ComputeWorldSpacePosition(i.uv.xy, depth, clipToWorld);
+				return float4(worldspace, 1.0);
 			}
 			ENDCG
 		}
