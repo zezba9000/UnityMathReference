@@ -45,9 +45,9 @@
 			float4 ComputeClipSpacePosition(float2 positionNDC, float deviceDepth)
 			{
 				float4 positionCS = float4(positionNDC * 2.0 - 1.0, deviceDepth, 1.0);
-				#if UNITY_UV_STARTS_AT_TOP
+				/*#if UNITY_UV_STARTS_AT_TOP
 				positionCS.y = -positionCS.y;
-				#endif
+				#endif*/
 				return positionCS;
 			}
 
@@ -61,6 +61,9 @@
 			float4 frag (v2f i) : SV_Target
 			{
 				float depth = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, i.uv.xy);
+				#if defined(SHADER_API_GLES) || defined(SHADER_API_GLES3) || defined(SHADER_API_GLCORE)
+				depth = (depth * 2.0) - 1.0;
+				#endif
 				float3 worldspace = ComputeWorldSpacePosition(i.uv.xy, depth, clipToWorld);
 				return float4(worldspace, 1.0);
 			}

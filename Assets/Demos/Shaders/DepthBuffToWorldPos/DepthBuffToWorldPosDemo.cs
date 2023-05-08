@@ -14,9 +14,9 @@ public class DepthBuffToWorldPosDemo : PostProcess
 
 	protected override void OnRenderImage(RenderTexture source, RenderTexture destination)
 	{
-        var viewMatrix = camera.worldToCameraMatrix;
+		var viewMatrix = camera.worldToCameraMatrix;
 		var projectionMatrix = camera.projectionMatrix;
-        projectionMatrix = GL.GetGPUProjectionMatrix(projectionMatrix, false);
+		projectionMatrix = GL.GetGPUProjectionMatrix(projectionMatrix, false);
 		var clipToPos = (projectionMatrix * viewMatrix).inverse;
 		material.SetMatrix("clipToWorld", clipToPos);
 
