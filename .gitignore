@@ -36,6 +36,7 @@ _ReSharper*/
 /[Bb]uilds/
 /Assets/AssetStoreTools*
 /[Ll]ogs
+/UserSettings
 
 *.sln
 *.csproj
