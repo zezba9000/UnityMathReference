@@ -8,7 +8,7 @@ public class RayIntersectBoxDemo : MonoBehaviour
 		Ray3 ray = new Ray3(new Vec3(-2, .3f, .25f), new Vec3(1, .25f, -.4f).Normalize()); 
 		Debug.DrawLine(ray.origin.ToVector3(), (ray.origin + (ray.direction*5)).ToVector3(), Color.green, 0, false);
 
-		Vec3 p1, p2, n1, n2;
+		Vec3 p1, p2;//, n1, n2;
 		if (ray.IntersectRayBox(new Box3(transform.position.ToVec3(), transform.localScale.ToVec3()), out p1, out p2))//, out n1, out n2))
 		{
 			Debug.DrawLine(p1.ToVector3(), p2.ToVector3(), Color.red, 0, false);

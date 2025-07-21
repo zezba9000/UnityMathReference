@@ -35,7 +35,7 @@ public class RigidbodyTrackObjectDemo : MonoBehaviour
 
 		// apply linear-velocity to rigidbody
 		var linearVelocity = startPos_UMR.ToVec3() - dstRigidbody_UMR.position.ToVec3();
-		dstRigidbody_UMR.velocity = ((linearVelocity * followSpeed) / Time.fixedDeltaTime).ToVector3();
+		dstRigidbody_UMR.linearVelocity = ((linearVelocity * followSpeed) / Time.fixedDeltaTime).ToVector3();
 	}
 
 	private void Run_UnityPrimitives()
@@ -50,6 +50,6 @@ public class RigidbodyTrackObjectDemo : MonoBehaviour
 
 		// apply linear-velocity to rigidbody
 		var linearVelocity = startPos_U - dstRigidbody_U.position;
-		dstRigidbody_U.velocity = (linearVelocity * followSpeed) / Time.fixedDeltaTime;
+		dstRigidbody_U.linearVelocity = (linearVelocity * followSpeed) / Time.fixedDeltaTime;
 	}
 }

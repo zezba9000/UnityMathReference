@@ -6,6 +6,8 @@ obj/
 Lib/
 ipch/
 .vs/
+.vscode/
+.idea/
 
 # Tooling
 _ReSharper*/
