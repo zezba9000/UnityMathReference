@@ -216,8 +216,9 @@ namespace UnityMathReference
 
 		public bool IntersectRayBox(Box3 box, out Vec3 point1, out Vec3 point2)
 		{
-			var min = (box.center - (box.size / 2)) - origin;
-			var max = (box.center + (box.size / 2)) - origin;
+			var s = box.size / 2;
+			var min = (box.center - s) - origin;
+			var max = (box.center + s) - origin;
 			float near = float.MinValue;
 			float far = float.MaxValue;
 
